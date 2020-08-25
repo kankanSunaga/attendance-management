@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<!-- CSSの読み込み -->
+	<link th:href="@{/css/AdminHome.css}" rel="stylesheet"></link>
+	
+	<title>AdminHome</title>
+</head>
+<body>
+<!-- ヘッダー -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">サービス名</a>
+			</div>
+			<button type="button" class="btn btn-success">管理ユーザー</button>
+		</div>
+	</nav>
+	<div class="box">
+    	<p>アカウントの新規申請数　x</p>
+　　　</div>
+	<button type="button" class="btn btn-success">新規作成申請</button>
+</body>
+</html>
