@@ -1,7 +1,7 @@
 /*一般ユーザーテーブル*/
-INSERT INTO generalUser (generalUser_id, generalUser_mail, generalUser_passwerd, role)
-VALUES('itsuka@xxx.co.jp', 'password', 'いいちゅかはやちょ', 'ROLE_GENERAL');
+INSERT INTO m_user (user_id, user_name, email, password, role)
+VALUES(1, 'いいちゅかはやちょ', 'itsuka@xxx.co.jp', 'password', 'ROLE_GENERAL');
 
 /*管理者テーブル*/
-INSERT INTO adminUser (adminUser_id, generalUser_mail, adminUser_passwerd, role)
-VALUES('kanri@xxx.co.jp', 'password', '管理太郎', 'ROLE_ADMIN');
+INSERT INTO m_user (user_id, user_name, email, password, role)
+VALUES(1, '管理太郎', 'kanri@xxx.co.jp', 'password', 'ROLE_ADMIN')
