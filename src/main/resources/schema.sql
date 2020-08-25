@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS m_user (
 	user_name VARCHAR(50),
 	emaIl VARCHAR(50) UNIQUE NOT NULL,
 	password VARCHAR(50),
-	role VARCHAR
-	);
+	role VARCHAR(50)
+);
