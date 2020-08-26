@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"></meta>
-
-    <!-- Bootstrapの設定 -->
+    <link th:href="@{/css/signup.css}" rel="stylesheet"></link>
     <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -11,14 +10,14 @@
     <title>Signup</title>
 </head>
 <body class="text-center">
-	<form method="post" th:action="@{/signup}" style="margin-top: 30px;">
+	<form method="post" th:action="@{/signup}">
 		<!-- 名前 -->
         <label>名前</label><br/>
-        <input type="text" name="userName" /><br/>
+        <input type="text" name="user_name" /><br/>
         <br/>
 		<!-- メールアドレス -->
     	<label>メールアドレス</label><br/>
-    	<input type="text" name="mail" /><br/>
+    	<input type="text" name="email" /><br/>
     	<br/>
     	<!-- パスワード -->
         <label>パスワード</label><br/>
@@ -28,7 +27,7 @@
         <label>パスワード確認</label><br/>
         <input type="password" name="confirmPassword" /><br/>
         <br/>
-	<button class="btn btn-primary" type="submit">申請する</button>
+		<button class="btn btn-primary" type="submit">申請する</button>
     </form>
     <br/>
     <a th:href="@{'/login'}">ログイン画面に戻る</a>
