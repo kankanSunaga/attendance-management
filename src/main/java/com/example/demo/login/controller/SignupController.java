@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SignupController {
 	
 	@GetMapping("/signup")
-	public String getLogin(Model model) {
+	public String getSignup(Model model) {
 		
 		return "login/signup";
 	}
 	
 	@PostMapping("/signup")
-	public String postLogin(Model model) {
+	public String postSignup(Model model) {
 		
-		return "login/Unapproved";
+		return "login/unapproved";
 	}
 }
