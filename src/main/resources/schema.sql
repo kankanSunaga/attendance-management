@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS m_user (
+	user_id INT IDENTITY(1, 1) PRIMARY KEY,
+	user_name VARCHAR(50),
+	email VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(50),
+	role VARCHAR(50)
+);
