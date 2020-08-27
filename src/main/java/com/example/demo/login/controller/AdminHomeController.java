@@ -11,12 +11,12 @@ public class AdminHomeController {
 	@GetMapping("/admin-home")
 	public String getAdminHome(Model model) {
 		
-		return "admin/AdminHome";
+		return "admin/adminHome";
 	}
 
 	@PostMapping("/admin-home")
 	public String postAdminHome(Model model) {
 		
-		return "admin/AdminHome";
+		return "admin/adminHome";
 	}
 }
