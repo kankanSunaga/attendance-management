@@ -10,7 +10,7 @@
 </head>
 <body class="text-center">
     <h1>Login</h1>
-    <form method="post" action="/login">
+    <form method="post" th:action="@{/login}">
         <!-- メールアドレス -->
         <label>メールアドレス</label><br/>
         <input type="text" name="email" placeholder="xxxx@yyyy.co.jp"/><br/>
