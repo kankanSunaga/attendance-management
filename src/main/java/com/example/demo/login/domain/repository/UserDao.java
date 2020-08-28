@@ -7,19 +7,7 @@ public interface UserDao {
 	public int count() throws DataAccessException;
 	
 	//Userテーブルにデータを1件insert
-	public int insertOne(String User) throws DataAccessException;
-	
-	//Userテーブルのデータを1件取得
-	public User selectOne(int userId) throws DataAccessException;
-	
-	//Userテーブルの全データを取得
-	public List<User> selectMany() throws DataAccessException;
-
-	//Userテーブルを1件更新
-	public int updateOne(User user) throws DataAccessException;
-	
-	//Userテーブルを1件削除
-	public int delateOne(int userId) throws DataAccessException;
+	public int insertOne(User user) throws DataAccessException;
 	
 }
 
