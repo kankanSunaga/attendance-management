@@ -28,11 +28,11 @@
         <input type="password" name="confirmPassword" /><br/>
         <br/>
         <!-- エラーメッセージの一覧表示 -->
-        <ul>
-        	<li th:each="error:${#fields.detailedErrors()}">
-        		<span th:text="${error.message}">Error message</span>
-        	</li>
-        </ul>
+        <br/>
+		<div th:each="error:${#fields.detailedErrors()}">
+			<span th:text="${error.message}">Error message</span>
+		</div>
+        <br/>
         <!-- 申請ボタン -->
 		<button class="btn btn-primary" type="submit">申請する</button>
     </form>
