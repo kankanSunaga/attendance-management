@@ -10,23 +10,30 @@
     <title>Signup</title>
 </head>
 <body class="text-center">
-	<form method="post" th:action="@{/signup}">
+	<form method="post" th:action="@{/signup}" th:object="${signupForm}">
 		<!-- 名前 -->
         <label>名前</label><br/>
-        <input type="text" name="user_name" /><br/>
+        <input type="text" th:field="*{userName}" name="userName"/><br/>
         <br/>
 		<!-- メールアドレス -->
     	<label>メールアドレス</label><br/>
-    	<input type="text" name="email" /><br/>
+    	<input type="text" th:field="*{email}" name="email" /><br/>
     	<br/>
     	<!-- パスワード -->
         <label>パスワード</label><br/>
-        <input type="password" name="password" /><br/>
+        <input type="password" th:field="*{password}" name="password" /><br/>
         <br/>
         <!-- パスワード確認 -->
         <label>パスワード確認</label><br/>
         <input type="password" name="confirmPassword" /><br/>
         <br/>
+        <!-- エラーメッセージの一覧表示 -->
+        <br/>
+		<div th:each="error:${#fields.detailedErrors()}">
+			<span th:text="${error.message}">Error message</span>
+		</div>
+        <br/>
+        <!-- 申請ボタン -->
 		<button class="btn btn-primary" type="submit">申請する</button>
     </form>
     <br/>
