@@ -19,5 +19,10 @@ public class UserService {
         }
         return result;
     }
+    
+    //カウント用メソッド
+    public int countPermission() {
+    	return dao.countPermission() ;
+    }
 }
 
