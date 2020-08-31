@@ -22,7 +22,6 @@
 			<button type="button" class="btn btn-success">管理ユーザー</button>		
 			</div>	
 		</div>
-		</div>
 	</nav>
 	<br><br>
 	<br><br>
@@ -30,7 +29,7 @@
 	<div class="container" >
 		<div class="text-center" >
 			<div class="jumbotron">
-	    		<h2>アカウントの新規申請数　x</h2>
+	    		<label th:text = "'アカウントの新規申請数 :  ' + ${countPermission}"></label>
 	　　　	</div>
 		<button type="button" class="btn btn-success">申請一覧</button>
 		</div>

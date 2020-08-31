@@ -10,5 +10,8 @@ public interface UserDao {
 	//Userテーブルにデータを1件insert
 	public int insertOne(User user) throws DataAccessException;
 	
+	//Userテーブルから未承認(false)の数を取得
+	public int countPermission() throws DataAccessException;
+	
 }
 

@@ -40,6 +40,7 @@ public class SignupController {
         user.setPassword(form.getPassword());
         user.setEmail(form.getEmail());
         user.setRole("ROLE_GENERAL");
+        user.setPermission(false);
         
         boolean result = userService.insert(user);
         

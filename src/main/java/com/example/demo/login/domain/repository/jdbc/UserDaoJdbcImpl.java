@@ -19,16 +19,27 @@ public class UserDaoJdbcImpl implements UserDao {
     public int insertOne(User user) throws DataAccessException {
 
         //１件登録
-        int rowNumber = jdbc.update("INSERT INTO m_user(user_name,"
+        int rowNumber = jdbc.update("INSERT INTO user(userName,"
                 + " email,"
                 + " password,"
-                + " role)"
-                + " VALUES(?, ?, ?, ?)",
+                + " role,"
+                + " permission)"
+                + " VALUES(?, ?, ?, ?, ?)",
                 user.getUserName(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getRole());
+                user.getRole(),
+                user.isPermission());
 
         return rowNumber;
+    }
+    
+  //Userテーブルから未承認の数を取得
+    @Override
+    public int countPermission() throws DataAccessException{
+    	//未承認の数を取得
+    	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'",Integer.class);
+		System.out.println(countPermission);
+    	return countPermission;
     }
 }
