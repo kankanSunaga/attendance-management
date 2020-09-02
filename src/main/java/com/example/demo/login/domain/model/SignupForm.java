@@ -5,12 +5,12 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
 
 @Data
-
 public class SignupForm {
 	
 	@NotBlank
@@ -23,12 +23,12 @@ public class SignupForm {
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
-	private String password; //パスワード
+	private String password; // パスワード
 	
-	private String confirmPassword;//パスワード確認
+	@NotBlank
+	private String confirmPassword; // パスワード確認
 	@AssertTrue
 	public boolean isConfirmPassword() {
-		if(password == null || password.isEmpty())return true;
 		return password.equals(confirmPassword);
 	}
 }
