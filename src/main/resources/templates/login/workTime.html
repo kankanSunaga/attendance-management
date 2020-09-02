@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <link th:href="@{/css/workTime.css}" rel="stylesheet"></link>
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    <title>workTime</title>
+</head>
+<body>
+	<!-- ヘッダー -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">サービス名</a>
+			</div>
+			<div class="pull-right">
+				<button type="button" class="btn btn-success">管理ユーザー</button>		
+			</div>	
+		</div>
+	</nav>
+	<br><br>
+	<br><br><br>
+	<form method="post" th:action="@{/workTime}">
+		<div class="container text-center">
+			<!-- 始業時間 -->
+			<div class="col-sm-2">
+				<label>始業時間</label>
+				<input class="form-control" type="time">
+				<br>
+			</div>
+			<!-- 休憩時間 -->
+			<div class="col-sm-2">
+				<label>休憩時間</label>
+				<input class="form-control" max="180" min="0" type="number">分
+			</div>
+			<br>
+			<!-- 終業時間 -->
+			<div class="col-sm-2">
+				<label>終業時間</label>
+				<input class="form-control" type="time">
+			</div>
+			<!-- チェックボックス -->
+			<div class="col-sm-4">
+				<input type="checkbox"> 0時を過ぎた
+				<br>
+			</div>
+			<br>
+			<br>
+			<!-- 今日の勤務時間 -->
+			<div class="col-sm-4">
+				<label>今日の勤務時間</label><span class="totalTime">  XX時間YY分</span>
+			</div>
+			<br>
+			<div class="col-sm-2">
+				<button class="btn btn-primary" type="submit">保存</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
