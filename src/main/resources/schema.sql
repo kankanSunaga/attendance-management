@@ -4,5 +4,7 @@ CREATE TABLE IF NOT EXISTS user (
 	email VARCHAR(50) UNIQUE NOT NULL,
 	password VARCHAR(50),
 	role VARCHAR(50),
-	permission BOOLEAN
+	permission BOOLEAN,
+	frozen　BOOLEAN,
+	requested_at VARCHAR(50)
 );
