@@ -41,6 +41,8 @@ public class SignupController {
         user.setEmail(form.getEmail());
         user.setRole("ROLE_GENERAL");
         user.setPermission(false);
+        user.setFrozen(false);
+        //申請時間登録の追記お願いします。
         
         boolean result = userService.insert(user);
         
