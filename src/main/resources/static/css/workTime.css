@@ -2,6 +2,7 @@ form {
 	margin-top: 30px;
 }
 
-#center-left {
+#center-left p {
+	display: inline-block;
 	text-align: left;
 }
