@@ -9,40 +9,50 @@
 
     <title>WorkTime</title>
 </head>
-<body class="text-center">
+<body>
 	<form method="post" th:action="@{/workDetail}" th:object="${workDetailForm}">
-		<div id="center-left">
-			<p>
-				<!-- 契約勤務時間 -->
-		        <label>契約勤務時間</label>
-		        <input type="number" name="contractTime" value="0" min="0" max="720" step="1"/><br/>
-		        <br/>
-				<!-- 想定始業時間 -->
-		        <label class="space">想定始業時間</label>
-		        <input type="time" id="startTime" name="startTime" min="0:00" max="23:59" required/>
-		        <br/>
-		        <br/>
-				<!-- 想定休憩時間(分で入力) -->
-		        <label class="space">想定休憩時間</label>
-		        <input type="time" id="breakTime" name="breakTime" min="0:00" max="23:59" required/><br/>
-		        <br/>
-				<!-- 想定退勤時間 -->
-		    	<label class="space">想定退勤時間</label>
-		        <input type="time" id="endTime" name="endTime" min="0:00" max="23:59" required/>
-		        <br/>
-		        <br/>
-		    	<!-- 勤務開始日(カレンダー選択) -->
-		        <label class="space">勤務開始日</label>
-		        <input type="date" name="startDate" /><br/>
-		        <br/>
-		        <!-- 勤務先会社名 -->
-		        <label class="space">勤務先会社名</label>
-		        <input type="text" name="officeName" placeholder="株式会社コスモシステムズ"/><br/>
-		        <br/>
-			</p>
-        </div>
-        <!-- 保存ボタン -->
-		<button class="btn btn-primary" type="submit">保存</button>
+		<div class="container text-center">
+			<!-- 契約勤務時間 -->
+			<div class="col-sm-2">
+				<label>契約勤務時間</label>
+				<input type="number" name="contractTime" value="0" min="0" max="720" step="1" class="form-control" required/>時間
+				</div>
+				<br/>
+	    	<!-- 想定始業時間 -->
+	   		<div class="col-sm-2">
+				<label class="space">想定始業時間</label>
+				<input type="time" id="startTime" name="startTime" min="0:00" max="23:59" class="form-control" required/>
+			</div>
+				<br/>
+	    	<!-- 想定休憩時間(分で入力) -->
+	    	<div class="col-sm-2">
+				<label class="space">想定休憩時間</label>
+				<input type="time" id="breakTime" name="breakTime" min="0:00" max="23:59" class="form-control" required/>分
+			</div>
+			<br/>
+	   		<!-- 想定退勤時間 -->
+	    	<div class="col-sm-2">
+				<label class="space">想定退勤時間</label>
+				<input type="time" id="endTime" name="endTime" min="0:00" max="23:59" class="form-control" required/>
+			</div>
+			<br/>
+			<!-- 勤務開始日(カレンダー選択) -->
+			<div class="col-sm-2">
+				<label class="space">勤務開始日</label><br/>
+				<input type="date" name="startDate" class="form-control" required/>
+			</div>
+			<br/>
+			<!-- 勤務先会社名 -->
+			<div class="col-sm-2">
+				<label class="space">勤務先会社名</label>
+				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" required/>
+			</div>
+			<br/>
+       		<!-- 保存ボタン -->
+       		<div class="col-sm-4">
+				<button class="btn btn-primary" type="submit">保存</button>
+			</div>
+		</div>
     </form>
     <br/>
 </body>

@@ -2,7 +2,8 @@ form {
 	margin-top: 30px;
 }
 
-#center-left p {
-	display: inline-block;
-	text-align: left;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
