@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class WorkTimeController {
+public class WorkDetailController {
     
-    @GetMapping("/workTime")
-    public String getWorkTime(Model model) {
+    @GetMapping("/workDetail")
+    public String getWorkDetail(Model model) {
         
-        return "login/workTime";
+        return "login/workDetail";
     }
     
-    @PostMapping("/workTime")
-    public String postWorkTime(Model model) {
+    @PostMapping("/workDetail")
+    public String postWorkDetail(Model model) {
         
-    	return "login/workTime";
+    	return "login/workDetail";
     }
 }
