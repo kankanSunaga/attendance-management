@@ -25,7 +25,7 @@
 	<form method="post" th:action="@{/workTime}">
 		<div class="container text-center">
 			<!-- カレンダー -->
-			<div class="col-sm-2.5">
+			<div class="col-sm-2">
 				<label>勤務日</label>
 				<input class="form-control" type="date" required>
 				<br>
@@ -33,30 +33,30 @@
 			<!-- 始業時間 -->
 			<div class="col-sm-2">
 				<label>始業時間</label>
-				<input class="form-control" type="time" required>
+				<input class="form-control" type="time" name="startTime" required>
 				<br>
 			</div>
 			<!-- 休憩時間 -->
 			<div class="col-sm-2">
 				<label>休憩時間</label>
-				<input class="form-control" max="180" min="0" type="number" required>分
+				<input class="form-control" max="180" min="0" type="number" name="breakTime" required>分
 			</div>
 			<br>
 			<!-- 終業時間 -->
 			<div class="col-sm-2">
 				<label>終業時間</label>
-				<input class="form-control" type="time" required>
+				<input class="form-control" type="time" name="endTime" required>
 			</div>
 			<!-- チェックボックス -->
 			<div class="col-sm-4">
-				<input type="checkbox"> 0時を過ぎた
+				<input type="checkbox" name="overTime"> 0時を過ぎた
 				<br>
 			</div>
 			<br>
 			<br>
 			<!-- 今日の勤務時間 -->
 			<div class="col-sm-4">
-				<label>今日の勤務時間</label><span class="totalTime">  XX時間YY分</span>
+				<label>今日の勤務時間 HH時間MM分</label> <!-- totalTime -->
 			</div>
 			<br>
 			<div class="col-sm-2">
