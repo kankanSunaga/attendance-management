@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
 @Controller
@@ -29,6 +32,11 @@ public class ApplyListController {
 		return "admin/applyList";
 		
 	}
-	
+	@GetMapping("/applyDetail/{userId}")
+	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
+			@PathVariable("userId")int userId) {
+		
+		return "admin/applyDetail";
+	}
 }
 
