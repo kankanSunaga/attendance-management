@@ -1,59 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"></meta>
-    <link th:href="@{/css/workDetail.css}" rel="stylesheet"></link>
-    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
-    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<meta charset="UTF-8"></meta>
+<link th:href="@{/css/workDetail.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
-    <title>WorkTime</title>
+<title>WorkTime</title>
 </head>
 <body>
-	<form method="post" th:action="@{/workDetail}" th:object="${workDetailForm}">
+	<form method="post" th:action="@{/workDetail}"
+		th:object="${workDetailForm}">
 		<div class="container text-center">
 			<!-- 契約勤務時間 -->
 			<div class="col-sm-2">
-				<label>契約勤務時間</label>
-				<input type="number" name="contractTime" value="0" min="0" max="720" step="1" class="form-control" required/>時間
-				</div>
-				<br/>
-	    	<!-- 想定始業時間 -->
-	   		<div class="col-sm-2">
-				<label class="space">想定始業時間</label>
-				<input type="time" id="startTime" name="startTime" min="0:00" max="23:59" class="form-control" required/>
+				<label>契約勤務時間</label> <input type="number" name="contractTime"
+					value="0" min="0" max="720" step="1" class="form-control" required />時間
 			</div>
-				<br/>
-	    	<!-- 想定休憩時間(分で入力) -->
-	    	<div class="col-sm-2">
-				<label class="space">想定休憩時間</label>
-				<input type="time" id="breakTime" name="breakTime" min="0:00" max="23:59" class="form-control" required/>分
+			<br />
+			<!-- 想定始業時間 -->
+			<div class="col-sm-2">
+				<label class="space">想定始業時間</label> <input type="time"
+					id="startTime" name="startTime" min="0:00" max="23:59"
+					class="form-control" required />
 			</div>
-			<br/>
-	   		<!-- 想定退勤時間 -->
-	    	<div class="col-sm-2">
-				<label class="space">想定退勤時間</label>
-				<input type="time" id="endTime" name="endTime" min="0:00" max="23:59" class="form-control" required/>
+			<br />
+			<!-- 想定休憩時間(分で入力) -->
+			<div class="col-sm-2">
+				<label class="space">想定休憩時間</label> <input type="time"
+					id="breakTime" name="breakTime" min="0:00" max="23:59"
+					class="form-control" required />分
 			</div>
-			<br/>
+			<br />
+			<!-- 想定退勤時間 -->
+			<div class="col-sm-2">
+				<label class="space">想定退勤時間</label> <input type="time" id="endTime"
+					name="endTime" min="0:00" max="23:59" class="form-control" required />
+			</div>
+			<br />
 			<!-- 勤務開始日(カレンダー選択) -->
 			<div class="col-sm-2">
-				<label class="space">勤務開始日</label><br/>
-				<input type="date" name="startDate" class="form-control" required/>
+				<label class="space">勤務開始日</label><br /> <input type="date"
+					name="startDate" class="form-control" required />
 			</div>
-			<br/>
+			<br />
 			<!-- 勤務先会社名 -->
 			<div class="col-sm-2">
-				<label class="space">勤務先会社名</label>
-				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" required/>
+				<label class="space">勤務先会社名</label> <input type="text"
+					name="officeName" placeholder="株式会社コスモシステムズ" class="form-control"
+					required />
 			</div>
-			<br/>
-       		<!-- 保存ボタン -->
-       		<div class="col-sm-4">
+			<br />
+			<!-- 保存ボタン -->
+			<div class="col-sm-4">
 				<button class="btn btn-primary" type="submit">保存</button>
 			</div>
 		</div>
-    </form>
-    <br/>
+	</form>
+	<br />
 </body>
 </html>
