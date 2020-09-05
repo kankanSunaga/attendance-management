@@ -1,6 +1,7 @@
 package com.example.demo.login.domain.model;
 
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -24,5 +25,10 @@ public class SignupForm {
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String password; // パスワード
 	
+	@NotBlank
 	private String confirmPassword; // パスワード確認
+	@AssertTrue
+	public boolean isConfirmPassword() {
+		return password.equals(confirmPassword);
+	}
 }
