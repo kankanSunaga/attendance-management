@@ -32,6 +32,7 @@ public class ApplyListController {
 		return "admin/applyList";
 		
 	}
+	//動的URLの作成
 	@GetMapping("/applyDetail/{userId}")
 	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
 			@PathVariable("userId")int userId) {
