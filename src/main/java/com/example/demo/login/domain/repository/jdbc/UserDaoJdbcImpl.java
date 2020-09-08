@@ -54,7 +54,7 @@ public class UserDaoJdbcImpl implements UserDao {
     //Userテーブルから未承認データを取得する
     public List<User> selectPermission() throws DataAccessException{
     	//DBから未承認のユーザーデータを取得
-    	List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= FALSE and frozen = FALSE");
+    	List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
     	
     	//結果返却用の変数
     	List<User> userList = new ArrayList<>();
