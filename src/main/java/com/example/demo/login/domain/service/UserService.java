@@ -28,7 +28,7 @@ public class UserService {
     }
     //未承認ユーザー取得メソッド
     public List<User> selectPermission(){
-		return dao.selectPermission();    	
+    	return dao.selectPermission();    	
     }
     //１件取得用メッソド
     public User selectOne(int userId) {
