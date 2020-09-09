@@ -31,7 +31,7 @@ public class SignupForm {
 	private String confirmPassword; // パスワード確認
 	@AssertTrue
 	public boolean isConfirmPassword() {
-		return password.equals(confirmPassword);				
+		return password.equals(confirmPassword);
 	}
 	private String role;//一般ユーザーか管理ユーザーか。
 	private boolean permission;//承認ステータス

@@ -23,14 +23,14 @@
 		<br>
 		<!-- 許可ボタン -->
 	    <!-- 許可モーダルを開くボタン・リンク -->	   
-        <div class="row mb-5">
+		<div class="row mb-5">
 			<div class="inline-block_test">
-				<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#permissionModal">許可</button>
-            </div>
-            <div class="inline-block_test">
-				<a class="btn btn-primary" data-toggle="modal" data-target="#refusalModal">拒否</a>
+			<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#permissionModal">許可</button>
 			</div>
-        </div>
+			<div class="inline-block_test">
+			<a class="btn btn-primary" data-toggle="modal" data-target="#refusalModal">拒否</a>
+			</div>
+		</div>
 	    
 	    <!-- 許可後に表示される画面の内容 -->
 	    <div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -65,7 +65,7 @@
 	                </div>
 	            </div>
 	        </div>
-        </div>       
+        </div>
 	    <br/>
     <!-- 未承認一覧画面へのリンク -->
     <a th:href="@{'/applyList'}">未承認一覧画面へ戻る</a>    
