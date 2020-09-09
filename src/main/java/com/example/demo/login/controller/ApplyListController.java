@@ -36,6 +36,22 @@ public class ApplyListController {
 	@GetMapping("/applyDetail/{userId}")
 	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
 			@PathVariable("userId")int userId) {
+		model.addAttribute("contents","admin/applyDetail::admin_contents");
+		
+		User user = userService.selectOne(userId);
+		
+		//Userクラスをフォームクラスに変換
+		form.setUserId(user.getUserId());
+		form.setUserName(user.getUserName());
+		form.setEmail(user.getEmail());
+		form.setPassword(user.getPassword());
+		form.setRole(user.getRole());
+		form.setPermission(user.isPermission());
+		form.setFrozen(user.isFrozen());
+		form.setRequested_at(user.getRequested_at());
+		
+		//Modelに登録
+		model.addAttribute("signupForm",form);
 		
 		return "admin/applyDetail";
 	}
