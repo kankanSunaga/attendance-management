@@ -13,14 +13,14 @@
 	<div class="container content text-center">
 		<div th:fragment="admin_contents">		        
 			<form th:object="${signupForm}">
-            	<p>名前<span class = "space" th:text = "${signupForm.userName}"></span></p>
-	            <br>
-	            <p>メールアドレス<span class = "space"th:text = "${signupForm.email}"></span></p>
-	            <br>
-	            <p>申請日時<span class = "space"th:text = "${signupForm.requested_at}"></span></p>
-		    </form>
-		  </div>
-		  <br>
+				<p>名前<span class = "space" th:text = "${signupForm.userName}"></span></p>
+				<br>
+				<p>メールアドレス<span class = "space"th:text = "${signupForm.email}"></span></p>
+				<br>
+				<p>申請日時<span class = "space"th:text = "${signupForm.requested_at}"></span></p>
+			</form>
+		</div>
+		<br>
 		<!-- 許可ボタン -->
 	    <!-- 許可モーダルを開くボタン・リンク -->	   
         <div class="row mb-5">
