@@ -17,5 +17,8 @@ public interface UserDao {
 	
 	////Userテーブルから未承認ユーザーのデータを取得
 	public List<User> selectPermission() throws DataAccessException;
+	
+	///Userテーブルから未承認ユーザー１件取得
+	public User selectOne(int userId) throws DataAccessException;
 }
 

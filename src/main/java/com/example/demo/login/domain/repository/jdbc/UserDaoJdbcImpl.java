@@ -80,4 +80,23 @@ public class UserDaoJdbcImpl implements UserDao {
     	return userList;
     	
     }
+    //Userテーブルから未承認ユーザー１件取得
+    public User selectOne(int userId) throws DataAccessException{
+    	//１件取得
+    	Map<String, Object>map = jdbc.queryForMap("SELECT * FROM user WHERE userId= ?",userId);
+    	//結果返却用の変数
+    	User user = new User();
+    	//取得したデータ結果返却用の変数にセットしていく
+		user.setUserId((int)map.get("UserId"));
+		user.setUserName((String)map.get("UserName"));
+		user.setEmail((String)map.get("Email"));
+		user.setPassword((String)map.get("Password"));
+		user.setRole((String)map.get("Role"));
+		user.setPermission((boolean)map.get("Permission"));
+		user.setFrozen((boolean)map.get("Frozen"));
+		user.setRequested_at((String)map.get("Requested_at"));
+		
+		return user;
+    	
+    }
 }
