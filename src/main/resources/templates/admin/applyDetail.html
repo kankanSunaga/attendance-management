@@ -32,43 +32,43 @@
 			</div>
 		</div>
 	    
-	    <!-- 許可後に表示される画面の内容 -->
-	    <div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		<!-- 許可後に表示される画面の内容 -->
+		<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 			<div class="modal-dialog">
-	            <div class="modal-content">
-	                <div class="modal-header">
-	                    <h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
-	                </div>
-	                <div class="modal-body">
-	                    <label>申請を許可しますか？</label>
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
-	                    <a th:href="@{'/applyList'}"><button type="button" class="btn btn-danger">はい</button></a>
-	                </div>
-	            </div>
+				<div class="modal-content">
+ 					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
+					</div>
+					<div class="modal-body">
+						<label>申請を許可しますか？</label>
+					</div>
+ 					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
+						<a th:href="@{'/applyList'}"><button type="button" class="btn btn-danger">はい</button></a>
+					</div>
+				</div>
 			</div>
-	    </div>
+		</div>
 		<!-- 拒否後に表示される画面の内容 -->
 		<div class="modal fade" id="refusalModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-	        <div class="modal-dialog">
-	            <div class="modal-content">
-	                <div class="modal-header">
-	                    <h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
-	                </div>
-	                <div class="modal-body">
-	                    <label>２度とこのメールアドレスでは申請<br>できなくなるけど良いですか？</label>
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
-	                    <a th:href="@{'/applyList'}"><button type="button" class="btn btn-danger">はい</button></a>
-	                </div>
-	            </div>
-	        </div>
-        </div>
-	    <br/>
-    <!-- 未承認一覧画面へのリンク -->
-    <a th:href="@{'/applyList'}">未承認一覧画面へ戻る</a>    
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
+					</div>
+					<div class="modal-body">
+						<label>２度とこのメールアドレスでは申請<br>できなくなるけど良いですか？</label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
+						<a th:href="@{'/applyList'}"><button type="button" class="btn btn-danger">はい</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<!-- 未承認一覧画面へのリンク -->
+		<a th:href="@{'/applyList'}">未承認一覧画面へ戻る</a>    
 	</div>		
 </body>
 </html>
