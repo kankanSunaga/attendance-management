@@ -8,3 +8,11 @@ CREATE TABLE IF NOT EXISTS user (
 	frozen　BOOLEAN,
 	requested_at VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS workTime (
+	workTimeId INT IDENTITY(1, 1) PRIMARY KEY,
+	workDay DATE,
+	startTime  TIMESTAMP,
+	breakTime TIME,
+	endTime TIMESTAMP
+);
