@@ -13,10 +13,10 @@ public class WorkTimeService {
 	WorkTimeDao dao;
 	
 	//insert用メソッド
-    public boolean insert(WorkTime workTime) {
-        
-        int rowNumber = dao.insertOne(workTime);
-        
-        return rowNumber > 0;
+	public boolean insert(WorkTime workTime) {
+		
+		int rowNumber = dao.insertOne(workTime);
+		
+		return rowNumber > 0;
     }
 }

@@ -7,5 +7,5 @@ import com.example.demo.login.domain.model.WorkTime;
 public interface WorkTimeDao {
 	
 	//Userテーブルにデータを1件insert
-		public int insertOne(WorkTime workTime) throws DataAccessException;
+	public int insertOne(WorkTime workTime) throws DataAccessException;
 }
