@@ -27,7 +27,7 @@ public class WorkTimeController {
 	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model) {
 		
 		WorkTime workTime = new WorkTime();
-				
+		
 		workTime.setWorkTime(form);
 		
 		workTimeService.insert(workTime);
