@@ -22,34 +22,35 @@
 	</nav>
 	<br><br>
 	<br><br><br>
-	<form method="post" th:action="@{/workTime}">
+	<form method="post" th:action="@{/workTime}" th:object="${workTimeForm}">
 		<div class="container text-center">
 			<!-- カレンダー -->
 			<div class="col-sm-2">
 				<label>勤務日</label>
-				<input class="form-control" type="date" required>
+				<input class="form-control" type="date" th:field="*{workDay}" name="workDay" required>
 				<br>
 			</div>
 			<!-- 始業時間 -->
 			<div class="col-sm-2">
 				<label>始業時間</label>
-				<input class="form-control" type="time" name="startTime" required>
+				<input class="form-control" type="time" th:field="*{startTime}" name="startTime" required>
 				<br>
 			</div>
 			<!-- 休憩時間 -->
 			<div class="col-sm-2">
 				<label>休憩時間</label>
-				<input class="form-control" max="180" min="0" type="number" name="breakTime" required>分
+				<!-- <input class="form-control" max="180" min="0" type="number" th:field="*{breakTime}" name="breakTime" required> -->
+				<input class="form-control" type="time" th:field="*{breakTime}" name="breakTime" required>
 			</div>
 			<br>
 			<!-- 終業時間 -->
 			<div class="col-sm-2">
 				<label>終業時間</label>
-				<input class="form-control" type="time" name="endTime" required>
+				<input class="form-control" type="time" th:field="*{endTime}" name="endTime" required>
 			</div>
 			<!-- チェックボックス -->
 			<div class="col-sm-4">
-				<input type="checkbox" name="overTime"> 0時を過ぎた
+				<input type="checkbox" th:field="*{overTimeFlag}" name="overTime"> 0時を過ぎた
 				<br>
 			</div>
 			<br>
