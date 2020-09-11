@@ -46,7 +46,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public int countPermission() throws DataAccessException{
     	//未承認の数を取得
-    	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'",Integer.class);
+    	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'",Integer.class);
 		System.out.println(countPermission);
     	return countPermission;
     }

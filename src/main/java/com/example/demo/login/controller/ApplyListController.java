@@ -58,7 +58,6 @@ public class ApplyListController {
 	}
 	@PostMapping("/applyUserPermission/{userId}")
 	public String postPermissionUpdate(@ModelAttribute SignupForm form, Model model) {
-		System.out.println("許可ボタンの処理");
 		
 		User user = new User();
 		
@@ -77,8 +76,7 @@ public class ApplyListController {
 	}
 	
 	@PostMapping("/applyUserFrozen/{userId}")
-	public String postupdateFrozen(@ModelAttribute SignupForm form, Model model) {
-		System.out.println("許可ボタンの処理");
+	public String postupdateFrozen(@ModelAttribute SignupForm form, Model model) {		
 		
 		User user = new User();
 		
@@ -86,9 +84,9 @@ public class ApplyListController {
 		user.setFrozen(form.isFrozen());
 		
 		boolean result = userService.updateFrozen(user);
-		if(result==true) {
+		if(result == true) {
 			model.addAttribute("result", "更新成功");
-		}else {
+		} else {
 			model.addAttribute("result", "更新失敗");
 		}
 		
