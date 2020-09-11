@@ -18,38 +18,38 @@ public class WorkDetailController {
 	@Autowired
 	private WorkDetailService workDetailService;
 	
-    @GetMapping("/workDetail")
-    public String getWorkDetail(@ModelAttribute WorkDetailForm form, Model model) {
-        return "login/workDetail";
-    }
+	@GetMapping("/workDetail")
+	public String getWorkDetail(@ModelAttribute WorkDetailForm form, Model model) {
+		return "login/workDetail";
+	}
     
-    @PostMapping("/workDetail")
-    public String postWorkDetail(@ModelAttribute @Validated WorkDetailForm form, BindingResult bindingResult, Model model) {
-    	
-    	if (bindingResult.hasErrors()) {
-            return getWorkDetail(form, model);
-        }
-        
-        System.out.println(form);
-        
-        //insert用変数
-        WorkDetail workDetail = new WorkDetail();
-        
-        workDetail.setContractTime(form.getContractTime());
-        workDetail.setStartTime(form.getStartTime());
-        workDetail.setBreakTime(form.getBreakTime());
-        workDetail.setEndTime(form.getEndTime());
-        workDetail.setStartDate(form.getStartDate());
-        workDetail.setOfficeName(form.getOfficeName());
-        
-        boolean result = workDetailService.insert(workDetail);
-        
-        if(result == true) {
-        	System.out.println("insert成功");
-        } else {
-        	System.out.println("insert失敗");
-        }
-        
-        return "login/startDateWaiting";
-    }
+	@PostMapping("/workDetail")
+	public String postWorkDetail(@ModelAttribute @Validated WorkDetailForm form, BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return getWorkDetail(form, model);
+		}
+		
+		System.out.println(form);
+		
+		//insert用変数
+		WorkDetail workDetail = new WorkDetail();
+		
+		workDetail.setContractTime(form.getContractTime());
+		workDetail.setStartTime(form.getStartTime());
+		workDetail.setBreakTime(form.getBreakTime());
+		workDetail.setEndTime(form.getEndTime());
+		workDetail.setStartDate(form.getStartDate());
+		workDetail.setOfficeName(form.getOfficeName());
+
+		boolean result = workDetailService.insert(workDetail);
+
+		if(result == true) {
+			System.out.println("insert成功");
+		} else {
+			System.out.println("insert失敗");
+		}
+
+		return "login/startDateWaiting";
+	}
 }

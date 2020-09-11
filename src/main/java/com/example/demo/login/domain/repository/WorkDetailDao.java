@@ -5,7 +5,7 @@ import com.example.demo.login.domain.model.WorkDetail;
 
 public interface WorkDetailDao {
 	
-	// WorkDetailテーブルにデータ1件insert
+	// WorkDetailテーブルに1件insert
 	public int insertOne(WorkDetail workDetail) throws DataAccessException;
 	
 }

@@ -11,7 +11,7 @@ public class WorkDetailService {
 	@Autowired
 	WorkDetailDao dao;
 	
-	//insert用メソッド
+	//insertメソッド
 	public boolean insert(WorkDetail workDetail) {
 		int rowNumber = dao.insertOne(workDetail);
 		boolean result = false;

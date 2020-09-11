@@ -35,7 +35,7 @@
 				<input type="time" name="endTime" class="form-control" th:field="*{endTime}" required/>
 			</div>
 			<br/>
-			<!-- 勤務開始日(カレンダー選択)-->
+			<!-- 勤務開始日(カレンダー選択) -->
 			<div class="col-sm-2">
 				<label class="space">勤務開始日</label><br />
 				<input type="date" name="startDate" class="form-control" th:field="*{startDate}" required/>
@@ -47,7 +47,7 @@
 				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" th:field="*{officeName}" required/>
 			</div>
 			<br/>
-			<!-- エラ〜メッセージの表示 -->
+			<!-- エラーメッセージの表示 -->
 			<ul>
 				<li th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>

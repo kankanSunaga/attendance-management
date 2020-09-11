@@ -30,7 +30,7 @@ public class WorkDetailDaoJdbcImpl implements WorkDetailDao {
 				, workDetail.getEndTime()
 				, workDetail.getStartDate()
 				, workDetail.getOfficeName());
-				
+		
 		return rowNumber;
 	}
 }
