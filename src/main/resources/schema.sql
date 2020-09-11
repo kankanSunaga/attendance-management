@@ -17,4 +17,11 @@ CREATE TABLE IF NOT EXISTS workDetail (
 	endTime TIME,
 	startDate DATE,
 	officeName VARCHAR(100)
+  
+CREATE TABLE IF NOT EXISTS workTime (
+	workTimeId INT IDENTITY(1, 1) PRIMARY KEY,
+	workDay DATE,
+	startTime TIMESTAMP,
+	breakTime TIME,
+	endTime TIMESTAMP
 );
