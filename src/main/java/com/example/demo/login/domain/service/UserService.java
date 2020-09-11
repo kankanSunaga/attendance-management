@@ -34,6 +34,28 @@ public class UserService {
     public User selectOne(int userId) {
     	return dao.selectOne(userId);
     }
+    //承認ステータス更新用メソッド
+    public boolean updatePermission(User user) {
+    	
+    	int rowNumber = dao.updatePermission(user);
+    	
+    	boolean result = false;
+    	if(rowNumber > 0) {
+    		result = true;
+    	}
+    	return result;
+    }
+    
+    public boolean updateFrozen(User user) {
+    	
+    	int rowNumber = dao.updateFrozen(user);
+    	
+    	boolean result = false;
+    	if(rowNumber > 0) {
+    		result = true;
+    	}
+    	return result;
+    }
     
 }
 

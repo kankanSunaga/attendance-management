@@ -96,7 +96,17 @@ public class UserDaoJdbcImpl implements UserDao {
 		user.setFrozen((boolean)map.get("Frozen"));
 		user.setRequested_at((String)map.get("Requested_at"));
 		
-		return user;
-    	
+		return user;    	
+    }
+  ///Userテーブルの承認ステータス　未承認→承認に変更
+    @Override
+    public int updatePermission(User user) throws DataAccessException{
+    	int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?",user.getUserId());    	
+    	return rowNumber;
+    }
+  ///Userテーブルの凍結ステータス　利用中→利用不可に変更
+    public int updateFrozen(User user) throws DataAccessException{
+    	int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?",user.getUserId());
+    	return rowNumber;
     }
 }

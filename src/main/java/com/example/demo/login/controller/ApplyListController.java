@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
@@ -55,5 +56,44 @@ public class ApplyListController {
 		
 		return "admin/applyDetail";
 	}
+	@PostMapping("/applyUser/{userId}")
+	public String postPermissionUpdate(@ModelAttribute SignupForm form, Model model) {
+		System.out.println("許可ボタンの処理");
+		
+		User user = new User();
+		
+		user.setUserId(form.getUserId());
+		user.setPermission(form.isPermission());
+		
+		boolean result = userService.updatePermission(user);
+		if(result==true) {
+			model.addAttribute("result", "更新成功");
+		}else {
+			model.addAttribute("result", "更新失敗");
+		}
+		
+		return getApplyList(model);
+		
+	}
+	
+//	@PostMapping("/applyUser/{userId}")
+//	public String postupdateFrozen(@ModelAttribute SignupForm form, Model model) {
+//		System.out.println("許可ボタンの処理");
+//		
+//		User user = new User();
+//		
+//		user.setUserId(form.getUserId());
+//		user.setFrozen(form.isFrozen());
+//		
+//		boolean result = userService.updateFrozen(user);
+//		if(result==true) {
+//			model.addAttribute("result", "更新成功");
+//		}else {
+//			model.addAttribute("result", "更新失敗");
+//		}
+//		
+//		return getApplyList(model);
+//		
+//	}
 }
 
