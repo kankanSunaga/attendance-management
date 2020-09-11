@@ -12,5 +12,5 @@ public class User {
 	private String role;
 	private boolean permission;
 	private boolean frozen;
-	private String requested_at;
+	private String requestedAt;
 	}

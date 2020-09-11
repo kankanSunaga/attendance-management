@@ -49,7 +49,7 @@ public class ApplyListController {
 		form.setRole(user.getRole());
 		form.setPermission(user.isPermission());
 		form.setFrozen(user.isFrozen());
-		form.setRequested_at(user.getRequested_at());
+		form.setRequestedAt(user.getRequestedAt());
 		
 		//Modelに登録
 		model.addAttribute("signupForm",form);

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
 	role VARCHAR(50),
 	permission BOOLEAN,
 	frozen BOOLEAN,
-	requested_at VARCHAR(50)
+	requestedAt VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS workDetail (
