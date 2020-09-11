@@ -1,5 +1,6 @@
 package com.example.demo.login.controller;
 
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,15 @@ public class WorkDetailController {
 		} else {
 			System.out.println("insert失敗");
 		}
-
-		return "login/startDateWaiting";
+		
+		//勤務開始日に以前か以降かのチェック
+		LocalDate formDate = form.getStartDate();
+		LocalDate currentDate = LocalDate.now();
+		
+		if(formDate.compareTo(currentDate) > 0) {
+			return "login/startDateWaiting";
+		} else {
+			return "login/login";
+		}
 	}
 }
