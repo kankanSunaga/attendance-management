@@ -45,7 +45,7 @@ public class UserService {
     	}
     	return result;
     }
-    
+    //凍結ステータス更新用メソッド
     public boolean updateFrozen(User user) {
     	
     	int rowNumber = dao.updateFrozen(user);

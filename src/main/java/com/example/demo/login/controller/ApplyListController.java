@@ -56,7 +56,7 @@ public class ApplyListController {
 		
 		return "admin/applyDetail";
 	}
-	@PostMapping("/applyUser/{userId}")
+	@PostMapping("/applyUserPermission/{userId}")
 	public String postPermissionUpdate(@ModelAttribute SignupForm form, Model model) {
 		System.out.println("許可ボタンの処理");
 		
@@ -76,24 +76,24 @@ public class ApplyListController {
 		
 	}
 	
-//	@PostMapping("/applyUser/{userId}")
-//	public String postupdateFrozen(@ModelAttribute SignupForm form, Model model) {
-//		System.out.println("許可ボタンの処理");
-//		
-//		User user = new User();
-//		
-//		user.setUserId(form.getUserId());
-//		user.setFrozen(form.isFrozen());
-//		
-//		boolean result = userService.updateFrozen(user);
-//		if(result==true) {
-//			model.addAttribute("result", "更新成功");
-//		}else {
-//			model.addAttribute("result", "更新失敗");
-//		}
-//		
-//		return getApplyList(model);
-//		
-//	}
+	@PostMapping("/applyUserFrozen/{userId}")
+	public String postupdateFrozen(@ModelAttribute SignupForm form, Model model) {
+		System.out.println("許可ボタンの処理");
+		
+		User user = new User();
+		
+		user.setUserId(form.getUserId());
+		user.setFrozen(form.isFrozen());
+		
+		boolean result = userService.updateFrozen(user);
+		if(result==true) {
+			model.addAttribute("result", "更新成功");
+		}else {
+			model.addAttribute("result", "更新失敗");
+		}
+		
+		return getApplyList(model);
+		
+	}
 }
 
