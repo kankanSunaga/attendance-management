@@ -71,7 +71,7 @@ public class UserDaoJdbcImpl implements UserDao {
             user.setRole((String)map.get("Role"));
             user.setPermission((boolean)map.get("Permission"));
     		user.setFrozen((boolean)map.get("Frozen"));
-    		user.setRequestedAt((String)map.get("Requested_at"));
+    		user.setRequestedAt((String)map.get("RequestedAt"));
     		
     		//結果返却用のListに追加
     		userList.add(user);
