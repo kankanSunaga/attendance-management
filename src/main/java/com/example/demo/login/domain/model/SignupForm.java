@@ -36,5 +36,5 @@ public class SignupForm {
 	private String role;//一般ユーザーか管理ユーザーか。
 	private boolean permission;//承認ステータス
 	private boolean frozen;//凍結ステータス
-	private String requested_at; //申請日時
+	private String requestedAt; //申請日時
 }
