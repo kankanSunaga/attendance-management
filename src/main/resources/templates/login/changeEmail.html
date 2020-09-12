@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/changeEmail.css}" rel="stylesheet"></link>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<title>ChangeEmail</title>
+</head>
+<body class="text-center">
+	<form method="post" th:action="@{/changeEmail}">
+		<!-- changeEmail画面 -->
+		<div class="container">
+			<h1>メールアドレス変更画面</h1>
+			<br>
+			<!-- 現在のメールアドレスの表示 -->
+			<div class="col-sm-5 jumbotron">
+				<label>現在登録されているメールアドレス</label>
+				<h4>prin@xxx.co.jp</h4>
+			</div>
+			<!-- 新しいメールアドレスの入力 -->
+			<div class="col-sm-3">
+				<label>新しいメールアドレスの入力</label>
+				<input class="form-control" type="text" name="newPassword" required>
+				<br>
+			</div>
+			<!-- 新しいメールアドレスの確認 -->
+			<div class="col-sm-3">
+				<label>新しいメールアドレスの確認</label>
+				<input class="form-control" type="text" name="newConfirmPassword" required>
+				<br>
+			</div>
+		</div>
+		<!-- モーダルを開くボタン -->
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-2">
+					<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
+				</div>
+			</div>
+		</div>
+		<!-- モーダル画面 -->
+		<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">変更確認画面</h4>
+					</div>
+					<div class="modal-body">
+						<label>本当にメールアドレスを変更しますか？</label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger">変更する</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
