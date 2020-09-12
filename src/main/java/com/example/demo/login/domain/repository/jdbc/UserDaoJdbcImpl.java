@@ -46,7 +46,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public int countPermission() throws DataAccessException{
     	//未承認の数を取得
-    	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'",Integer.class);
+    	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'",Integer.class);
 		System.out.println(countPermission);
     	return countPermission;
     }
@@ -54,7 +54,7 @@ public class UserDaoJdbcImpl implements UserDao {
     //Userテーブルから未承認データを取得する
     public List<User> selectPermission() throws DataAccessException{
     	//DBから未承認のユーザーデータを取得
-    	List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　='FALSE'");
+    	List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
     	
     	//結果返却用の変数
     	List<User> userList = new ArrayList<>();
@@ -71,7 +71,7 @@ public class UserDaoJdbcImpl implements UserDao {
             user.setRole((String)map.get("Role"));
             user.setPermission((boolean)map.get("Permission"));
     		user.setFrozen((boolean)map.get("Frozen"));
-    		user.setRequested_at((String)map.get("Requested_at"));
+    		user.setRequestedAt((String)map.get("RequestedAt"));
     		
     		//結果返却用のListに追加
     		userList.add(user);
@@ -79,5 +79,34 @@ public class UserDaoJdbcImpl implements UserDao {
     	
     	return userList;
     	
+    }
+    //Userテーブルから未承認ユーザー１件取得
+    public User selectOne(int userId) throws DataAccessException{
+    	//１件取得
+    	Map<String, Object>map = jdbc.queryForMap("SELECT * FROM user WHERE userId= ?",userId);
+    	//結果返却用の変数
+    	User user = new User();
+    	//取得したデータ結果返却用の変数にセットしていく
+		user.setUserId((int)map.get("UserId"));
+		user.setUserName((String)map.get("UserName"));
+		user.setEmail((String)map.get("Email"));
+		user.setPassword((String)map.get("Password"));
+		user.setRole((String)map.get("Role"));
+		user.setPermission((boolean)map.get("Permission"));
+		user.setFrozen((boolean)map.get("Frozen"));
+		user.setRequestedAt((String)map.get("RequestedAt"));
+		
+		return user;    	
+    }
+  ///Userテーブルの承認ステータス　未承認→承認に変更
+    @Override
+    public int updatePermission(User user) throws DataAccessException{
+    	int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?",user.getUserId());    	
+    	return rowNumber;
+    }
+  ///Userテーブルの凍結ステータス　利用中→利用不可に変更
+    public int updateFrozen(User user) throws DataAccessException{
+    	int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?",user.getUserId());
+    	return rowNumber;
     }
 }

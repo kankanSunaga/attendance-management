@@ -14,7 +14,7 @@ public class AdminHomeController {
 	@Autowired
 	UserService userService; 
 	
-	@GetMapping("/admin-home")
+	@GetMapping("/adminHome")
 	public String getAdminHome(Model model) {
 		
 		int countPermission = userService.countPermission();
@@ -23,7 +23,7 @@ public class AdminHomeController {
 		return "admin/adminHome";
 	}
 
-	@PostMapping("/admin-home")
+	@PostMapping("/adminHome")
 	public String postAdminHome(Model model) {
 		
 		return "admin/adminHome";

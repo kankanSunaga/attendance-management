@@ -28,8 +28,33 @@ public class UserService {
     }
     //未承認ユーザー取得メソッド
     public List<User> selectPermission(){
-		return dao.selectPermission();
+    	return dao.selectPermission();    	
+    }
+    //１件取得用メッソド
+    public User selectOne(int userId) {
+    	return dao.selectOne(userId);
+    }
+    //承認ステータス更新用メソッド
+    public boolean updatePermission(User user) {
     	
+    	int rowNumber = dao.updatePermission(user);
+    	
+    	boolean result = false;
+    	if(rowNumber > 0) {
+    		result = true;
+    	}
+    	return result;
+    }
+    //凍結ステータス更新用メソッド
+    public boolean updateFrozen(User user) {
+    	
+    	int rowNumber = dao.updateFrozen(user);
+    	
+    	boolean result = false;
+    	if(rowNumber > 0) {
+    		result = true;
+    	}
+    	return result;
     }
     
 }

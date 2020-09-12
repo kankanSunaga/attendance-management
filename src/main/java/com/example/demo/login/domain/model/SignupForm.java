@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class SignupForm {
 	
+	private int userId;//ユーザーID
+	
 	@NotBlank
 	private String userName; // 名前
 	
@@ -31,4 +33,8 @@ public class SignupForm {
 	public boolean isConfirmPassword() {
 		return password.equals(confirmPassword);
 	}
+	private String role;//一般ユーザーか管理ユーザーか。
+	private boolean permission;//承認ステータス
+	private boolean frozen;//凍結ステータス
+	private String requestedAt; //申請日時
 }

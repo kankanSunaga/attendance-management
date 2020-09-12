@@ -17,5 +17,14 @@ public interface UserDao {
 	
 	////Userテーブルから未承認ユーザーのデータを取得
 	public List<User> selectPermission() throws DataAccessException;
+	
+	///Userテーブルから未承認ユーザー１件取得
+	public User selectOne(int userId) throws DataAccessException;
+	
+	///Userテーブルの承認ステータス　未承認→承認に変更
+	public int updatePermission(User user) throws DataAccessException;
+	
+	///Userテーブルの凍結ステータス　false→trueに変更
+	public int updateFrozen(User user) throws DataAccessException;
 }
 

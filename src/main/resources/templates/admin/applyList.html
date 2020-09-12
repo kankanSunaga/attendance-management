@@ -39,8 +39,8 @@
 			    <tr th:each ="user : ${userList}">
 			      <th scope="row" th:text="${user.userName}"></th>
 			      <td th:text="${user.email}"></td>
-			      <td th:text="${user.requested_at}"></td>
-			      <td ><a class="btn btn-primary" th:href="@{'/adminDetail/'+ ${user.userId}}">詳細</a></td>
+			      <td th:text="${user.requestedAt}"></td>
+			      <td ><a class="btn btn-primary" th:href="@{'/applyDetail/'+ ${user.userId}}">詳細</a></td>
 			    </tr>
 			  </tbody>
 			</table>

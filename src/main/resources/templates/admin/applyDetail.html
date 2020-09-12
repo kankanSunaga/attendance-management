@@ -2,14 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
+	 <link th:href="@{/css/applyDetail.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>	
 	
 	<title>applyDetail</title>
 </head>
 <body>
-	
+	<div class="container content text-center">
+		<div th:fragment="admin_contents">		        
+			<form method="post" th:object="${signupForm}"  th:action="@{/applyUserPermission/{userId}(userId=${signupForm.userId})}">
+				<p>名前<span class="space" th:text="${signupForm.userName}"></span></p>
+				<br>
+				<p>メールアドレス<span class="space"th:text="${signupForm.email}"></span></p>
+				<br>
+				<p>申請日時<span class="space"th:text="${signupForm.requestedAt}"></span></p>					
+				<br>
+				<!-- 許可ボタン -->
+				<!-- 許可モーダルを開くボタン・リンク -->	   
+				<div class="row mb-5">
+					<div class="inline-block_test">
+					<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#permissionModal">許可</button>
+					</div>
+					<div class="inline-block_test">
+					<a class="btn btn-primary" data-toggle="modal" data-target="#refusalModal">拒否</a>
+					</div>
+				</div>			    
+				<!-- 許可後に表示される画面の内容 -->
+				<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+		 					<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
+							</div>
+							<div class="modal-body">
+								<label>申請を許可しますか？</label>
+							</div>
+		 					<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
+								<button type="submit" class="btn btn-danger">はい</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<!-- 拒否後に表示される画面の内容 -->
+			<form method="post" th:action="@{/applyUserFrozen/{userId}(userId=${signupForm.userId})}">
+				<div class="modal fade" id="refusalModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
+							</div>
+							<div class="modal-body">
+								<label>２度とこのメールアドレスでは申請<br>できなくなるけど良いですか？</label>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
+								<button type="submit" class="btn btn-danger">はい</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>	
+		<br/>
+		<!-- 未承認一覧画面へのリンク -->
+		<a th:href="@{'/applyList'}">未承認一覧画面へ戻る</a>    
+	</div>		
 </body>
 </html>
