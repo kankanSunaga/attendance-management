@@ -28,7 +28,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
                 workTime.getStartTime(),
                 workTime.getBreakTime(),
                 workTime.getEndTime(),
-        		workTime.getTotalTimeMinute());
+                workTime.getTotalTimeMinute());
 
         return job;
     }
