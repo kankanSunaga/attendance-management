@@ -32,6 +32,6 @@ public class WorkTimeController {
 		
 		workTimeService.insert(workTime);
 		
-		return "login/login";
+		return "login/workTime";
 	}
 }

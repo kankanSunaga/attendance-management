@@ -24,5 +24,6 @@ CREATE TABLE IF NOT EXISTS workTime (
 	workDay DATE,
 	startTime TIMESTAMP,
 	breakTime TIME,
-	endTime TIMESTAMP
+	endTime TIMESTAMP,
+	totalTimeMinute INT
 );

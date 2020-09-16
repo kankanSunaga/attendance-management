@@ -21,12 +21,14 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
         int job = jdbc.update("INSERT INTO workTime(workDay,"
                 + " startTime,"
                 + " breakTime,"
-                + " endTime)"
-                + " VALUES(?, ?, ?, ?)",
+                + " endTime,"
+                + " totalTimeMinute)"
+                + " VALUES(?, ?, ?, ?, ?)",
                 workTime.getWorkDay(),
                 workTime.getStartTime(),
-                workTime.getLdtBreakTime(),
-                workTime.getEndTime());
+                workTime.getBreakTime(),
+                workTime.getEndTime(),
+        		workTime.getTotalTimeMinute());
 
         return job;
     }
