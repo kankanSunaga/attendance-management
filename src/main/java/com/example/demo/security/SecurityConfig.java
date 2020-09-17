@@ -11,8 +11,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 //セキュリティ設定用クラス
 
@@ -21,10 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
 	@Autowired
 	private DataSource dataSource;
@@ -61,11 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// ログイン不要ページの設定
 		http.authorizeRequests()
 				.antMatchers("/css/**").permitAll() // cssへのアクセス許可
-				.antMatchers("/login**").permitAll() // ログインページへの直リンクの許可
-				.antMatchers("/signup**").permitAll() // ユーザー登録ページへの直リンク許可
+				.antMatchers("/login/**").permitAll() // ログインページへの直リンクの許可
+				.antMatchers("/signup/**").permitAll() // ユーザー登録ページへの直リンク許可
 				.anyRequest().authenticated(); // その他の直リンク禁止
 		
-		//ログイン処理
+		// ログイン処理
 		http.formLogin()
 				.loginProcessingUrl("/login") // ログイン処理のパス
 				.loginPage("/login") // ログイン処理のパス
@@ -73,6 +73,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("email") // ログインページのユーザーメールアドレス
 				.passwordParameter("password") // ログインページのパスワード
 				.defaultSuccessUrl("/workDetail", true); // ログイン成功後の遷移先
+		
+		// ログアウト処理
+		http.logout()
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/login");
 		
 //		// CSRF対策を無効に設定（一時的）
 //		http.csrf().disable();
@@ -87,8 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.dataSource(dataSource)
 			.usersByUsernameQuery(USER_SQL)
 			.authoritiesByUsernameQuery(ROLE_SQL)
-//			.passwordEncoder(passwordEncoder());
-			.passwordEncoder(NoOpPasswordEncoder.getInstance());
+			.passwordEncoder(passwordEncoder());
 		
 	}
 }

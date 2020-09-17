@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.domain.model.User;
@@ -17,26 +18,33 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Autowired
     JdbcTemplate jdbc;
+    
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-    // Userテーブルにデータを1件insert.
+    // Userテーブルにデータを1件insert
     @Override
     public int insertOne(User user) throws DataAccessException {
 
+    	// パスワードを暗号化
+    	String password = passwordEncoder.encode(user.getPassword());
+    	System.out.println(password);
         //１件登録
-        int rowNumber = jdbc.update("INSERT INTO user(userName,"
-                + " email,"
-                + " password,"
-                + " role,"
-                + " permission"
-                + " frozen)"
-                + " VALUES(?, ?, ?, ?, ?)",
+        int rowNumber = jdbc.update("INSERT INTO user("
+        		+ " userName,"
+        		+ " email,"
+        		+ " password,"
+        		+ " role,"
+        		+ " permission,"
+        		+ " frozen)"
+        		+ " VALUES(?, ?, ?, ?, ?, ?)",
                 //申請日時の登録処理追記してください
                 user.getUserName(),
                 user.getEmail(),
-                user.getPassword(),
+                password,
                 user.getRole(),
                 user.isPermission(),
-        		user.isFrozen());
+                user.isFrozen());
         		//申請日時の登録処理追記してください
         
         return rowNumber;
