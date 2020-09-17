@@ -17,6 +17,6 @@ public class LoginController {
 	@PostMapping("/login")
 	public String postLogin(Model model) {
 		
-		return "login/login";
+		return "login/workDetail";
 	}
 }

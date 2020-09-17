@@ -40,8 +40,12 @@
 			<!-- 休憩時間 -->
 			<div class="col-sm-2">
 				<label>休憩時間</label>
+<<<<<<< HEAD
 				<!-- <input class="form-control" max="180" min="0" type="number" th:field="*{breakTime}" name="breakTime" required> -->
 				<input class="form-control" type="time" name="breakTime" th:field="*{breakTime}" required>
+=======
+				<input class="form-control" type="time" max="03:00" th:field="*{breakTime}" name="breakTime" required>
+>>>>>>> sprint-4
 			</div>
 			<br>
 			<!-- 終業時間 -->
@@ -55,11 +59,6 @@
 				<br>
 			</div>
 			<br>
-			<br>
-			<!-- 今日の勤務時間 -->
-			<div class="col-sm-4">
-				<label>今日の勤務時間 HH時間MM分</label> <!-- totalTime -->
-			</div>
 			<br>
 			<div class="col-sm-2">
 				<button class="btn btn-primary" type="submit">保存</button>
