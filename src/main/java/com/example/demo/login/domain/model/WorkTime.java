@@ -4,7 +4,7 @@ package com.example.demo.login.domain.model;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.temporal.ChronoField;
 import java.util.HashMap;
 
 import lombok.Data;
@@ -16,39 +16,26 @@ public class WorkTime {
 	private LocalDateTime startTime;
 	private LocalTime breakTime;
 	private LocalDateTime endTime;
-	private int totalTimeMinute;
+	private int workTimeMinute;
 	
 	
-	public static int totalTimeMinute(WorkTimeForm form) {
+	public static int workTimeMinute(WorkTimeForm form) {
 		
-		HashMap<String, Integer> totalTimeMinute = new HashMap<String, Integer>();
+		HashMap<String, Integer> workTimeMinute = new HashMap<String, Integer>();
 		
 		// 始業時間（分）
-		totalTimeMinute.put("startHour", form.getStartTime().getHour() * 60);
-		totalTimeMinute.put("startMinute", form.getStartTime().getMinute());
-		totalTimeMinute.put("startTotalMinute", totalTimeMinute.get("startHour") + totalTimeMinute.get("startMinute"));
+		workTimeMinute.put("startTimeMinute", form.getStartTime().get(ChronoField.MINUTE_OF_DAY));
 		
 		// 休憩時間（分）
-		totalTimeMinute.put("breakHour", form.getBreakTime().getHour() * 60);
-		totalTimeMinute.put("breakMinute", form.getBreakTime().getMinute());
-		totalTimeMinute.put("breakTotalMinute", totalTimeMinute.get("breakHour") + totalTimeMinute.get("breakMinute"));
-		
-		// 終業時間（trueの場合+24時間）
-		if (form.isOverTimeFlag()) {
-			totalTimeMinute.put("endHourFlag", form.getEndTime().getHour() + 24);
-		} else {
-			totalTimeMinute.put("endHourFlag", form.getEndTime().getHour());
-		}
+		workTimeMinute.put("breakTimeMinute", form.getBreakTime().get(ChronoField.MINUTE_OF_DAY));
 		
 		// 終業時間（分）
-		totalTimeMinute.put("endHour", totalTimeMinute.get("endHourFlag") * 60);
-		totalTimeMinute.put("endMinute", form.getEndTime().getMinute());
-		totalTimeMinute.put("endTotalMinute", totalTimeMinute.get("endHour") + totalTimeMinute.get("endMinute"));
+		workTimeMinute.put("endTimeMinute", form.getEndTime().get(ChronoField.MINUTE_OF_DAY));
 		
 		// 勤務時間の計算（分）
-		totalTimeMinute.put("totalTimeMinute", totalTimeMinute.get("endTotalMinute") - (totalTimeMinute.get("startTotalMinute") + totalTimeMinute.get("breakTotalMinute")));
+		workTimeMinute.put("workTimeMinute", workTimeMinute.get("endTimeMinute") - (workTimeMinute.get("startTimeMinute") + workTimeMinute.get("breakTimeMinute")));
 		
-		return totalTimeMinute.get("totalTimeMinute");
+		return workTimeMinute.get("workTimeMinute");
 	}
 	
 	
@@ -60,10 +47,10 @@ public class WorkTime {
 		
 		if (form.isOverTimeFlag()) {
 			this.setEndTime(LocalDateTime.of(this.getWorkDay().plusDays(1), form.getEndTime()));
-			this.setTotalTimeMinute(totalTimeMinute(form));
+			this.setWorkTimeMinute(workTimeMinute(form) + 1440);
 		} else {
 			this.setEndTime(LocalDateTime.of(form.getWorkDay(), form.getEndTime()));
-			this.setTotalTimeMinute(totalTimeMinute(form));
+			this.setWorkTimeMinute(workTimeMinute(form));
 		}
 	}
 }
