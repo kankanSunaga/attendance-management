@@ -9,28 +9,17 @@
 	<title>home</title>
 </head>
 <body>
-	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">サービス名</a>
-			</div>
-			<div class="pull-right">
-				<button type="button" class="btn btn-success">管理ユーザー</button>		
-			</div>	
-		</div>
-	</nav>
-	<br><br>
-	<br><br>
+	<div th:fragment="home_contents">
 	<!-- コンテンツ -->
-	<div class="container">
-		<div class="text-center">
-			<div class="jumbotron">
-				<label >日付：</label><label th:text="${today}"></label><br>
-				<label>契約時間まであと：</label><label>100時間</label><br>
-				<label>今月の勤務時間：</label><label>60時間</label>
+		<div class="container">
+			<div class="text-center">
+				<div class="jumbotron">
+					<label >日付：</label><label th:text="${today}"></label><br>
+					<label>契約時間まであと：</label><label>100時間</label><br>
+					<label>今月の勤務時間：</label><label>60時間</label>
+				</div>
+				<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
 			</div>
-			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
 		</div>
 	</div>
 </body>
