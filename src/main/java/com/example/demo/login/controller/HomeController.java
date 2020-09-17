@@ -19,7 +19,10 @@ public class HomeController {
 		String formatChangedToday = today.format(formatChange);
 		model.addAttribute("today", formatChangedToday);
 		
-		return "login/home";
+		model.addAttribute("contents","login/home :: home_contents");
+		
+		return "login/headerLayout";
+		
 	}
 	
 	@PostMapping("/home")
