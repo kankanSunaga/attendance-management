@@ -8,4 +8,8 @@ public interface WorkDetailDao {
 	// WorkDetailテーブルに1件insert
 	public int insertOne(WorkDetail workDetail) throws DataAccessException;
 	
+	//WorkDetailテーブルからデータ取得
+	public  WorkDetail selectOne() throws DataAccessException;
+	
+	
 }
