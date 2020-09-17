@@ -22,13 +22,13 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
                 + " startTime,"
                 + " breakTime,"
                 + " endTime,"
-                + " totalTimeMinute)"
+                + " workTimeMinute)"
                 + " VALUES(?, ?, ?, ?, ?)",
                 workTime.getWorkDay(),
                 workTime.getStartTime(),
                 workTime.getBreakTime(),
                 workTime.getEndTime(),
-                workTime.getTotalTimeMinute());
+                workTime.getWorkTimeMinute());
 
         return job;
     }
