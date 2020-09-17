@@ -20,4 +20,9 @@ public class WorkDetailService {
 		}
 		return result;
 	}
+	
+	//workDetailテーブルのデータ取得
+		public WorkDetail selectOne() {
+			return dao.selectOne();
+		}
 }
