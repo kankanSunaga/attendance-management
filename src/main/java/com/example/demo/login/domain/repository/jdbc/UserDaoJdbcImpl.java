@@ -32,19 +32,19 @@ public class UserDaoJdbcImpl implements UserDao {
         //１件登録
         int rowNumber = jdbc.update("INSERT INTO user("
         		+ " userName,"
-                + " email,"
-                + " password,"
-                + " role,"
-                + " permission,"
-                + " frozen)"
-                + " VALUES(?, ?, ?, ?, ?, ?)",
+        		+ " email,"
+        		+ " password,"
+        		+ " role,"
+        		+ " permission,"
+        		+ " frozen)"
+        		+ " VALUES(?, ?, ?, ?, ?, ?)",
                 //申請日時の登録処理追記してください
                 user.getUserName(),
                 user.getEmail(),
                 password,
                 user.getRole(),
                 user.isPermission(),
-        		user.isFrozen());
+                user.isFrozen());
         		//申請日時の登録処理追記してください
         
         return rowNumber;
