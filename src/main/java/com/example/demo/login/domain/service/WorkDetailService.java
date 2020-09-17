@@ -22,7 +22,7 @@ public class WorkDetailService {
 	}
 	
 	//workDetailテーブルのデータ取得
-		public WorkDetail selectOne() {
-			return dao.selectOne();
-		}
+	public WorkDetail selectOne() {
+		return dao.selectOne();
+	}
 }
