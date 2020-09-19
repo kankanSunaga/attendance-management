@@ -1,5 +1,7 @@
 package com.example.demo.login.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,10 @@ public class WorkTimeService {
 		int rowNumber = dao.insertOne(workTime);
 		
 		return rowNumber > 0;
+    }
+	
+	//その月のデータ取得用メソッド
+	public List<WorkTime> selectMonthData(){
+    	return dao.selectMonthData();    	
     }
 }

@@ -2,14 +2,23 @@ package com.example.demo.login.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.login.domain.model.WorkTime;
+import com.example.demo.login.domain.service.WorkTimeService;
+
 @Controller
 public class HomeController {
 
+	@Autowired
+	private WorkTimeService workTimeService;
+	
 	@GetMapping("/home")
 	public String getHome(Model model) {
 		
@@ -20,6 +29,12 @@ public class HomeController {
 		model.addAttribute("today", formatChangedToday);
 		
 		model.addAttribute("contents","login/home :: home_contents");
+		
+		List<WorkTime> monthDataList= workTimeService.selectMonthData();
+		
+		model.addAttribute("monthDataList",monthDataList);
+		
+		System.out.println(monthDataList);
 		
 		return "login/headerLayout";
 		
