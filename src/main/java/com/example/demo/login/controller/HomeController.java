@@ -62,14 +62,6 @@ public class HomeController {
 		model.addAttribute("remainingTimeInt", remainingTimeInt);
 		model.addAttribute("remainingTimeDouble", remainingTimeDouble);
 		
-		//契約達成かどうかの判定
-		if(remainingTimeInt <= 0 && remainingTimeDouble <= 0) {
-			String achievement = "契約時間を達成しました";
-			model.addAttribute("achievement", achievement);
-			model.addAttribute("contents","login/achievement :: home_contents");
-			return "login/headerLayout";
-		}
-		
 		model.addAttribute("contents","login/home :: home_contents");
 		return "login/headerLayout";
 	}
