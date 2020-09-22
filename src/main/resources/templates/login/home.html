@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<link th:href="@{/css/home.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -15,8 +14,11 @@
 			<div class="text-center">
 				<div class="jumbotron">
 					<label >日付：</label><label th:text="${today}"></label><br>
-					<label>契約時間まであと：</label><label>100時間</label><br>
-					<label>今月の勤務時間：</label><label>60時間</label>
+					<label>契約時間まであと：</label>
+						<!-- 達成したかどうかの分岐 -->
+						<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}" th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
+						<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
+					<label>今月の勤務時間：</label><label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br><br>
 				</div>
 				<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
 			</div>

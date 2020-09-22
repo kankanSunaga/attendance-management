@@ -12,14 +12,22 @@ VALUES(2, '管理太郎', 'kanri@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95
 INSERT INTO workDetail (workDetailId, contractTime, startTime,breakTime,endTime,startDate,officeName)
 VALUES(1, 170, '09:00', '01:00', '18:00', '2020-9-01','LIM'); 
 
+/*仕事詳細テーブル（8月1日）*/
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute)
+VALUES(1, '2020-8-01', '2020-8-01 09:00:00', '12:00:00', '2020-8-01 17:00:00', 420);
+
 /*仕事詳細テーブル（9月1日）*/
 INSERT INTO workTime (workTimeId,workDay,startTime,breakTime,endTime,workTimeMinute)
-VALUES(1, '2020-9-01', '2020-9-01 09:00:00', '12:00:00', '2020-9-01 17:00:00', 420);
+VALUES(2, '2020-9-01', '2020-9-01 09:00:00', '12:00:00', '2020-9-01 17:00:00', 42000);
 
 /*仕事詳細テーブル（9月2日）*/
 INSERT INTO workTime (workTimeId,workDay,startTime,breakTime,endTime,workTimeMinute)
-VALUES(2, '2020-9-02', '2020-9-02 09:00:00', '12:00:00', '2020-9-02 17:00:00', 420);
+VALUES(3, '2020-9-02', '2020-9-02 09:00:00', '12:00:00', '2020-9-02 17:00:00', 420);
+
+/*仕事詳細テーブル（9月3日）*/
+INSERT INTO workTime (workTimeId,workDay,startTime,breakTime,endTime,workTimeMinute)
+VALUES(4, '2020-9-03', '2020-9-03 09:00:00', '12:00:00', '2020-9-03 17:00:00', 420);
 
 /*仕事詳細テーブル（10月1日）*/
 INSERT INTO workTime (workTimeId,workDay,startTime,breakTime,endTime,workTimeMinute)
-VALUES(3, '2020-10-02', '2020-10-02 09:00:00', '12:00:00', '2020-10-02 17:00:00', 420);
+VALUES(5, '2020-10-02', '2020-10-02 09:00:00', '12:00:00', '2020-10-02 17:00:00', 420);
