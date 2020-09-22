@@ -9,6 +9,7 @@
     <title>workTime</title>
 </head>
 <body>
+<div th:fragment="workDatail_contents">
 	<!-- ヘッダー -->
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -33,20 +34,19 @@
 			<!-- 始業時間 -->
 			<div class="col-sm-2">
 				<label>始業時間</label>
-				<input class="form-control" type="time" th:field="*{startTime}" name="startTime" required>
+				<input class="form-control" type="time" name="startTime" th:field="*{startTime}" required>
 				<br>
 			</div>
 			<!-- 休憩時間 -->
 			<div class="col-sm-2">
 				<label>休憩時間</label>
-				<!-- <input class="form-control" max="180" min="0" type="number" th:field="*{breakTime}" name="breakTime" required> -->
-				<input class="form-control" type="time" th:field="*{breakTime}" name="breakTime" required>
+				<input class="form-control" type="time" max="03:00" name="breakTime" th:field="*{breakTime}" required>
 			</div>
 			<br>
 			<!-- 終業時間 -->
 			<div class="col-sm-2">
 				<label>終業時間</label>
-				<input class="form-control" type="time" th:field="*{endTime}" name="endTime" required>
+				<input class="form-control" type="time" name="endTime" th:field="*{endTime}" required>
 			</div>
 			<!-- チェックボックス -->
 			<div class="col-sm-4">
@@ -55,15 +55,11 @@
 			</div>
 			<br>
 			<br>
-			<!-- 今日の勤務時間 -->
-			<div class="col-sm-4">
-				<label>今日の勤務時間 HH時間MM分</label> <!-- totalTime -->
-			</div>
-			<br>
 			<div class="col-sm-2">
 				<button class="btn btn-primary" type="submit">保存</button>
 			</div>
-		</div>
+		</div>		
 	</form>
+</div>
 </body>
 </html>

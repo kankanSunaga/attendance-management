@@ -11,6 +11,7 @@
 <body class="text-center">
     <h1>Login</h1>
     <form method="post" th:action="@{/login}">
+		<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-denger">ログインエラーメッセージ</p>
         <!-- メールアドレス -->
         <label>メールアドレス</label><br/>
         <input type="text" name="email" placeholder="xxxx@yyyy.co.jp"/><br/>
