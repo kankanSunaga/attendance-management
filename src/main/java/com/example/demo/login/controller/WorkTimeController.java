@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.WorkDetail;
+import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.model.WorkTimeForm;
-import com.example.demo.login.domain.service.WorkDetailService;
+import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
@@ -20,17 +20,17 @@ public class WorkTimeController {
 	private WorkTimeService workTimeService;
 	
 	@Autowired
-	private WorkDetailService workDetailService;
+	private ContractService contractService;
 	
 	@GetMapping("/workTime")
 	public String getWorkTime(@ModelAttribute WorkTimeForm form, Model model) {
 			
-		WorkDetail workDetail = workDetailService.selectOne();
+		Contract contract = contractService.selectOne();
 		
 		
-		form.setStartTime(workDetail.getStartTime());
-		form.setBreakTime(workDetail.getBreakTime());
-		form.setEndTime(workDetail.getEndTime());
+		form.setStartTime(contract.getStartTime());
+		form.setBreakTime(contract.getBreakTime());
+		form.setEndTime(contract.getEndTime());
 		
 		
 		System.out.println(form);

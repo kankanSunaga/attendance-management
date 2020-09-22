@@ -10,16 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.WorkDetail;
+import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
-import com.example.demo.login.domain.service.WorkDetailService;
+import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	WorkDetailService workDetailService;
+	ContractService contractService;
 	
 	@Autowired
 	private WorkTimeService workTimeService;
@@ -52,8 +52,8 @@ public class HomeController {
 		System.out.println(monthDataList);
 		
 		//契約勤務時間を取得（WorkDetailテーブルより取得）
-		WorkDetail workDetail = workDetailService.selectOne();
-		int contractTime = workDetail.getContractTime();
+		Contract contract = contractService.selectOne();
+		int contractTime = contract.getContractTime();
 		
 		//残りの契約時間の算出（契約時間から月の合計勤務時間を引く）
 		int remainingMinute = contractTime * 60 - totalWorkTimeMinute; //残り時間（分）

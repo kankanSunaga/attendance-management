@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class WorkDetailForm {
+public class ContractForm {
 	
 	@NotNull
 	private int contractTime; //契約勤務時間

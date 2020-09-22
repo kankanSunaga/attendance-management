@@ -9,41 +9,41 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.example.demo.login.domain.model.WorkDetail;
-import com.example.demo.login.domain.model.WorkDetailForm;
-import com.example.demo.login.domain.service.WorkDetailService;
+import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.ContractForm;
+import com.example.demo.login.domain.service.ContractService;
 
 @Controller
-public class WorkDetailController {
+public class ContractController {
 	
 	@Autowired
-	private WorkDetailService workDetailService;
+	private ContractService contractService;
 	
-	@GetMapping("/workDetail")
-	public String getWorkDetail(@ModelAttribute WorkDetailForm form, Model model) {
-		return "login/workDetail";
+	@GetMapping("/contract")
+	public String getContract(@ModelAttribute ContractForm form, Model model) {
+		return "login/contract";
 	}
     
-	@PostMapping("/workDetail")
-	public String postWorkDetail(@ModelAttribute @Validated WorkDetailForm form, BindingResult bindingResult, Model model) {
+	@PostMapping("/contract")
+	public String postContract(@ModelAttribute @Validated ContractForm form, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
-			return getWorkDetail(form, model);
+			return getContract(form, model);
 		}
 		
 		System.out.println(form);
 		
 		//insert用変数
-		WorkDetail workDetail = new WorkDetail();
+		Contract contract = new Contract();
 		
-		workDetail.setContractTime(form.getContractTime());
-		workDetail.setStartTime(form.getStartTime());
-		workDetail.setBreakTime(form.getBreakTime());
-		workDetail.setEndTime(form.getEndTime());
-		workDetail.setStartDate(form.getStartDate());
-		workDetail.setOfficeName(form.getOfficeName());
+		contract.setContractTime(form.getContractTime());
+		contract.setStartTime(form.getStartTime());
+		contract.setBreakTime(form.getBreakTime());
+		contract.setEndTime(form.getEndTime());
+		contract.setStartDate(form.getStartDate());
+		contract.setOfficeName(form.getOfficeName());
 
-		boolean result = workDetailService.insert(workDetail);
+		boolean result = contractService.insert(contract);
 
 		if(result == true) {
 			System.out.println("insert成功");

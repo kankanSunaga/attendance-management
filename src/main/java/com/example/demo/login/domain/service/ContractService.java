@@ -2,18 +2,18 @@ package com.example.demo.login.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.login.domain.model.WorkDetail;
-import com.example.demo.login.domain.repository.WorkDetailDao;
+import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.repository.ContractDao;
 
 @Service
-public class WorkDetailService {
+public class ContractService {
 	
 	@Autowired
-	WorkDetailDao dao;
+	ContractDao dao;
 	
 	//insertメソッド
-	public boolean insert(WorkDetail workDetail) {
-		int rowNumber = dao.insertOne(workDetail);
+	public boolean insert(Contract contract) {
+		int rowNumber = dao.insertOne(contract);
 		boolean result = false;
 		if(rowNumber > 0) {
 			result = true;
@@ -22,7 +22,7 @@ public class WorkDetailService {
 	}
 	
 	//workDetailテーブルのデータ取得
-	public WorkDetail selectOne() {
+	public Contract selectOne() {
 		return dao.selectOne();
 	}
 }
