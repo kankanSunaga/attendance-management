@@ -44,8 +44,8 @@ public class HomeController {
 		
 		int totalWorkTimeInt = totalWorkTimeMinute / 60; //時間
 		int totalWorkTimeDouble = totalWorkTimeMinute % 60; //分
-		model.addAttribute("totalWorkTimeOfMonthInt", totalWorkTimeInt);
-		model.addAttribute("totalWorkTimeOfMonthDouble", totalWorkTimeDouble);
+		model.addAttribute("totalWorkTimeInt", totalWorkTimeInt);
+		model.addAttribute("totalWorkTimeDouble", totalWorkTimeDouble);
 		
 		//月のデータを取得する際に使用可能
 		model.addAttribute("monthDataList",monthDataList);
@@ -64,8 +64,10 @@ public class HomeController {
 		
 		//契約達成かどうかの判定
 		if(remainingTimeInt <= 0 && remainingTimeDouble <= 0) {
-			String achievement = "達成しました";
+			String achievement = "契約時間を達成しました";
 			model.addAttribute("achievement", achievement);
+			model.addAttribute("contents","login/achievement :: home_contents");
+			return "login/headerLayout";
 		}
 		
 		model.addAttribute("contents","login/home :: home_contents");
