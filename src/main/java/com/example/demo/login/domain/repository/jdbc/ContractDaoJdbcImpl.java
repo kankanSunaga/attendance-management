@@ -52,6 +52,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		contract.setEndTime(((java.sql.Time) map.get("endTime")).toLocalTime());
 		contract.setStartDate(((java.sql.Date)map.get("startDate")).toLocalDate());
 		contract.setOfficeName((String)map.get("officeName"));
+		contract.setEndDate(((java.sql.Date)map.get("endDate")).toLocalDate());
 		
 		return contract;
     	

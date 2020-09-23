@@ -54,6 +54,7 @@ public class HomeController {
 		//契約勤務時間を取得（Contractテーブルより取得）
 		Contract contract = contractService.selectOne();
 		int contractTime = contract.getContractTime();
+		System.out.println(contract);
 		
 		//残りの契約時間の算出（契約時間から月の合計勤務時間を引く）
 		int remainingMinute = contractTime * 60 - totalWorkTimeMinute; //残り時間（分）
