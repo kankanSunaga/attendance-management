@@ -15,7 +15,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	@Autowired
 	JdbcTemplate jdbc;
 	
-	//WorkDetailテーブルの件数を取得
+	//Contractテーブルの件数を取得
 	@Override
 	public int insertOne(Contract contract) throws DataAccessException {
 		
@@ -36,7 +36,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return rowNumber;
 	}
 	
-	//workDetailテーブルからデータを取得
+	//Contractテーブルからデータを取得
   	public  Contract selectOne() throws DataAccessException {
     	//1件取得
 		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId=1");

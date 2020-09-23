@@ -51,7 +51,7 @@ public class HomeController {
 		model.addAttribute("monthDataList",monthDataList);
 		System.out.println(monthDataList);
 		
-		//契約勤務時間を取得（WorkDetailテーブルより取得）
+		//契約勤務時間を取得（Contractテーブルより取得）
 		Contract contract = contractService.selectOne();
 		int contractTime = contract.getContractTime();
 		

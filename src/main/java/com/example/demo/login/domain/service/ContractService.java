@@ -21,7 +21,7 @@ public class ContractService {
 		return result;
 	}
 	
-	//workDetailテーブルのデータ取得
+	//Contractテーブルのデータ取得
 	public Contract selectOne() {
 		return dao.selectOne();
 	}

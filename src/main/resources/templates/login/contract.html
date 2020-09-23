@@ -47,7 +47,7 @@
 				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" th:field="*{officeName}" required/>
 			</div>
 			<br/>
-			<!-- エラ〜メッセージの表示 -->
+			<!-- エラーメッセージの表示 -->
 			<ul>
 				<li th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>
