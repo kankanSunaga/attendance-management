@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/contractDay.css}" rel="stylesheet"></link>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<title>contractDay</title>
+</head>
+<body>
+	<!-- ヘッダー -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">サービス名</a>
+			</div>
+			<div class="pull-right">
+			<button type="button" class="btn btn-success">プロフ画像</button>		
+			</div>	
+		</div>
+	</nav>
+	<br><br>
+	<br><br>
+	<div th:fragment="login_contents">
+		<div class="container">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>2020年6月</th>
+						<th>勤務日</th>
+						<th>始業時間</th>
+						<th>休憩時間</th>
+						<th>退勤時間</th>
+						<th>合計時間</th>
+					</tr>
+				</thead>
+			<tbody>
+				<tr th:each ="workTime : ${contractDay}">
+					<td th:text="${workTime.workDay}"></td>
+					<td th:text="${workTime.startTime}"></td>
+					<td th:text="${workTime.breakTime}"></td>
+					<td th:text="${workTime.endTime}"></td>
+					<td th:text="${workTime.workTimeMinute}"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
