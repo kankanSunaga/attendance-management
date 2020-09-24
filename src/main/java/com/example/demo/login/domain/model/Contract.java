@@ -15,5 +15,6 @@ public class Contract {
 	private LocalTime endTime; //想定退社時間
 	private LocalDate startDate; //勤務開始日
 	private String officeName; //勤務会社名
+	private LocalDate endDate; //勤務終了日
 	
 }

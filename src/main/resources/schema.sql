@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS contract (
 	breakTime TIME,
 	endTime TIME,
 	startDate DATE,
-	officeName VARCHAR(100)
+	officeName VARCHAR(100),
+	endDate DATE
 );
 
 CREATE TABLE IF NOT EXISTS workTime (
