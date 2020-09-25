@@ -58,6 +58,6 @@ VALUES(7, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00'
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
 VALUES(8, '2020-9-01', '2020-9-01 09:00:00', '12:00:00', '2020-9-01 17:00:00', 420, 3);
 
-/*仕事詳細テーブル3-2（2020年9月3日）*/
+/*仕事詳細テーブル3-2（2020年10月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(9, '2020-9-03', '2020-9-03 09:00:00', '12:00:00', '2020-9-03 17:00:00', 420, 3);
+VALUES(9, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 3);
