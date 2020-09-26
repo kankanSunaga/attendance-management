@@ -9,14 +9,15 @@ CREATE TABLE IF NOT EXISTS user (
 	requestedAt VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS workDetail (
-	workDetailId INT IDENTITY(1, 1) PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS contract (
+	contractId INT IDENTITY(1, 1) PRIMARY KEY,
 	contractTime INT,
 	startTime TIME,
 	breakTime TIME,
 	endTime TIME,
 	startDate DATE,
-	officeName VARCHAR(100)
+	officeName VARCHAR(100),
+	endDate DATE
 );
 
 CREATE TABLE IF NOT EXISTS workTime (

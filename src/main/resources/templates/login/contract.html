@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<link th:href="@{/css/workDetail.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/contract.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	<title>WorkDetail</title>
+	<title>Contract</title>
 </head>
 <body>
-	<form method="post" th:action="@{/workDetail}" th:object="${workDetailForm}">
+	<form method="post" th:action="@{/contract}" th:object="${contractForm}">
 		<div class="container text-center">
 			<!-- 契約勤務時間 -->
 			<div class="col-sm-2">
@@ -47,7 +47,7 @@
 				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" th:field="*{officeName}" required/>
 			</div>
 			<br/>
-			<!-- エラ〜メッセージの表示 -->
+			<!-- エラーメッセージの表示 -->
 			<ul>
 				<li th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>
