@@ -40,11 +40,8 @@ public class WorkTimeService {
 		int loopCount = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); 
 		for(int i = 0;i<loopCount;i++){
 			calendar.set(year, month - 1, day+i);
-			list.add(calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1)+ "/" + calendar.get(Calendar.DATE));
-			
+			list.add(calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1)+ "/" + calendar.get(Calendar.DATE));			
 		}
-		System.out.println(list);
-				
 		return list;
 	}
 }
