@@ -33,8 +33,12 @@ public class HomeController {
 		List<WorkTime> monthDataList= workTimeService.selectMonthData();
 		
 		model.addAttribute("monthDataList",monthDataList);
-		
+				
 		System.out.println(monthDataList);
+		
+		List<String>  calendar = workTimeService.selectCalendar();
+		
+		model.addAttribute("calendar",calendar);
 		
 		return "login/headerLayout";
 		
