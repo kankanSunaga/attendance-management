@@ -1,5 +1,7 @@
 package com.example.demo.login.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,11 @@ public class ContractListController {
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 	public String getContractList(@ModelAttribute Contract form, Model model) {
 		
-		model.addAttribute("contents","login/contracts::login_contents");
+		List<Contract> contractList = contractService.selectMany();
+		
+		model.addAttribute("contractList", contractList);
+		model.addAttribute("contents","login/contractList::login_contents");
+		
 		return "login/headerLayout";
 	}
 	
