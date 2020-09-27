@@ -19,31 +19,12 @@ public class ContractListController {
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 	public String getContractList(@ModelAttribute Contract form, Model model) {
 		
-		Contract contract = contractService.selectOne();
-		
-		//Contractクラスをフォームクラスに変換
-		form.setContractId(contract.getContractId());
-		form.setStartDate(contract.getStartDate());
-		form.setOfficeName(contract.getOfficeName());
-		form.setEndDate(contract.getEndDate());
-		
-		//Modelに登録
-		model.addAttribute("contractList",form);
-		
-		model.addAttribute("contents","login/contractList::login_contents");
+		model.addAttribute("contents","login/contracts::login_contents");
 		return "login/headerLayout";
 	}
 	
 	@GetMapping("/contract/{contractId}")
 	public String getContractMonth(@ModelAttribute Contract form, Model model, @PathVariable("contractId")int contractId){
-		
-		Contract contract = contractService.selectOne();
-		
-		//Contractクラスをフォームクラスに変換
-		form.setContractId(contract.getContractId());
-		
-		//Modelに登録
-		model.addAttribute("signupForm",form);
 		
 		return "login/contracts/{contractId}";
 	}
@@ -51,7 +32,7 @@ public class ContractListController {
 	@GetMapping("/contracts/{contractId}/{yearMonth}")
 	public String getContractDay(@ModelAttribute Contract form, Model model, @PathVariable("contractId")int contractId, @PathVariable("yearMonth")int yearMonth){
 		
-		return "login/contractDay";
+		return "login/contracts/{contractId}/{yearMonth}";
 	}
 }
 
