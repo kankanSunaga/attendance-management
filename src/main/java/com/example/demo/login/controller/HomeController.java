@@ -41,7 +41,11 @@ public class HomeController {
 			  int workTimeMinute = workTime.getWorkTimeMinute();
 			  totalWorkTimeMinute += workTimeMinute;
 		}
+		//その月の全ての日数を取得
+		List<String>  calendar = workTimeService.selectCalendar();
 		
+		model.addAttribute("calendar",calendar);
+				
 		int totalWorkTimeInt = totalWorkTimeMinute / 60; //時間
 		int totalWorkTimeDouble = totalWorkTimeMinute % 60; //分
 		model.addAttribute("totalWorkTimeInt", totalWorkTimeInt);
