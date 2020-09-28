@@ -1,5 +1,7 @@
 package com.example.demo.login.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.login.domain.model.Contract;
@@ -24,5 +26,10 @@ public class ContractService {
 	//Contractテーブルのデータ取得
 	public Contract selectOne() {
 		return dao.selectOne();
+	}
+	
+	//Contractテーブルのデータ全件取得（userIdでソート）
+	public List<Contract> selectMany() {
+		return dao.selectMany();
 	}
 }
