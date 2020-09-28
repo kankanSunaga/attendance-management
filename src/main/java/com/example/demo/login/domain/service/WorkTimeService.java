@@ -30,10 +30,11 @@ public class WorkTimeService {
 	}
 	
 	public List<String> selectCalendar(){	
-	 // 年月日を設定
+		// 年月日を設定
 		List<String> list = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
+		//+１しないと欲しい値が取れないのでしてます。(仕様です)
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int day = 1;
 		// 作成する日数
