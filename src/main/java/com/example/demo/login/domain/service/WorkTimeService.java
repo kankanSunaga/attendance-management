@@ -45,8 +45,9 @@ public class WorkTimeService {
 		}
 		return list;
 	}
-		//月のデータ全件取得用メソッド
-		public List<WorkTime> selectMany(int contractId){
-	         return dao.selectMany(contractId); 
-		}
+	
+	//月のデータ全件取得用メソッド
+	public List<WorkTime> selectMany(int contractId){
+		return dao.selectMany(contractId); 
+	}
 }

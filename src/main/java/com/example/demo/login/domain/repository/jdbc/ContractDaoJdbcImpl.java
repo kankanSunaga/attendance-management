@@ -40,12 +40,12 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	
 	//Contractテーブルから1件データを取得
   	public  Contract selectOne() throws DataAccessException {
-    	//1件取得
-		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId=1");
-		
-    	//結果返却用の変数
-		Contract contract = new Contract();
-					
+  		//1件取得
+  		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId=1");
+  		
+  		//結果返却用の変数
+  		Contract contract = new Contract();
+  		
 		//取得したデータを結果返却用の変数にセットしていく
 		contract.setContractId((int)map.get("contractId"));
 		contract.setContractTime((int)map.get("contractTime"));
@@ -62,12 +62,12 @@ public class ContractDaoJdbcImpl implements ContractDao {
   	
   	//Contractテーブルから1件データを取得（動的）
   	public Contract activeSelectOne(int contractId) throws DataAccessException {
-    	//1件取得
+  		//1件取得
 		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId= ?", contractId);
 		
-    	//結果返却用の変数
+		//結果返却用の変数
 		Contract contract = new Contract();
-					
+		
 		//取得したデータを結果返却用の変数にセットしていく
 		contract.setContractId((int)map.get("contractId"));
 		contract.setContractTime((int)map.get("contractTime"));
