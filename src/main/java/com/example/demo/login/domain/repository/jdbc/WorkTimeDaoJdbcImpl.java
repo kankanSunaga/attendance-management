@@ -59,7 +59,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
   	
   	//workTimeテーブルから月のデータを全件取得
   	public List<WorkTime> selectMany(int contractId) throws DataAccessException{
-  		  		  		
+  		
   		List<Map<String, Object>> getList  = jdbc.queryForList("SELECT * FROM workTime WHERE contractId = ? ORDER BY workDay DESC", contractId);
   		
   		List<WorkTime> contractMonthList = new ArrayList<>();
