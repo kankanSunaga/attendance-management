@@ -38,10 +38,10 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
         return job;
     }
     
-  //workTimeテーブルから今月のデータを取得
+    //workTimeテーブルから今月のデータを取得
   	public List<WorkTime> selectMonthData() throws DataAccessException{
   		  		  		
-  		List<Map<String, Object>>getList  = jdbc.queryForList("SELECT * FROM workTime WHERE month(workDay) = month(now())");
+  		List<Map<String, Object>> getList  = jdbc.queryForList("SELECT * FROM workTime WHERE month(workDay) = month(now())");
   		
   		List<WorkTime> monthDataList = new ArrayList<>();
   		
@@ -57,5 +57,28 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
   		monthDataList.add(workTime);
   		}
   		return monthDataList;
+  	}
+  	
+  	//workTimeテーブルから月のデータを全件取得
+  	public List<WorkTime> selectMany(int contractId) throws DataAccessException{
+  		  		  		
+  		List<Map<String, Object>> getList  = jdbc.queryForList("SELECT * FROM workTime WHERE contractId = ? ORDER BY workDay DESC", contractId);
+  		
+  		List<WorkTime> contractMonthList = new ArrayList<>();
+  		
+  		for(Map<String,Object> map:getList){
+  			WorkTime workTime = new WorkTime();
+  			
+  			workTime.setWorkTimeId((int) map.get("workTimeId"));
+  			workTime.setWorkDay(((java.sql.Date)map.get("workDay")).toLocalDate());
+  			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
+  			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+  			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
+  			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
+  			workTime.setContractId((int) map.get("contractId"));
+		
+  			contractMonthList.add(workTime);
+  		}
+  		return contractMonthList;
   	}
 }

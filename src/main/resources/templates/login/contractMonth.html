@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/contractMonth.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -22,17 +23,17 @@
 	<br><br>
 	<br><br>
 	<div th:fragment="login_contents">
-		<div class="container">
+		<div id="month" class="container">
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th>会社名</th>
-						<th>年月</th>
+						<th th:text=${officeName}></th>
 					</tr>
 				</thead>
 			<tbody>
-				<tr th:each ="contract : ${contractMonth}">
-					<td ><a class="btn btn-primary" th:href="@{'/contractDay/'+ ${workTime.workTimeId}}">詳細</a></td>
+				<tr th:each ="contractMonth : ${contractMonth}">
+					<td th:text="${contractMonth}"></td>
+					<td ><a class="btn btn-primary" th:href="@{'/contract/'+ ${workTime.workTimeId}}">詳細</a></td>
 				</tr>
 			</tbody>
 			</table>
