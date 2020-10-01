@@ -3,6 +3,7 @@ package com.example.demo.login.domain.repository.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -84,4 +85,30 @@ public class ContractDaoJdbcImpl implements ContractDao {
   		}
   		return contractList;
   	}
+  	
+  	// userIdをキーに勤務情報を取得する
+   	public List<Contract> selectByUserId(int userId) throws DataAccessException {
+   		List<Map<String, Object>> list = jdbc.queryForList("SELECT * FROM contract WHERE userId =?", userId);
+
+   		return list.stream()
+   				.map(contractMap -> this.mapToContract(contractMap))
+   				.collect(Collectors.toList());
+   	}
+   	
+   	public Contract mapToContract (Map<String, Object> map) {
+   		Contract contract = new Contract();
+   			
+   		//取得したデータを結果返却用の変数にセットしていく
+ 		contract.setContractId((int)map.get("contractId"));
+ 		contract.setContractTime((int)map.get("contractTime"));
+ 		contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
+ 		contract.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+ 		contract.setEndTime(((java.sql.Time) map.get("endTime")).toLocalTime());
+ 		contract.setStartDate(((java.sql.Date)map.get("startDate")).toLocalDate());
+ 		contract.setOfficeName((String)map.get("officeName"));
+ 		contract.setEndDate(((java.sql.Date)map.get("endDate")).toLocalDate());
+ 		contract.setUserId((int)map.get("userId"));
+ 			
+ 		return contract;
+   	}
 }

@@ -57,5 +57,12 @@ public class UserService {
     	return result;
     }
     
+    // emailで検索したユーザーのuserIdを返却
+    public User selectByEmail(String email) {
+    	User userId = dao.selectByEmail(email);
+
+    	return userId;
+    }
+    
 }
 

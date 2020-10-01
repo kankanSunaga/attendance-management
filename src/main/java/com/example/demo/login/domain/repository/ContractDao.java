@@ -16,4 +16,7 @@ public interface ContractDao {
 	// Contractテーブルからデータ全件取得（userIdでソート）
 	public List<Contract> selectMany() throws DataAccessException;
 	
+	// Contractテーブルから特定のユーザーのデータ取得
+	public List<Contract> selectByUserId(int userId) throws DataAccessException;
+	
 }

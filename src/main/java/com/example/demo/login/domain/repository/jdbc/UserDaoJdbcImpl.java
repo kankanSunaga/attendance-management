@@ -106,15 +106,39 @@ public class UserDaoJdbcImpl implements UserDao {
 		
 		return user;    	
     }
-  ///Userテーブルの承認ステータス　未承認→承認に変更
+    
+    // Userテーブルの承認ステータス　未承認→承認に変更
     @Override
     public int updatePermission(User user) throws DataAccessException{
     	int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?",user.getUserId());    	
     	return rowNumber;
     }
-  ///Userテーブルの凍結ステータス　利用中→利用不可に変更
+    // Userテーブルの凍結ステータス　利用中→利用不可に変更
     public int updateFrozen(User user) throws DataAccessException{
     	int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?",user.getUserId());
     	return rowNumber;
     }
+    
+    // userテーブルからemailをキーにuserIdを取得する
+ 	@Override
+ 	public User selectByEmail(String email) throws DataAccessException {
+ 		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM user WHERE email= ?",email);
+ 		
+ 		// 変数を格納するインスタンスの生成
+     	User user = new User();
+     	
+     	// インスタンスに取得した値をセットする
+ 		user.setUserId((int)map.get("UserId"));
+ 		user.setUserName((String)map.get("UserName"));
+ 		user.setEmail((String)map.get("Email"));
+ 		user.setPassword((String)map.get("Password"));
+ 		user.setRole((String)map.get("Role"));
+ 		user.setPermission((boolean)map.get("Permission"));
+ 		user.setFrozen((boolean)map.get("Frozen"));
+ 		user.setRequestedAt((String)map.get("RequestedAt"));
+ 		
+ 		return user;    	
+ 		
+ 	}
+    
 }
