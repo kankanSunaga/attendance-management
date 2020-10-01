@@ -62,6 +62,7 @@ public class UserService {
     	User userId = dao.selectByEmail(email);
 
     	return userId;
+    	
     }
     
 }

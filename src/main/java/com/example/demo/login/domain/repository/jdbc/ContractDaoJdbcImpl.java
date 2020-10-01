@@ -95,12 +95,13 @@ public class ContractDaoJdbcImpl implements ContractDao {
    				.collect(Collectors.toList());
    	}
    	
-   	public Contract mapToContract (Map<String, Object> map) {
+   	// contractテーブルから取得した値をセットする
+   	public Contract mapToContract(Map<String, Object> map) {
+   		
    		Contract contract = new Contract();
    			
-   		//取得したデータを結果返却用の変数にセットしていく
- 		contract.setContractId((int)map.get("contractId"));
- 		contract.setContractTime((int)map.get("contractTime"));
+   		contract.setContractId((int)map.get("contractId"));
+   		contract.setContractTime((int)map.get("contractTime"));
  		contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
  		contract.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
  		contract.setEndTime(((java.sql.Time) map.get("endTime")).toLocalTime());

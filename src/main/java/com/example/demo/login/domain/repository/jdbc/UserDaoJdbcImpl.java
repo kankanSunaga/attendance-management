@@ -28,7 +28,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     	// パスワードを暗号化
     	String password = passwordEncoder.encode(user.getPassword());
-    	System.out.println(password);
+    	
         //１件登録
         int rowNumber = jdbc.update("INSERT INTO user("
         		+ " userName,"
@@ -50,17 +50,19 @@ public class UserDaoJdbcImpl implements UserDao {
         return rowNumber;
     }
     
-  //Userテーブルから未承認の数を取得
+    //Userテーブルから未承認の数を取得
     @Override
     public int countPermission() throws DataAccessException{
+    	
     	//未承認の数を取得
     	int countPermission =jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'",Integer.class);
-		System.out.println(countPermission);
+    	
     	return countPermission;
     }
     
     //Userテーブルから未承認データを取得する
     public List<User> selectPermission() throws DataAccessException{
+    	
     	//DBから未承認のユーザーデータを取得
     	List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
     	
@@ -88,12 +90,16 @@ public class UserDaoJdbcImpl implements UserDao {
     	return userList;
     	
     }
+    
     //Userテーブルから未承認ユーザー１件取得
     public User selectOne(int userId) throws DataAccessException{
+    	
     	//１件取得
     	Map<String, Object>map = jdbc.queryForMap("SELECT * FROM user WHERE userId= ?",userId);
+    	
     	//結果返却用の変数
     	User user = new User();
+    	
     	//取得したデータ結果返却用の変数にセットしていく
 		user.setUserId((int)map.get("UserId"));
 		user.setUserName((String)map.get("UserName"));
@@ -113,6 +119,7 @@ public class UserDaoJdbcImpl implements UserDao {
     	int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?",user.getUserId());    	
     	return rowNumber;
     }
+    
     // Userテーブルの凍結ステータス　利用中→利用不可に変更
     public int updateFrozen(User user) throws DataAccessException{
     	int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?",user.getUserId());
