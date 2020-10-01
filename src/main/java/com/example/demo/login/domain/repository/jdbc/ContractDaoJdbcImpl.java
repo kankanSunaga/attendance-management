@@ -40,12 +40,34 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	
 	//Contractテーブルから1件データを取得
   	public  Contract selectOne() throws DataAccessException {
-    	//1件取得
-		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId=1");
+  		//1件取得
+  		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId=1");
+  		
+  		//結果返却用の変数
+  		Contract contract = new Contract();
+  		
+		//取得したデータを結果返却用の変数にセットしていく
+		contract.setContractId((int)map.get("contractId"));
+		contract.setContractTime((int)map.get("contractTime"));
+		contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
+		contract.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+		contract.setEndTime(((java.sql.Time) map.get("endTime")).toLocalTime());
+		contract.setStartDate(((java.sql.Date)map.get("startDate")).toLocalDate());
+		contract.setOfficeName((String)map.get("officeName"));
+		contract.setEndDate(((java.sql.Date)map.get("endDate")).toLocalDate());
 		
-    	//結果返却用の変数
+		return contract;
+    	
+    }
+  	
+  	//Contractテーブルから1件データを取得（動的）
+  	public Contract activeSelectOne(int contractId) throws DataAccessException {
+  		//1件取得
+		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId= ?", contractId);
+		
+		//結果返却用の変数
 		Contract contract = new Contract();
-					
+		
 		//取得したデータを結果返却用の変数にセットしていく
 		contract.setContractId((int)map.get("contractId"));
 		contract.setContractTime((int)map.get("contractTime"));

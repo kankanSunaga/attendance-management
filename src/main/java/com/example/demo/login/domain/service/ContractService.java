@@ -28,6 +28,11 @@ public class ContractService {
 		return dao.selectOne();
 	}
 	
+	//Contractテーブルのデータ取得
+	public Contract activeSelectOne(int contractId) {
+		return dao.activeSelectOne(contractId);
+	}
+	
 	//Contractテーブルのデータ全件取得（userIdでソート）
 	public List<Contract> selectMany() {
 		return dao.selectMany();
