@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login") // ログイン失敗時の遷移先
 				.usernameParameter("email") // ログインページのユーザーメールアドレス
 				.passwordParameter("password") // ログインページのパスワード
-				.defaultSuccessUrl("/contract", true); // ログイン成功後の遷移先
+				.defaultSuccessUrl("/session", true); // ログイン成功後の遷移先
 		
 		// ログアウト処理
 		http.logout()
@@ -80,9 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutUrl("/logout")
 			.logoutSuccessUrl("/login");
 		
-//		// CSRF対策を無効に設定（一時的）
-//		http.csrf().disable();
-		
+		// H2コンソール使用の許可(デプロイ時に削除)
+		http.csrf().disable();
+		http.headers().frameOptions().disable();
 	}
 
 	@Override

@@ -4,19 +4,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	ContractService contractService;
@@ -25,7 +36,17 @@ public class HomeController {
 	private WorkTimeService workTimeService;
 	
 	@GetMapping("/home")
-	public String getHome(Model model) {
+	public String getHome(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		// SpringSecurityのセッションの呼出(emailの呼出)
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		// emailで検索したユーザーのuserIdの取得
+		User user = userService.selectByEmail(auth.getName());
+				
+		// セッションの保持(userId)
+		HttpSession session = request.getSession();
+		session.setAttribute("userId", user.getUserId());
 		
 		//現在の日付を取得
 		LocalDateTime today = LocalDateTime.now();
@@ -53,7 +74,6 @@ public class HomeController {
 		
 		//月のデータを取得する際に使用可能
 		model.addAttribute("monthDataList",monthDataList);
-		System.out.println(monthDataList);
 		
 		//契約勤務時間を取得（Contractテーブルより取得）
 		Contract contract = contractService.selectOne();

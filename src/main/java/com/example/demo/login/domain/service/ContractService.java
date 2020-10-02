@@ -37,4 +37,13 @@ public class ContractService {
 	public List<Contract> selectMany() {
 		return dao.selectMany();
 	}
+	
+	// 契約件数の取得
+	public boolean hasBeenContract(int userId) {
+		List<Contract> list = dao.selectByUserId(userId);
+
+		return list.size() >= 1;
+
+	}
+	
 }
