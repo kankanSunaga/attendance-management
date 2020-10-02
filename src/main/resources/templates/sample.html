@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> -->
+
+<title>Sample</title>
+<!-- スタイルシートの中でフォントを明示的に指定しないとpdf出力時に日本語が出ない -->
+<style>
+@font-face {
+	font-family: "IPAGothic";
+	src: url("fonts/ipag.ttf");
+	-fs-pdf-font-embed: embed;
+	-fs-pdf-font-encoding: Identity-H;
+}
+
+body {
+	font-family: "IPAGothic";
+}
+</style>
+
+</head>
+<body>
+	<h1>Arguments</h1>
+	<p>
+		The sample application received <span
+			th:text="${#arrays.isEmpty(args)} ? 'no' : 'some'">...</span>
+		arguments. KANKNAKNAKNA
+	</p>
+	<div th:fragment="sample_contents">
+		<div class="container">
+			<table class="table" border="1" style="border-collapse: collapse">
+				<thead class="thead-dark">
+					<tr>
+						<th>名前</th>
+						<th>年齢</th>
+						<th>日付</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- <tr th:each="testModel : ${testList}">
+						<td th:text="${testModel.testName}"></td>
+						<td th:text="${testModel.testAge}"></td>
+						<td th:text="${testModel.testDate}"></td>
+						<td th:text="${testModel.testTime}"></td>
+					</tr> -->
+					<tr th:each="a : ${args}">
+						<td><span th:text="${a.testName}"></span></td>
+						<td><span th:text="${a.testAge}"></span></td>
+						<td><span th:text="${a.testDate}"></span></td>
+						<td><span th:text="${a.testTime}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- <ul>
+		<li th:each="testModel : ${testList}"><span th:text="${testModel.testName}">...</span></li>
+	</ul> -->
+	<p>
+		今日は: <span th:text="${today}">13 February 2011</span>
+	</p>
+
+	<ul>
+		<li th:each="a : ${args}"><span th:text="${a}">...</span></li>
+	</ul>
+	<button class="btn btn-primary" type="submit">ログイン</button>
+	<a href="output/report.pdf">ダウンロード（file.pdf）</a>
+</body>
+</html>

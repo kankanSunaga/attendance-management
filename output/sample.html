@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> -->
+
+<title>Sample</title>
+<!-- スタイルシートの中でフォントを明示的に指定しないとpdf出力時に日本語が出ない -->
+<style>
+@font-face {
+	font-family: "IPAGothic";
+	src: url("fonts/ipag.ttf");
+	-fs-pdf-font-embed: embed;
+	-fs-pdf-font-encoding: Identity-H;
+}
+
+body {
+	font-family: "IPAGothic";
+}
+</style>
+
+</head>
+<body>
+	<h1>Arguments</h1>
+	<p>
+		The sample application received <span>some</span>
+		arguments. KANKNAKNAKNA
+	</p>
+	<div>
+		<div class="container">
+			<table class="table" border="1" style="border-collapse: collapse">
+				<thead class="thead-dark">
+					<tr>
+						<th>名前</th>
+						<th>年齢</th>
+						<th>日付</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- <tr th:each="testModel : ${testList}">
+						<td th:text="${testModel.testName}"></td>
+						<td th:text="${testModel.testAge}"></td>
+						<td th:text="${testModel.testDate}"></td>
+						<td th:text="${testModel.testTime}"></td>
+					</tr> -->
+					<tr>
+						<td><span>kan</span></td>
+						<td><span>14</span></td>
+						<td><span>2020-11-22</span></td>
+						<td><span>11:11</span></td>
+					</tr>
+					<tr>
+						<td><span>yue</span></td>
+						<td><span>15</span></td>
+						<td><span>2020-11-23</span></td>
+						<td><span>11:22</span></td>
+					</tr>
+					<tr>
+						<td><span>hiro</span></td>
+						<td><span>16</span></td>
+						<td><span>2020-11-24</span></td>
+						<td><span>11:33</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- <ul>
+		<li th:each="testModel : ${testList}"><span th:text="${testModel.testName}">...</span></li>
+	</ul> -->
+	<p>
+		今日は: <span>02 10月 2020</span>
+	</p>
+
+	<ul>
+		<li><span>TestModel(testName=kan, testAge=14, testDate=2020-11-22, testTime=11:11)</span></li>
+		<li><span>TestModel(testName=yue, testAge=15, testDate=2020-11-23, testTime=11:22)</span></li>
+		<li><span>TestModel(testName=hiro, testAge=16, testDate=2020-11-24, testTime=11:33)</span></li>
+	</ul>
+	<button class="btn btn-primary" type="submit">ログイン</button>
+	<a href="output/report.pdf">ダウンロード（file.pdf）</a>
+</body>
+</html>

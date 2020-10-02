@@ -82,6 +82,26 @@
 			<groupId>org.springframework.boot</groupId>	
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<!-- pdf関係 -->
+        <dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.1.16</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>html2pdf</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+        <dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
