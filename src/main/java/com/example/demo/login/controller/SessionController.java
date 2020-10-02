@@ -45,6 +45,7 @@ public class SessionController {
 			response.sendRedirect("/home");
 		} else {
 			response.sendRedirect("/contract");
+			
 		}
 
 	}

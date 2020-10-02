@@ -20,7 +20,7 @@ public class SignupController {
     
     @GetMapping("/signup")
     public String getSignup(@ModelAttribute SignupForm form, Model model) {
-        
+    	
         return "login/signup";
     }
     
@@ -28,7 +28,7 @@ public class SignupController {
     public String postSignup(@ModelAttribute @Validated SignupForm form, BindingResult bindingResult, Model model) {
         
         if (bindingResult.hasErrors()) {
-            
+        	
             return getSignup(form, model);
         }
         
