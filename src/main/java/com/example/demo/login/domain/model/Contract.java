@@ -16,5 +16,6 @@ public class Contract {
 	private LocalDate startDate; //勤務開始日
 	private String officeName; //勤務会社名
 	private LocalDate endDate; //勤務終了日
+	private int userId; //ユーザーID
 	
 }

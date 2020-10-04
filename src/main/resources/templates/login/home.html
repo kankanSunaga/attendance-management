@@ -9,7 +9,24 @@
 </head>
 <body>
 	<div th:fragment="home_contents">
-	<!-- コンテンツ -->
+		<!-- コンテンツ -->
+		<div class="container" >
+			<table class="table table-bordered">
+			 	<thead class="thead-dark">
+			    	<tr>
+				      <th>日付</th>
+				      <th>開始時間</th>
+				      <th>休憩時間</th>
+				      <th>終了時間</th>
+			    	</tr>
+			 	</thead>
+				<tbody>			     
+					<tr th:each ="calendar : ${calendar}">
+					<th th:text="${calendar}"></th>
+					</tr>
+			 	</tbody>
+			</table>
+		</div>
 		<div class="container">
 			<div class="text-center">
 				<div class="jumbotron">
