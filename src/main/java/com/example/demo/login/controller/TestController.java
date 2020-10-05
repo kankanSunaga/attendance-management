@@ -43,7 +43,7 @@ public class TestController {
 	@Autowired
 	TestJdbc testJdbc;
 
-	@GetMapping("/sample")
+	@GetMapping("pdf")
 	public String getSample(@ModelAttribute TestModel testModel, Model model) throws IOException {
 
 		// テンプレートエンジンを初期化する
@@ -56,7 +56,7 @@ public class TestController {
 		final Writer writer = new FileWriter("output/sample.html");
 
 		// テンプレート名とコンテキストとWriterを引数としてprocessメソッドをコール
-		engine.process("sample", ctx, writer);
+		engine.process("pdf/pdf", ctx, writer);
 		
 		// Writerをクローズ
 		writer.close();
