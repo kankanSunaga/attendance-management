@@ -82,6 +82,16 @@
 			<groupId>org.springframework.boot</groupId>	
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<!-- SpringBatch -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>3.1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
