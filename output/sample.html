@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org" xml:lang="ja" lang="ja">
+	xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -28,11 +28,10 @@ body {
 <body>
 	<h1>Arguments</h1>
 	<p>
-		The sample application received <span
-			th:text="${#arrays.isEmpty(args)} ? 'no' : 'some'">...</span>
+		The sample application received <span>some</span>
 		arguments. KANKNAKNAKNA
 	</p>
-	<div th:fragment="contractContents">
+	<div>
 		<div class="container">
 			<table class="table" border="1" style="border-collapse: collapse">
 				<thead class="thead-dark">
@@ -50,11 +49,23 @@ body {
 						<td th:text="${testModel.testDate}"></td>
 						<td th:text="${testModel.testTime}"></td>
 					</tr> -->
-					<tr th:each="a : ${args}">
-						<td><span th:text="${a.testName}"></span></td>
-						<td><span th:text="${a.testAge}"></span></td>
-						<td><span th:text="${a.testDate}"></span></td>
-						<td><span th:text="${a.testTime}"></span></td>
+					<tr>
+						<td><span>kan</span></td>
+						<td><span>14</span></td>
+						<td><span>2020-11-22</span></td>
+						<td><span>11:11</span></td>
+					</tr>
+					<tr>
+						<td><span>yue</span></td>
+						<td><span>15</span></td>
+						<td><span>2020-11-23</span></td>
+						<td><span>11:22</span></td>
+					</tr>
+					<tr>
+						<td><span>hiro</span></td>
+						<td><span>16</span></td>
+						<td><span>2020-11-24</span></td>
+						<td><span>11:33</span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -64,12 +75,14 @@ body {
 		<li th:each="testModel : ${testList}"><span th:text="${testModel.testName}">...</span></li>
 	</ul> -->
 	<p>
-		今日は: <span th:text="${today}">13 February 2011</span>
+		今日は: <span>06 10月 2020</span>
 		aaaaaaaaaaaaaaaaa
 	</p>
 
 	<ul>
-		<li th:each="a : ${args}"><span th:text="${a}">...</span></li>
+		<li><span>Pdf(testName=kan, testAge=14, testDate=2020-11-22, testTime=11:11)</span></li>
+		<li><span>Pdf(testName=yue, testAge=15, testDate=2020-11-23, testTime=11:22)</span></li>
+		<li><span>Pdf(testName=hiro, testAge=16, testDate=2020-11-24, testTime=11:33)</span></li>
 	</ul>
 	<button class="btn btn-primary" type="submit">ログイン</button>
 	<a href="output/report.pdf">ダウンロード（file.pdf）</a>

@@ -61,3 +61,13 @@ VALUES(8, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00'
 /*仕事詳細テーブル3-2（2020年10月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
 VALUES(9, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 3);
+
+-- PDFテスト
+INSERT INTO test (testName, testAge, testDate, testTime)
+VALUES('kan', 14, '2020-11-22', '11:11');
+
+INSERT INTO test (testName, testAge, testDate, testTime)
+VALUES('yue', 15, '2020-11-23', '11:22');
+
+INSERT INTO test (testName, testAge, testDate, testTime)
+VALUES('hiro', 16, '2020-11-24', '11:33');
