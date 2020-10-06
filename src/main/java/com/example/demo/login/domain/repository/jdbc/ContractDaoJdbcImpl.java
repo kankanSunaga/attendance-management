@@ -116,7 +116,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
    				.map(contractMap -> this.mapToContract(contractMap))
    				.collect(Collectors.toList());
    	}
-   	
+
    	// contractテーブルから取得した値をセットする
    	public Contract mapToContract(Map<String, Object> map) {
    		

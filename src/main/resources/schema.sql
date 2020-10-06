@@ -30,3 +30,9 @@ CREATE TABLE IF NOT EXISTS workTime (
 	workTimeMinute INT,
 	contractId INT
 );
+
+
+CREATE TABLE IF NOT EXISTS currentTime (
+	currentTime02 TIME
+);
+

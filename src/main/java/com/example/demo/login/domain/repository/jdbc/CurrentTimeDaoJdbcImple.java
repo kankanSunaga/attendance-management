@@ -15,10 +15,11 @@ public class CurrentTimeDaoJdbcImple implements CurrentTimeDao {
 	@Autowired
 	JdbcTemplate jdbc;
 	
-	//	 バッチ処理で、今の時間をDBに保存する
+	// バッチ処理で、今の時間をDBに保存する
 	public int insertByBatch(CurrentTime currentTime) throws DataAccessException {
-   		int time = jdbc.update("INSERT INTO currentTime( currentTime)" + " VALUES(?))",
-   				currentTime.getCurrentTime());
+   		int time = jdbc.update("INSERT INTO currentTime(currentTime02)" + " VALUES(?)",
+   				currentTime.getCurrentTime02());
+   		
    		return time;
    	}
 	

@@ -61,3 +61,9 @@ VALUES(8, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00'
 /*仕事詳細テーブル3-2（2020年10月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
 VALUES(9, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 3);
+
+/*バッチ実行用テーブル*/
+INSERT INTO currentTime (currentTime02)
+VALUES('12:12:12');
+
+
