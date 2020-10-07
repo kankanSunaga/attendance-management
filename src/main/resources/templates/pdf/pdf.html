@@ -4,13 +4,7 @@
 	xmlns:th="http://www.thymeleaf.org" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<!-- <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
-    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> -->
-
-<title>Sample</title>
-<!-- スタイルシートの中でフォントを明示的に指定しないとpdf出力時に日本語が出ない -->
+<title>Pdf</title>
 <style>
 @font-face {
 	font-family: "IPAGothic";
@@ -22,35 +16,53 @@
 body {
 	font-family: "IPAGothic";
 }
-</style>
 
+table {
+	border-collapse: collapse;
+	margin-bottom: 10px;
+}
+
+th, td {
+	text-align: center;
+	padding: 3px 10px;
+}
+
+th {
+	width: 20%;
+}
+
+.container {
+	
+}
+</style>
 </head>
 <body>
-	<h1>Arguments</h1>
-	<p>
-		The sample application received <span
-			th:text="${#arrays.isEmpty(args)} ? 'no' : 'some'">...</span>
-		arguments. KANKNAKNAKNA
-	</p>
+	<div th:fragment="">
+		<div class="container">
+			<table class="table" border="1" align="left" width="80%">
+				<tr>
+					<th>部門　エンジニアリング</th>
+					<th>氏名　<span>かんかん太郎</span></th>
+				</tr>
+			</table>
+		</div>
+	</div>
 	<div th:fragment="contractContents">
 		<div class="container">
-			<table class="table" border="1" style="border-collapse: collapse">
+			<table class="table" border="1" align="center" width="100%">
 				<thead class="thead-dark">
 					<tr>
-						<th>名前</th>
-						<th>年齢</th>
-						<th>日付</th>
-						<th>時間</th>
+						<th colspan="2">2020年10月</th>
+						<th>勤務開始時間</th>
+						<th>勤務終了時間</th>
+						<th>休憩時間</th>
+						<th>稼働時間</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- <tr th:each="testModel : ${testList}">
-						<td th:text="${testModel.testName}"></td>
-						<td th:text="${testModel.testAge}"></td>
-						<td th:text="${testModel.testDate}"></td>
-						<td th:text="${testModel.testTime}"></td>
-					</tr> -->
 					<tr th:each="a : ${args}">
+						<td></td>
+						<td></td>
 						<td><span th:text="${a.testName}"></span></td>
 						<td><span th:text="${a.testAge}"></span></td>
 						<td><span th:text="${a.testDate}"></span></td>
@@ -60,18 +72,19 @@ body {
 			</table>
 		</div>
 	</div>
-	<!-- <ul>
-		<li th:each="testModel : ${testList}"><span th:text="${testModel.testName}">...</span></li>
-	</ul> -->
-	<p>
-		今日は: <span th:text="${today}">13 February 2011</span>
-		aaaaaaaaaaaaaaaaa
-	</p>
-
-	<ul>
-		<li th:each="a : ${args}"><span th:text="${a}">...</span></li>
-	</ul>
-	<button class="btn btn-primary" type="submit">ログイン</button>
-	<a href="output/report.pdf">ダウンロード（file.pdf）</a>
+	<div th:fragment="">
+		<div class="container">
+			<table class="table" border="1" align="right" width="40%">
+				<tr>
+					<th>合計稼働時間</th>
+					<th><span>xxx</span>時間</th>
+				</tr>
+				<tr>
+					<th>合計稼働日数</th>
+					<th><span>yy</span>日</th>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
