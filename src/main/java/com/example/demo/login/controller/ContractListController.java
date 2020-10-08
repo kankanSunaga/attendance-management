@@ -80,18 +80,17 @@ public class ContractListController {
 	
 	@GetMapping("/contract/{contractId}/{yearMonth}")
 	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId")int contractId, @PathVariable("yearMonth")String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay) {
-		
 		// yyyy-MM-01(月初のString)の作成
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(yearMonth);
 		stringBuilder.insert(4, "-");
 		stringBuilder.append("-01");
-	    String strMinWorkDay = stringBuilder.toString();
-	    
-	    // 引数のminWorkDayとmaxWorkDayの値を代入
-	    minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
-	    maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
-	    
+		String strMinWorkDay = stringBuilder.toString();
+		
+		// 引数のminWorkDayとmaxWorkDayの値を代入
+		minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+		
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		model.addAttribute("contractDay", contractDayList);
 		
