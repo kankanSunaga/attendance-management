@@ -1,5 +1,6 @@
 package com.example.demo.login.domain.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -49,5 +50,10 @@ public class WorkTimeService {
 	//月のデータ全件取得用メソッド
 	public List<WorkTime> selectMany(int contractId){
 		return dao.selectMany(contractId); 
+	}
+	
+	//月のデータ全件取得用メソッド（範囲検索）
+	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) {
+		return dao.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 	}
 }

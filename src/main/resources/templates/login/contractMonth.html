@@ -28,11 +28,14 @@
 					<tr>
 						<th th:text=${officeName}></th>
 					</tr>
+					<tr>
+						<th>年月</th>
+					</tr>
 				</thead>
 				<tbody>
 					<tr th:each ="contractMonth : ${contractMonth}">
-						<td th:text="${contractMonth}"></td>
-						<td ><a class="btn btn-primary" th:href="@{'/contract/'+ ${workTime.workTimeId}}">詳細</a></td>
+						<td th:text=${contractMonth.view}></td>
+						<td><a class="btn btn-primary" th:href="@{'/contract/'+ ${workTime.contractId} + '/' + ${contractMonth.url}}">詳細</a></td>
 					</tr>
 				</tbody>
 			</table>

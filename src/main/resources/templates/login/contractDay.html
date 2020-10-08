@@ -26,7 +26,9 @@
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th>2020年6月</th>
+						<th th:text=${yearMonth}></th>
+					</tr>
+					<tr>
 						<th>勤務日</th>
 						<th>始業時間</th>
 						<th>休憩時間</th>
@@ -34,16 +36,17 @@
 						<th>合計時間</th>
 					</tr>
 				</thead>
-			<tbody>
-				<tr th:each ="workTime : ${contractDay}">
-					<td th:text="${workTime.workDay}"></td>
-					<td th:text="${workTime.startTime}"></td>
-					<td th:text="${workTime.breakTime}"></td>
-					<td th:text="${workTime.endTime}"></td>
-					<td th:text="${workTime.workTimeMinute}"></td>
-				</tr>
-			</tbody>
+				<tbody>
+					<tr th:each ="contractDay : ${contractDay}">
+						<td th:text="${contractDay.workDay}"></td>
+						<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
+						<td th:text="${contractDay.breakTime}"></td>
+						<td th:text="${#temporals.format(contractDay.endTime, 'HH:mm')}"></td>
+						<td th:text="${contractDay.workTimeMinute / 60} + 時 + ${contractDay.workTimeMinute % 60} + 分"></td>
+					</tr>
+				</tbody>
 			</table>
+			<p class="btn btn-primary" style="text-align: center">PDFをダウンロード</p>
 		</div>
 	</div>
 </body>
