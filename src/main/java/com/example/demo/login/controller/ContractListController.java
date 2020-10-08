@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,7 @@ public class ContractListController {
 	WorkTimeService workTimeService;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
-	public String getContractList(HttpServletRequest request, Model model) {
+	public String getContractList(Model model) {
 		
 		List<Contract> contractList = contractService.selectMany();
 		
