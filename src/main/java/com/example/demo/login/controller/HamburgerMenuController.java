@@ -35,7 +35,6 @@ public class HamburgerMenuController {
 		// セッションの保持(userId)
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", user.getUserId());
-		model.addAttribute("contents","login/changePassword :: changePassword_contents");
 		
 		return "login/changePassword";
 	}
@@ -51,9 +50,6 @@ public class HamburgerMenuController {
 		// セッションの保持(userId)
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", user.getUserId());
-		
-		model.addAttribute("contents","login/changePassword :: changePassword_contents");
-		model.addAttribute("contents","login/changeEmail :: changeEmail_contents");
 		
 		return "login/changeEmail";
 	}
