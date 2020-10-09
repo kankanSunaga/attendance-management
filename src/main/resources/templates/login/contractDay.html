@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -9,45 +10,34 @@
 </head>
 <body>
 	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">サービス名</a>
-			</div>
-			<div class="pull-right">
-				<button type="button" class="btn btn-success">プロフ画像</button>		
-			</div>	
-		</div>
-	</nav>
+	<div th:replace="login/headerLayout.html :: header"></div>
+	<!-- コンテンツ -->
 	<br><br>
-	<br><br>
-	<div th:fragment="login_contents">
-		<div class="container">
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th th:text=${yearMonth}></th>
-					</tr>
-					<tr>
-						<th>勤務日</th>
-						<th>始業時間</th>
-						<th>休憩時間</th>
-						<th>退勤時間</th>
-						<th>合計時間</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each ="contractDay : ${contractDay}">
-						<td th:text="${contractDay.workDay}"></td>
-						<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
-						<td th:text="${contractDay.breakTime}"></td>
-						<td th:text="${#temporals.format(contractDay.endTime, 'HH:mm')}"></td>
-						<td th:text="${contractDay.workTimeMinute / 60} + 時 + ${contractDay.workTimeMinute % 60} + 分"></td>
-					</tr>
-				</tbody>
-			</table>
-			<p class="btn btn-primary" style="text-align: center">PDFをダウンロード</p>
-		</div>
+	<div class="container">
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th th:text=${yearMonth}></th>
+				</tr>
+				<tr>
+					<th>勤務日</th>
+					<th>始業時間</th>
+					<th>休憩時間</th>
+					<th>退勤時間</th>
+					<th>合計時間</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each ="contractDay : ${contractDay}">
+					<td th:text="${contractDay.workDay}"></td>
+					<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
+					<td th:text="${contractDay.breakTime}"></td>
+					<td th:text="${#temporals.format(contractDay.endTime, 'HH:mm')}"></td>
+					<td th:text="${contractDay.workTimeMinute / 60} + 時 + ${contractDay.workTimeMinute % 60} + 分"></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="btn btn-primary" style="text-align: center">PDFをダウンロード</p>
 	</div>
 </body>
 </html>

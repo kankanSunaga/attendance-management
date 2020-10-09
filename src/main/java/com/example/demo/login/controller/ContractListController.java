@@ -8,7 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +22,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
 public class ContractListController {
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	ContractService contractService;
@@ -30,14 +41,24 @@ public class ContractListController {
 	WorkTimeService workTimeService;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
-	public String getContractList(Model model) {
+
+	public String getContractList(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		// SpringSecurityのセッションの呼出(emailの呼出)
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		// emailで検索したユーザーのuserIdの取得
+		User user = userService.selectByEmail(auth.getName());
+						
+		// セッションの保持(userId)
+		HttpSession session = request.getSession();
+		session.setAttribute("userId", user.getUserId());
 		
 		List<Contract> contractList = contractService.selectMany();
 		
 		model.addAttribute("contractList", contractList);
-		model.addAttribute("contents","login/contractList::login_contents");
 		
-		return "login/headerLayout";
+		return "login/contractList";
 	}
 	
 	@GetMapping("/contract/{contractId}")
@@ -72,9 +93,7 @@ public class ContractListController {
 		String officeName = contract.getOfficeName() ;
 		model.addAttribute("officeName", officeName);
 		
-		model.addAttribute("contents", "login/contractMonth::login_contents");
-		
-		return "login/headerLayout";
+		return "login/contractMonth";
 	}
 	
 	
@@ -100,7 +119,6 @@ public class ContractListController {
 		
 		model.addAttribute("yearMonth", strYearMonth);
 		
-		model.addAttribute("contents", "login/contractDay::login_contents");
-		return "login/headerLayout";
+		return "login/contractDay";
 	}
 }
