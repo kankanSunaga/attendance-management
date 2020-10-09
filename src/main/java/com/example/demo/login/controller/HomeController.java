@@ -86,8 +86,7 @@ public class HomeController {
 		model.addAttribute("remainingTimeInt", remainingTimeInt);
 		model.addAttribute("remainingTimeDouble", remainingTimeDouble);
 		
-		model.addAttribute("contents","login/home :: home_contents");
-		return "login/headerLayout";
+		return "login/home";
 	}
 	
 	@PostMapping("/home")
