@@ -6,21 +6,20 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
 
 @Service
 public class DayOfWeekService {
-	public static boolean hasHolliday(LocalDate termination){
+	public static boolean hasHoliday(LocalDate termination){
 		
 		//LocalDate型の変数を曜日にして、String型に変換
 		String holiday = termination.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 		//System.out.println(holiday);
 		
 		//土日だったらtrueを返す
-		if(holiday.equals("Sunday")||holiday.equals("Saturday")) {
+		if (holiday.equals("Sunday")||holiday.equals("Saturday")) {
 			return true;
 		}
 		
@@ -46,7 +45,6 @@ public class DayOfWeekService {
 			e.printStackTrace();
 
 		}
-		//System.out.println(writeContent);
 		
 		//祝日かどうかの判定
 		if (writeContent.equals("holiday")) {
@@ -54,15 +52,5 @@ public class DayOfWeekService {
 		}else {
 			return false;
 		}
-	}
-	// 文字列の日付をフォーマット(yyyyMMddやyyyy/mm/ddなど)をもとにLocalDate型に変換するメソッド
-	public static LocalDate convertToLocalDate(String date,String format) {
-
-	                // シンプルにLocalDate型に変換された日付を返却
-	        return LocalDate.parse(date, DateTimeFormatter.ofPattern(format));
-	}
-	//テスト用
-	//LocalDate termination =convertToLocalDate("20201002", "yyyyMMdd");
-	//boolean result = hasHolliday(termination);
-	
+	}	
 }
