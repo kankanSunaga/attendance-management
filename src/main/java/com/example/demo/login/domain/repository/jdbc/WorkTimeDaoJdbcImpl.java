@@ -1,6 +1,7 @@
 package com.example.demo.login.domain.repository.jdbc;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,4 +76,32 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		}
 		return contractMonthList;
 	}
+	
+	// workTimeテーブルから月のデータを全件取得（日付で範囲検索）
+	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) throws DataAccessException {
+		
+		// LocalDateからsql.Dateに型変換（次のqueryでSQLで扱えるようにするため）
+		java.sql.Date sqlMinWorkDay = java.sql.Date.valueOf(minWorkDay);
+		java.sql.Date sqlMaxWorkDay = java.sql.Date.valueOf(maxWorkDay);
+		
+		List<Map<String, Object>> getList = jdbc
+				.queryForList("SELECT * FROM workTime WHERE contractId = ? AND workDay >= ? AND workDay <= ? ORDER BY workDay ASC", contractId, sqlMinWorkDay, sqlMaxWorkDay);
+		
+		List<WorkTime> contractDayList = new ArrayList<>();
+		for (Map<String, Object> map : getList) {
+			WorkTime workTime = new WorkTime();
+			
+			workTime.setWorkTimeId((int) map.get("workTimeId"));
+			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
+			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
+			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
+			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
+			workTime.setContractId((int) map.get("contractId"));
+			
+			contractDayList.add(workTime);
+		}
+		return contractDayList;
+	}
+	
 }

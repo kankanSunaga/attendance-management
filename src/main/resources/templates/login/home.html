@@ -2,43 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	<title>home</title>
 </head>
 <body>
-	<div th:fragment="home_contents">
-		<!-- コンテンツ -->
-		<div class="container" >
-			<table class="table table-bordered">
-			 	<thead class="thead-dark">
-			    	<tr>
-				      <th>日付</th>
-				      <th>開始時間</th>
-				      <th>休憩時間</th>
-				      <th>終了時間</th>
-			    	</tr>
-			 	</thead>
-				<tbody>			     
-					<tr th:each ="calendar : ${calendar}">
-					<th th:text="${calendar}"></th>
-					</tr>
-			 	</tbody>
-			</table>
-		</div>
-		<div class="container">
-			<div class="text-center">
-				<div class="jumbotron">
-					<label >日付：</label><label th:text="${today}"></label><br>
-					<label>契約時間まであと：</label>
-						<!-- 達成したかどうかの分岐 -->
-						<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}" th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
-						<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
-					<label>今月の勤務時間：</label><label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br><br>
-				</div>
-				<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
+	<!-- ヘッダー -->
+	<div th:replace="login/headerLayout.html :: header"></div>
+	<!-- コンテンツ -->
+	<br><br>
+	<br><br>
+	<div class="container" >
+		<table class="table table-bordered">
+		 	<thead class="thead-dark">
+		    	<tr>
+			      <th>日付</th>
+			      <th>開始時間</th>
+			      <th>休憩時間</th>
+			      <th>終了時間</th>
+		    	</tr>
+		 	</thead>
+			<tbody>			     
+				<tr th:each ="calendar : ${calendar}">
+				<th th:text="${calendar}"></th>
+				</tr>
+		 	</tbody>
+		</table>
+	</div>
+	<div class="container">
+		<div class="text-center">
+			<div class="jumbotron">
+				<label >日付：</label><label th:text="${today}"></label><br>
+				<label>契約時間まであと：</label>
+					<!-- 達成したかどうかの分岐 -->
+					<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}" th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
+					<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
+				<label>今月の勤務時間：</label><label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br><br>
 			</div>
+			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
 		</div>
 	</div>
 </body>
