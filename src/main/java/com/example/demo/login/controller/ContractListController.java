@@ -2,12 +2,19 @@ package com.example.demo.login.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +22,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
 public class ContractListController {
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	ContractService contractService;
@@ -29,14 +41,24 @@ public class ContractListController {
 	WorkTimeService workTimeService;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
-	public String getContractList(Model model) {
+
+	public String getContractList(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		// SpringSecurityのセッションの呼出(emailの呼出)
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		// emailで検索したユーザーのuserIdの取得
+		User user = userService.selectByEmail(auth.getName());
+						
+		// セッションの保持(userId)
+		HttpSession session = request.getSession();
+		session.setAttribute("userId", user.getUserId());
 		
 		List<Contract> contractList = contractService.selectMany();
 		
 		model.addAttribute("contractList", contractList);
-		model.addAttribute("contents","login/contractList::login_contents");
 		
-		return "login/headerLayout";
+		return "login/contractList";
 	}
 	
 	@GetMapping("/contract/{contractId}")
@@ -44,38 +66,59 @@ public class ContractListController {
 		
 		List<WorkTime> contractMonthList = workTimeService.selectMany(contractId);
 		
-		//年月を表示させる
-		List<String> monthList = new ArrayList<>();
+		// 「yyyy年MM月」と「yyyyMM」のStringを作成する処理
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		
 		for(int i = 0; i < contractMonthList.size(); i++) {
-			//workDayの取り出し
+			Map<String, String> map = new HashMap<String, String>();
 			WorkTime workTime = contractMonthList.get(i);
 			LocalDate localDate = workTime.getWorkDay();
 			
-			//フォーマット変換
-			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy年MM月");
-			String month = localDate.format(format);		
-			monthList.add(month);
+			//2つのフォーマットの作成とLocalDateからStringに型の変換
+			DateTimeFormatter viewFormat = DateTimeFormatter.ofPattern("yyyy年MM月");
+			DateTimeFormatter urlFormat = DateTimeFormatter.ofPattern("yyyyMM");
+			String listYearMonth = localDate.format(viewFormat);
+			String urlYearMonth = localDate.format(urlFormat);
+			
+			map.put("view", listYearMonth);
+			map.put("url", urlYearMonth);
+			list.add(map);
 		}
 		
-		//重複している情報を順番を変えずに削除
-		List<String> orderMonthList = new ArrayList<String>(new LinkedHashSet<>(monthList));
+		model.addAttribute("contractMonth", list);
 		
-		model.addAttribute("contractMonth", orderMonthList);
 		
 		//会社名を取得
 		Contract contract = contractService.activeSelectOne(contractId);
 		String officeName = contract.getOfficeName() ;
 		model.addAttribute("officeName", officeName);
 		
-		model.addAttribute("contents", "login/contractMonth::login_contents");
-		
-		return "login/headerLayout";
+		return "login/contractMonth";
 	}
 	
-	@GetMapping("/contracts/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute Contract form, Model model, @PathVariable("contractId")int contractId, @PathVariable("yearMonth")int yearMonth){
+	
+	@GetMapping("/contract/{contractId}/{yearMonth}")
+	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId")int contractId, @PathVariable("yearMonth")String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay) {
+		// yyyy-MM-01(月初のString)の作成
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(yearMonth);
+		stringBuilder.insert(4, "-");
+		stringBuilder.append("-01");
+		String strMinWorkDay = stringBuilder.toString();
 		
-		return "login/contracts/{contractId}/{yearMonth}";
+		// 引数のminWorkDayとmaxWorkDayの値を代入
+		minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+		
+		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
+		model.addAttribute("contractDay", contractDayList);
+		
+		//yyyy年MM月の作成
+		String strMonth = strMinWorkDay.replace("-01", "月");
+		String strYearMonth = strMonth.replace("-", "年");
+		
+		model.addAttribute("yearMonth", strYearMonth);
+		
+		return "login/contractDay";
 	}
 }
-

@@ -10,9 +10,9 @@
 </head>
 <body>
 	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav th:fragment="header" class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
-			<a class="navbar-brand">サービス名</a>
+			<a class="navbar-brand" href="/home">サービス名</a>
 			<div class="dropdown pull-right">
 				<!-- ハンバーガーメニュー -->
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -24,22 +24,14 @@
 				</button>
 				<!-- ドロップダウンメニュー -->
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li><a href="#">メールアドレス変更</a></li>
-					<li><a href="#">パスワード変更</a></li>
-					<li><a href="#">過去分の確認</a></li>
-					<li><a href="#">設定時間の変更</a></li>
-					<li><a href="#">契約の変更</a></li>
+					<li><a href="/changeEmail">メールアドレス変更</a></li>
+					<li><a href="/changePassword">パスワード変更</a></li>
+					<li><a href="/contracts">過去分の確認</a></li>
+					<li><a href="/changeContractTime">設定時間の変更</a></li>
+					<li><a href="/changeContract">契約の変更</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<!-- コンテンツ -->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-12 main">
-				<div th:include="__${contents}__"></div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>
