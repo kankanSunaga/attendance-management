@@ -17,7 +17,7 @@ public interface ContractDao {
 	public Contract activeSelectOne(int contractId) throws DataAccessException;
 	
 	// Contractテーブルからデータ全件取得（userIdでソート）
-	public List<Contract> selectMany() throws DataAccessException;
+	public List<Contract> selectMany(int userId) throws DataAccessException;
 	
 	// Contractテーブルから特定のユーザーのデータ取得
 	public List<Contract> selectByUserId(int userId) throws DataAccessException;

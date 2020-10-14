@@ -34,8 +34,8 @@ public class ContractService {
 	}
 	
 	//Contractテーブルのデータ全件取得（userIdでソート）
-	public List<Contract> selectMany() {
-		return dao.selectMany();
+	public List<Contract> selectMany(int userId) {
+		return dao.selectMany(userId);
 	}
 	
 	// 契約件数の取得

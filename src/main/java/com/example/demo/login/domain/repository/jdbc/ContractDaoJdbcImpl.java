@@ -84,8 +84,8 @@ public class ContractDaoJdbcImpl implements ContractDao {
     }
   	
   	//Contractテーブルから全件データを取得（userIdでソート）
-  	public List<Contract> selectMany() throws DataAccessException {
-  		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM contract WHERE userId = 1 ORDER BY startDate DESC");
+  	public List<Contract> selectMany(int userId) throws DataAccessException {
+  		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM contract WHERE userId = ? ORDER BY startDate DESC", userId);
   		List<Contract> contractList = new ArrayList<>();
   		
   		for(Map<String, Object> map:getList) {
