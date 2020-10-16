@@ -37,3 +37,7 @@ CREATE TABLE IF NOT EXISTS test (
 	testDate DATE,
 	testTime TIME
 );
+
+CREATE TABLE IF NOT EXISTS monthTable (
+	workDay DATE
+);
