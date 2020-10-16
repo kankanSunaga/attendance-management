@@ -15,6 +15,12 @@
 					</tr>
 				</thead>
 				<tbody>
+					<tr th:each ="contractDay : ${contractDay}">
+					<td th:text="${contractDay.workDay}"></td>
+					<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
+					<td th:text="${contractDay.breakTime}"></td>
+					<td th:text="${#temporals.format(contractDay.endTime, 'HH:mm')}"></td>
+					<td th:text="${contractDay.workTimeMinute / 60} + 時 + ${contractDay.workTimeMinute % 60} + 分"></td>
 				</tbody>
 			</table>
 		</div>
