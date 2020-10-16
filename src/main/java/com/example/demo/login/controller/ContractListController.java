@@ -1,8 +1,13 @@
 package com.example.demo.login.controller;
 
-
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.OutputStream;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -23,7 +28,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IContext;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.User;
@@ -31,7 +39,12 @@ import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
-
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
 
 @Controller
 public class ContractListController {
@@ -45,25 +58,18 @@ public class ContractListController {
 	@Autowired
 	WorkTimeService workTimeService;
 
-
 	@GetMapping("/contracts") // sessionでuserId渡されるため静的URL
 	public String getContractList(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-		// SpringSecurityのセッションの呼出(emailの呼出)
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		// emailで検索したユーザーのuserIdの取得
-		User user = userService.selectByEmail(auth.getName());
-
 		// セッションの保持(userId)
-		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUserId());
-
-		List<Contract> contractList = contractService.selectMany();
-
-		model.addAttribute("contractList", contractList);
-
-		return "login/contractList";
+				HttpSession session = request.getSession();
+				int userId = (int)session.getAttribute("userId");
+				
+				List<Contract> contractList = contractService.selectMany(userId);
+				
+				model.addAttribute("contractList", contractList);
+				
+				return "login/contractList";
 	}
 
 	@GetMapping("/contract/{contractId}")
@@ -114,19 +120,19 @@ public class ContractListController {
 		stringBuilder.insert(4, "-");
 		stringBuilder.append("-01");
 		String strMinWorkDay = stringBuilder.toString();
-
+		
 		// 引数のminWorkDayとmaxWorkDayの値を代入
 		minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
 		maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		model.addAttribute("contractDay", contractDayList);
-
+		
 		// yyyy年MM月の作成
 		String strMonth = strMinWorkDay.replace("-01", "月");
 		String strYearMonth = strMonth.replace("-", "年");
 
 		model.addAttribute("yearMonth", strYearMonth);
-
+		
 		return "login/contractDay";
 	}
 }
