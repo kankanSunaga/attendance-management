@@ -8,25 +8,30 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import com.example.demo.login.domain.model.Pdf;
-import com.example.demo.login.domain.repository.jdbc.PdfDaoJdbcImpl;
-import com.example.demo.login.domain.service.PdfService;
+import com.example.demo.login.domain.model.WorkTime;
+import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.service.WorkTimeService;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
@@ -38,26 +43,67 @@ import com.itextpdf.layout.Document;
 public class PdfController {
 
 	@Autowired
-	PdfService pdfService;
+	UserService userService;
 
 	@Autowired
-	PdfDaoJdbcImpl jdbc;
+	ContractService contractService;
 
-	@GetMapping("/pdf")
-	public String getSample(@ModelAttribute Pdf pdf, Model model) throws IOException {
+	@Autowired
+	WorkTimeService workTimeService;
 
+	// yyyy年MM月
+	private String setStrYearMonth;
+
+	@GetMapping("/contract/{contractId}/{yearMonth}/pdfDownload")
+	public String getPdfDownload(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth
+//			LocalDate minWorkDay, LocalDate maxWorkDay
+	) throws IOException {
+
+		model.addAttribute("yearMonthUrl", yearMonth);
+		// yyyy-MM-01(月初のString)の作成
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(yearMonth);
+		stringBuilder.insert(4, "-");
+		stringBuilder.append("-01");
+		String strMinWorkDay = stringBuilder.toString();
+
+		// 引数のminWorkDayとmaxWorkDayの値を代入
+		LocalDate minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+
+		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
+		model.addAttribute("contractDay", contractDayList);
+
+		// yyyy年MM月の作成
+		String strMonth = strMinWorkDay.replace("-01", "月");
+		String strYearMonth = strMonth.replace("-", "年");
+
+		// PDFで使いたいのでFieldにset
+		this.setStrYearMonth = strYearMonth;
+
+		model.addAttribute("contractId", contractId);
+		model.addAttribute("yearMonth", strYearMonth);
+		model.addAttribute("yearMonthUrl", yearMonth);
+
+		// セッション取得(userId)
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId");
+
+		// ***** PDF作成処理 *****
 		// テンプレートエンジンを初期化する
 		final TemplateEngine engine = initializeTemplateEngine();
 
 		// コンテキストを生成する
-		final IContext ctx = makeContext(model);
+		final IContext ctx = makeContext(model, userId, contractId, yearMonth, minWorkDay, maxWorkDay);
 
 		// 今回はWriter経由で結果を出力するのでWriterも初期化
 		final Writer writer = new FileWriter("output/sample.html");
 
 		// テンプレート名とコンテキストとWriterを引数としてprocessメソッドをコール
 		engine.process("pdf/pdf", ctx, writer);
-		
+
 		// Writerをクローズ
 		writer.close();
 
@@ -77,19 +123,13 @@ public class PdfController {
 			Document document = HtmlConverter.convertToDocument(htmlStr, pdfDocument, converterProperties);
 			document.close();
 		}
-		
-		return "pdf/pdf";
-	}
 
-	@GetMapping("/download")
-	public String getDownload(HttpServletResponse response) {
-		
-		// ダウンロード対象のファイルデータを取得
-		Path data = Paths.get("/Users/yuenee/Documents/workspace-sts-3.9.9.RELEASE/attendance-management/output/report.pdf");
+		// ***** PDFダウンロード処理 *****
+		Path data = Paths.get("output/report.pdf");
 
 		// ダウンロード対象のファイルデータがnullの場合はエラー画面に遷移
 		if (data == null) {
-			
+
 			return "download_error";
 		}
 
@@ -109,7 +149,6 @@ public class PdfController {
 			System.err.println(e);
 		}
 
-		// 画面遷移先はnullを指定
 		return null;
 	}
 
@@ -126,26 +165,23 @@ public class PdfController {
 		resolver.setSuffix(".html");
 		// テンプレート解決子をエンジンに設定
 		templateEngine.setTemplateResolver(resolver);
-		
+
 		return templateEngine;
 	}
 
+	// ***** PDFに書き込む処理 *****
+	private IContext makeContext(@ModelAttribute Model model, int userId, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay) {
 
-	private IContext makeContext(@ModelAttribute Model model) {
 		final IContext ctx = new Context();
-		// 変数マップにテンプレート変数を設定
+		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 
-		List<Pdf> pdfList = pdfService.selectMany();
-
-		model.addAttribute("pdfList", pdfList);
-		model.addAttribute("contents", "pdf/pdf::contractContents");
-
-		((Context) ctx).setVariable("args", jdbc.selectMany());
-
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-		Calendar cal = Calendar.getInstance();
-		((Context) ctx).setVariable("today", dateFormat.format(cal.getTime()));
+		// PDFに書き込む用のデータ
+		((Context) ctx).setVariable("userName", userService.selectOne(userId).getUserName());
+		((Context) ctx).setVariable("yearMonth", setStrYearMonth);
+		((Context) ctx).setVariable("contract", workTimes);
+		((Context) ctx).setVariable("totalTime", workTimeService.samWorkTimeMinute(workTimes));
+		((Context) ctx).setVariable("totalDay", workTimes.size());
 
 		return ctx;
 	}

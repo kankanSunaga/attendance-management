@@ -30,61 +30,51 @@ th, td {
 th {
 	width: 20%;
 }
-
-.container {
-	
-}
 </style>
 </head>
 <body>
-	<div th:fragment="">
-		<div class="container">
-			<table class="table" border="1" align="left" width="80%">
-				<tr>
-					<th>部門　エンジニアリング</th>
-					<th>氏名　<span>かんかん太郎</span></th>
-				</tr>
-			</table>
-		</div>
+	<div class="container">
+		<table class="table" border="1" align="left" width="80%">
+			<tr>
+				<th>部門 エンジニアリング</th>
+				<th>氏名 <span th:text="${userName}"></span></th>
+			</tr>
+		</table>
 	</div>
-	<div th:fragment="contractContents">
-		<div class="container">
-			<table class="table" border="1" align="center" width="100%">
-				<thead class="thead-dark">
-					<tr>
-						<th colspan="2">2020年10月</th>
-						<th>勤務開始時間</th>
-						<th>勤務終了時間</th>
-						<th>休憩時間</th>
-						<th>稼働時間</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="a : ${args}">
-						<td></td>
-						<td></td>
-						<td><span th:text="${a.testName}"></span></td>
-						<td><span th:text="${a.testAge}"></span></td>
-						<td><span th:text="${a.testDate}"></span></td>
-						<td><span th:text="${a.testTime}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<div class="container">
+		<table class="table" border="1" align="center" width="100%">
+			<thead class="thead-dark">
+				<tr>
+					<th th:text="${yearMonth}" colspan="2"></th>
+					<th>勤務開始時間</th>
+					<th>勤務終了時間</th>
+					<th>休憩時間</th>
+					<th>稼働時間</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="contractDay : ${contract}">
+					<td th:text="${contractDay.Day}"></td>
+					<td th:text="${contractDay.DayOfWeek}"></td>
+					<td th:text="${contractDay.stringStartTime}"></td>
+					<td th:text="${contractDay.stringEndTime}"></td>
+					<td th:text="${contractDay.breakTime}"></td>
+					<td th:text="${contractDay.workTimeMinute / 60} + 時間 + ${contractDay.workTimeMinute % 60} + 分"></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div th:fragment="">
-		<div class="container">
-			<table class="table" border="1" align="right" width="40%">
-				<tr>
-					<th>合計稼働時間</th>
-					<th><span>xxx</span>時間</th>
-				</tr>
-				<tr>
-					<th>合計稼働日数</th>
-					<th><span>yy</span>日</th>
-				</tr>
-			</table>
-		</div>
+	<div class="container">
+		<table class="table" border="1" align="right" width="40%">
+			<tr>
+				<th>合計稼働時間</th>
+				<th><span th:text="${totalTime / 60} + 時間 + ${totalTime % 60} + 分"></span></th>　<!-- エラーでる -->
+			</tr>
+			<tr>
+				<th>合計稼働日数</th>
+				<th><span th:text="${totalDay}"></span>日</th>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

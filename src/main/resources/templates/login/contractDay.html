@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each ="contractDay : ${contractDay}">
+				<tr th:each="contractDay : ${contractDay}">
 					<td th:text="${contractDay.workDay}"></td>
 					<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
 					<td th:text="${contractDay.breakTime}"></td>
@@ -37,7 +37,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<p class="btn btn-primary" style="text-align: center">PDFをダウンロード</p>
+		<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 	</div>
 </body>
 </html>

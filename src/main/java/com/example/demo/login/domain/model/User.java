@@ -13,4 +13,4 @@ public class User {
 	private boolean permission;
 	private boolean frozen;
 	private String requestedAt;
-	}
+}
