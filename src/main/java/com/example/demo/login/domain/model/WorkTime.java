@@ -1,6 +1,5 @@
 package com.example.demo.login.domain.model;
 
-
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,8 +9,8 @@ import java.util.HashMap;
 import lombok.Data;
 
 @Data
-public class WorkTime {	
-	
+public class WorkTime {
+
 	private int workTimeId;
 	private LocalDate workDay;
 	private LocalDateTime startTime;
@@ -19,33 +18,39 @@ public class WorkTime {
 	private LocalDateTime endTime;
 	private int workTimeMinute;
 	private int contractId;
-	
+
+	// 変換したデータ(List内のデータ)
+	private int day;
+	private String dayOfWeek;
+	private String stringStartTime;
+	private String stringEndTime;
+
 	public static int workTimeMinute(WorkTimeForm form) {
-		
+
 		HashMap<String, Integer> workTimeMinute = new HashMap<String, Integer>();
-		
+
 		// 始業時間（分）
 		workTimeMinute.put("startTimeMinute", form.getStartTime().get(ChronoField.MINUTE_OF_DAY));
-		
+
 		// 休憩時間（分）
 		workTimeMinute.put("breakTimeMinute", form.getBreakTime().get(ChronoField.MINUTE_OF_DAY));
-		
+
 		// 終業時間（分）
 		workTimeMinute.put("endTimeMinute", form.getEndTime().get(ChronoField.MINUTE_OF_DAY));
-		
+
 		// 勤務時間の計算（分）
-		workTimeMinute.put("workTimeMinute", workTimeMinute.get("endTimeMinute") - (workTimeMinute.get("startTimeMinute") + workTimeMinute.get("breakTimeMinute")));
-		
+		workTimeMinute.put("workTimeMinute", workTimeMinute.get("endTimeMinute")
+				- (workTimeMinute.get("startTimeMinute") + workTimeMinute.get("breakTimeMinute")));
+
 		return workTimeMinute.get("workTimeMinute");
 	}
-	
-	
+
 	public void setWorkTime(WorkTimeForm form) {
-		
+
 		this.setWorkDay(form.getWorkDay());
 		this.setStartTime(LocalDateTime.of(form.getWorkDay(), form.getStartTime()));
-		this.setBreakTime(form.getBreakTime());	
-		
+		this.setBreakTime(form.getBreakTime());
+
 		if (form.isOverTimeFlag()) {
 			this.setEndTime(LocalDateTime.of(this.getWorkDay().plusDays(1), form.getEndTime()));
 			this.setWorkTimeMinute(workTimeMinute(form) + 1440);
