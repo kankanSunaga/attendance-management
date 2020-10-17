@@ -3,6 +3,7 @@ package com.example.demo.login.domain.service;
 
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.Locale;
 
 @Service
 public class DayOfWeekService {
-	public static boolean hasHoliday(LocalDate termination){
+	public static boolean hasHoliday(LocalDate termination) throws IOException{
 		
 		//LocalDate型の変数を曜日にして、String型に変換
 		String holiday = termination.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
@@ -41,9 +42,12 @@ public class DayOfWeekService {
 			while ((readLine = br.readLine()) != null)
 				writeContent = writeContent + readLine;// ここで読み込んだ内容を変数に保存している
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 
+		}finally {
+			isr.close();
+			br.close();
 		}
 		
 		//祝日かどうかの判定

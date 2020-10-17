@@ -30,3 +30,14 @@ CREATE TABLE IF NOT EXISTS workTime (
 	workTimeMinute INT,
 	contractId INT
 );
+
+CREATE TABLE IF NOT EXISTS test (
+	testName VARCHAR(50),
+	testAge INT,
+	testDate DATE,
+	testTime TIME
+);
+
+CREATE TABLE IF NOT EXISTS monthTable (
+	workDay DATE
+);

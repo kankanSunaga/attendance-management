@@ -2,27 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"></meta>
-    <link th:href="@{/css/workTime.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/headerlayout.css}" rel="stylesheet"></link>
     <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
     <title>workTime</title>
 </head>
 <body>
-<div th:fragment="contract_contents">
 	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">サービス名</a>
-			</div>
-			<div class="pull-right">
-				<button type="button" class="btn btn-success">管理ユーザー</button>		
-			</div>	
-		</div>
-	</nav>
+	<div th:replace="login/headerLayout.html :: header"></div>
 	<br><br>
-	<br><br><br>
 	<form method="post" th:action="@{/workTime}" th:object="${workTimeForm}">
 		<div class="container text-center">
 			<!-- カレンダー -->
@@ -60,6 +49,5 @@
 			</div>
 		</div>		
 	</form>
-</div>
 </body>
 </html>
