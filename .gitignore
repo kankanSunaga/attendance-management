@@ -35,5 +35,7 @@ build/
 .vscode/
 
 /.ipag.ttf.icloud
+output/report.pdf
+output/sample.html
 *.pdf
 */sample.html
