@@ -11,7 +11,9 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +62,7 @@ public class PdfController {
 			@PathVariable("yearMonth") String yearMonth
 //			LocalDate minWorkDay, LocalDate maxWorkDay
 	) throws IOException {
-
+		
 		model.addAttribute("yearMonthUrl", yearMonth);
 		// yyyy-MM-01(月初のString)の作成
 		StringBuilder stringBuilder = new StringBuilder();
@@ -175,11 +177,23 @@ public class PdfController {
 
 		final IContext ctx = new Context();
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
+		
+		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 
-		// PDFに書き込む用のデータ
+		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
+		
+		List<WorkTime> aiueo = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
+		
+		System.out.println(aiueo);
+		
+		// PDFに書き込む用のデータ		
 		((Context) ctx).setVariable("userName", userService.selectOne(userId).getUserName());
+		((Context) ctx).setVariable("weekFormatter", DateTimeFormatter.ofPattern("E", Locale.JAPANESE));
+		((Context) ctx).setVariable("string", "String");
+
+		
 		((Context) ctx).setVariable("yearMonth", setStrYearMonth);
-		((Context) ctx).setVariable("contract", workTimes);
+		((Context) ctx).setVariable("contract", setCalenderObject);
 		((Context) ctx).setVariable("totalTime", workTimeService.samWorkTimeMinute(workTimes));
 		((Context) ctx).setVariable("totalDay", workTimes.size());
 
