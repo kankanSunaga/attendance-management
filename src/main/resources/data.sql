@@ -28,6 +28,7 @@ VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3);
  INSERT INTO month (monthId, year, month, deadlineStatus)
  VALUES(1, 2020, 9, 'false');
 
+
 /*仕事詳細テーブル1-1（2020年9月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
 VALUES(1, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1, 1);
