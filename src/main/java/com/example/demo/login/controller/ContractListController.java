@@ -5,10 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IContext;
 
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
@@ -35,6 +39,8 @@ public class ContractListController {
 	
 	@Autowired
 	WorkTimeService workTimeService;
+	
+	private String setStrYearMonth;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 
@@ -88,7 +94,9 @@ public class ContractListController {
 	
 	
 	@GetMapping("/contract/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId")int contractId, @PathVariable("yearMonth")String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay) {
+	public String getContractDay(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth) {
 		// yyyy-MM-01(月初のString)の作成
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(yearMonth);
@@ -97,8 +105,8 @@ public class ContractListController {
 		String strMinWorkDay = stringBuilder.toString();
 		
 		// 引数のminWorkDayとmaxWorkDayの値を代入
-		minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
-		maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
 		
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		model.addAttribute("contractDay", contractDayList);
@@ -107,8 +115,22 @@ public class ContractListController {
 		String strMonth = strMinWorkDay.replace("-01", "月");
 		String strYearMonth = strMonth.replace("-", "年");
 		
+		model.addAttribute("contractId", contractId);
 		model.addAttribute("yearMonth", strYearMonth);
+		model.addAttribute("yearMonthUrl", yearMonth);
 		
+		// セッション取得(userId)
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId");
+		
+		// 空のカレンダー作成
+		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
+		// 空のカレンダーにデータを追加
+		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
+				
+		model.addAttribute("yearMonth", setStrYearMonth);
+		model.addAttribute("contract", setCalenderObject);
+						
 		return "login/contractDay";
 	}
 }
