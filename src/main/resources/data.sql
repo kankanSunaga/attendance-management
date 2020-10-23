@@ -27,37 +27,92 @@ VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3);
 /*仕事詳細テーブル1-1（2020年9月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
 VALUES(1, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
-
-/*仕事詳細テーブル1-2（2020年9月3日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(2, '2020-09-03', '2020-09-03 09:00:00', '12:00:00', '2020-09-03 17:00:00', 420, 1);
-
-/*仕事詳細テーブル1-3（2020年10月1日）*/
+VALUES(2, '2020-09-02', '2020-09-02 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(3, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 1);
-
-/*仕事詳細テーブル1-4（2020年11月1日）*/
+VALUES(3, '2020-09-03', '2020-09-03 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(4, '2020-11-01', '2020-11-01 09:00:00', '12:00:00', '2020-11-01 17:00:00', 420, 1);
-
-/*仕事詳細テーブル1-5（2021年8月30日）*/
+VALUES(4, '2020-09-04', '2020-09-04 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(5, '2021-08-30', '2021-08-30 09:00:00', '12:00:00', '2021-08-30 17:00:00', 420, 1);
-
-
-/*仕事詳細テーブル2-1（2021年9月1日）*/
+VALUES(7, '2020-09-07', '2020-09-07 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(6, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 2);
-
-/*仕事詳細テーブル2-2（2021年10月1日）*/
+VALUES(8, '2020-09-08', '2020-09-08 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(7, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 2);
-
-
-/*仕事詳細テーブル3-1（2020年9月1日）*/
+VALUES(9, '2020-09-09', '2020-09-09 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(8, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 3);
+VALUES(10, '2020-09-10', '2020-09-10 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
 
-/*仕事詳細テーブル3-2（2020年10月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
-VALUES(9, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 3);
+VALUES(11, '2020-09-11', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(14, '2020-09-14', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(15, '2020-09-15', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(16, '2020-09-16', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(17, '2020-09-17', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(18, '2020-09-18', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(21, '2020-09-21', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(22, '2020-09-22', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(23, '2020-09-23', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(24, '2020-09-24', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(25, '2020-09-25', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(28, '2020-09-28', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(29, '2020-09-29', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+VALUES(30, '2020-09-30', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1);
+
+
+
+
+
+
+
+
+
+
+
+
+-- /*仕事詳細テーブル1-2（2020年9月3日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(2, '2020-09-03', '2020-09-03 09:00:00', '12:00:00', '2020-09-03 17:00:00', 420, 1);
+-- 
+-- /*仕事詳細テーブル1-3（2020年10月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(3, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 1);
+-- 
+-- /*仕事詳細テーブル1-4（2020年11月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(4, '2020-11-01', '2020-11-01 09:00:00', '12:00:00', '2020-11-01 17:00:00', 420, 1);
+-- 
+-- /*仕事詳細テーブル1-5（2021年8月30日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(5, '2021-08-30', '2021-08-30 09:00:00', '12:00:00', '2021-08-30 17:00:00', 420, 1);
+-- 
+-- 
+-- /*仕事詳細テーブル2-1（2021年9月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(6, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 2);
+-- 
+-- /*仕事詳細テーブル2-2（2021年10月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(7, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 2);
+-- 
+-- 
+-- /*仕事詳細テーブル3-1（2020年9月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(8, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 3);
+-- 
+-- /*仕事詳細テーブル3-2（2020年10月1日）*/
+-- INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId)
+-- VALUES(9, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 3);

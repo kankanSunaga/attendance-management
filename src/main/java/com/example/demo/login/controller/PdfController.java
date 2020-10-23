@@ -32,6 +32,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.DayOfWeekService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 import com.itextpdf.html2pdf.ConverterProperties;
@@ -53,6 +54,9 @@ public class PdfController {
 	@Autowired
 	WorkTimeService workTimeService;
 
+	@Autowired
+	DayOfWeekService dayOfWeekService;
+
 	// yyyy年MM月
 	private String setStrYearMonth;
 
@@ -60,10 +64,10 @@ public class PdfController {
 	public String getPdfDownload(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth
-//			LocalDate minWorkDay, LocalDate maxWorkDay
 	) throws IOException {
-		
+
 		model.addAttribute("yearMonthUrl", yearMonth);
+		
 		// yyyy-MM-01(月初のString)の作成
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(yearMonth);
@@ -93,7 +97,7 @@ public class PdfController {
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
 
-		// ***** PDF作成処理 *****
+		// PDF作成処理
 		// テンプレートエンジンを初期化する
 		final TemplateEngine engine = initializeTemplateEngine();
 
@@ -126,7 +130,7 @@ public class PdfController {
 			document.close();
 		}
 
-		// ***** PDFダウンロード処理 *****
+		// PDFダウンロード処理
 		Path data = Paths.get("output/report.pdf");
 
 		// ダウンロード対象のファイルデータがnullの場合はエラー画面に遷移
@@ -171,27 +175,22 @@ public class PdfController {
 		return templateEngine;
 	}
 
-	// ***** PDFに書き込む処理 *****
+	// PDFに書き込む処理
 	private IContext makeContext(@ModelAttribute Model model, int userId, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay) {
 
 		final IContext ctx = new Context();
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-		
-		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 
+		// 空のカレンダー作成
+		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
+		// 空のカレンダーにデータを追加
 		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
-		
-		List<WorkTime> aiueo = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-		
-		System.out.println(aiueo);
-		
-		// PDFに書き込む用のデータ		
+
+		// PDFに書き込む用のデータ
 		((Context) ctx).setVariable("userName", userService.selectOne(userId).getUserName());
 		((Context) ctx).setVariable("weekFormatter", DateTimeFormatter.ofPattern("E", Locale.JAPANESE));
-		((Context) ctx).setVariable("string", "String");
-
-		
+		((Context) ctx).setVariable("dayOfWeek", dayOfWeekService);
 		((Context) ctx).setVariable("yearMonth", setStrYearMonth);
 		((Context) ctx).setVariable("contract", setCalenderObject);
 		((Context) ctx).setVariable("totalTime", workTimeService.samWorkTimeMinute(workTimes));
