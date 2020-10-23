@@ -56,17 +56,17 @@ th {
 				<tr th:each="contractDay : ${contract}">
 					<!-- 日付 -->
 					<td th:if="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
-						<span style="color:#FF0000;">[[${contractDay.value.workDay.getDayOfMonth()}]]</span>
+						<span th:text="${contractDay.value.workDay.getDayOfMonth()}" style="color:#FF0000;"></span>
 					</td>
 					<td th:unless="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
-						<span>[[${contractDay.value.workDay.getDayOfMonth()}]]</span>
+						<span th:text="${contractDay.value.workDay.getDayOfMonth()}"></span>
 					</td>
 					<!-- 曜日 -->
 					<td th:if="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
-						<span style="color:#FF0000;">[[${contractDay.value.workDay.format(weekFormatter)}]]</span>
+						<span th:text="${contractDay.value.workDay.format(weekFormatter)}" style="color:#FF0000;"></span>
 					</td>
 					<td th:unless="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
-						<span>[[${contractDay.value.workDay.format(weekFormatter)}]]</span>
+						<span th:text="${contractDay.value.workDay.format(weekFormatter)}"></span>
 					</td>
 					<!-- 勤務開始時間 -->
 					<td th:text="${contractDay.value.stringStartTime}"></td>
@@ -76,7 +76,7 @@ th {
 					<td th:text="${contractDay.value.breakTime}"></td>
 					<!-- 勤務時間 -->
 					<td>
-						<span th:if="${contractDay.value.workTimeMinute}">[[${contractDay.value.workTimeMinute / 60}]]h [[${contractDay.value.workTimeMinute % 60}]]m</span>
+						<span th:if="${contractDay.value.workTimeMinute}" th:text="${contractDay.value.workTimeMinute / 60} + 'h ' + ${contractDay.value.workTimeMinute % 60} + 'm'"></span>
 						<span th:unless="${contractDay.value.workTimeMinute}"></span>
 					</td>
 				</tr>
@@ -87,7 +87,7 @@ th {
 		<table class="table" border="1" align="right" width="40%">
 			<tr>
 				<th>合計稼働時間</th>
-				<th><span th:text="${totalTime / 60} + h + ' ' + ${totalTime % 60} + m"></span></th>　<!-- エラーでる -->
+				<th><span th:text="${totalTime / 60} + h + ' ' + ${totalTime % 60} + m"></span></th>
 			</tr>
 			<tr>
 				<th>合計稼働日数</th>
