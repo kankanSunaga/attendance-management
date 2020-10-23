@@ -102,6 +102,11 @@
 			<artifactId>itext</artifactId>
 			<version>4.2.2</version>
 		</dependency>
+		<!-- SpringBatch -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
