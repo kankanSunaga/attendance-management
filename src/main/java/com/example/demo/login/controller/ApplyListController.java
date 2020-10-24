@@ -33,6 +33,15 @@ public class ApplyListController {
 		return "admin/applyList";
 		
 	}
+	
+	@GetMapping("/changeApplyList")
+	public String getChangeApplyList(Model model){
+		
+		return "admin/changeApplyList";
+		
+	}
+	
+	
 	//動的URLの作成
 	@GetMapping("/applyDetail/{userId}")
 	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
