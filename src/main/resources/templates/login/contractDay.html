@@ -14,11 +14,9 @@
 	<!-- コンテンツ -->
 	<br><br>
 	<div class="container">
-		<table class="table">
+		<table class="table table-bordered">
 			<thead class="thead-dark">
-				<tr>
-					<th th:text=${yearMonth}></th>
-				</tr>
+				
 				<tr>
 					<th>勤務日</th>
 					<th>始業時間</th>
@@ -28,12 +26,20 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="contractDay : ${contractDay}">
-					<td th:text="${contractDay.workDay}"></td>
-					<td th:text="${#temporals.format(contractDay.startTime, 'HH:mm')}"></td>
-					<td th:text="${contractDay.breakTime}"></td>
-					<td th:text="${#temporals.format(contractDay.endTime, 'HH:mm')}"></td>
-					<td th:text="${contractDay.workTimeMinute / 60} + 時 + ${contractDay.workTimeMinute % 60} + 分"></td>
+				<tr th:each ="contractDay : ${contract}">
+					<!-- 日付 -->
+					<td th:text ="${contractDay.value.workDay}">
+					<!-- 勤務開始時間 -->
+					<td th:text="${#temporals.format(contractDay.value.StartTime, 'HH:mm')}"></td>
+					<!-- 勤務終了時間 -->
+					<td th:text="${#temporals.format(contractDay.value.EndTime, 'HH:mm')}"></td>
+					<!-- 休憩時間 -->
+					<td th:text="${contractDay.value.breakTime}"></td>
+					<!-- 勤務時間 -->
+					<td>
+						<span th:if="${contractDay.value.workTimeMinute}" th:text="${contractDay.value.workTimeMinute / 60} + 'h ' + ${contractDay.value.workTimeMinute % 60} + 'm'"></span>
+						<span th:unless="${contractDay.value.workTimeMinute}"></span>
+					</td>
 				</tr>
 			</tbody>
 		</table>
