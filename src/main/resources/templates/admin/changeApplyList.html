@@ -14,61 +14,59 @@
 	<div th:replace="login/headerLayout.html :: header"></div>
 		<div class="container" >
 			<table class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th>名前</th>
-			      <th>申請時間</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <th >富田</th>
-			      <td>10:00</td>
-			      <td>
-			      	<!--許可ボタン -->
-			      	<a class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</a>
-			     	<!--拒否ボタン -->
-			     	<a class="btn btn-primary" data-toggle="modal" data-target="#rejectModal">拒否</a>
-			      </td>
-			    </tr>
-			  </tbody>
+				<thead class="thead-dark">
+					<tr>
+						<th>名前</th>
+						<th>申請時間</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th >富田</th>
+						<td>10:00</td>
+						<td>
+							<!--許可ボタン -->
+							<a class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</a>
+							<!--拒否ボタン -->
+							<a class="btn btn-primary" data-toggle="modal" data-target="#rejectModal">拒否</a>
+			     		</td>
+					</tr>
+				</tbody>
 			</table>
 			<!--許可ボタンのモーダル -->
 			<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
-							</div>
-							<div class="modal-body">
-								<label>申請を許可しますか？</label>
-							</div>
-		 					<div class="modal-footer">
-		 						<button type="submit" class="btn btn-danger">はい</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>								
-							</div>
+				<div class="modal-dialog">
+					<div class="modal-content">
+	 					<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
+						</div>
+						<div class="modal-body">
+							<label>申請を許可しますか？</label>
+						</div>
+	 					<div class="modal-footer">
+	 						<button type="submit" class="btn btn-danger">はい</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>								
 						</div>
 					</div>
 				</div>
-				<!--拒否ボタンのモーダル -->
-				<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
-							</div>
-							<div class="modal-body">
-								<label>申請を拒否しますか？</label>
-							</div>
-		 					<div class="modal-footer">
-		 						<button type="submit" class="btn btn-danger">はい</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>								
-							</div>
+			</div>
+			<!--拒否ボタンのモーダル -->
+			<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+	 					<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
+						</div>
+						<div class="modal-body">
+							<label>申請を拒否しますか？</label>
+						</div>
+	 					<div class="modal-footer">
+	 						<button type="submit" class="btn btn-danger">はい</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>								
 						</div>
 					</div>
 				</div>
-		</div>
-	</div>
-	
-	
+			</div>
+		</div>	
 </body>
+</html>
