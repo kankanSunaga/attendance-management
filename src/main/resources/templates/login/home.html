@@ -1,31 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8"></meta>
-	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
-	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
-	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	<title>home</title>
+<meta charset="UTF-8"></meta>
+<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<title>home</title>
 </head>
 <body>
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
-	<br><br>
-	<br><br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<div class="container">
 		<div class="text-center">
 			<div class="jumbotron">
-				<label >日付：</label><label th:text="${today}"></label><br>
-				<label>契約時間まであと：</label>
-					<!-- 達成したかどうかの分岐 -->
-					<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}" th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
-					<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
-				<label>今月の勤務時間：</label><label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br><br>
+				<label>日付：</label><label th:text="${today}"></label><br> <label>契約時間まであと：</label>
+				<!-- 達成したかどうかの分岐 -->
+				<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}"
+					th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
+				<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
+				<label>今月の勤務時間：</label><label
+					th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br>
+				<br>
 			</div>
-			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
-			<a class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
+			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a> <a
+				class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
+		</div>
+	</div>
+	<br>
+	<!-- 勤怠を締めるボタン -->
+	<div class="container">
+		<div class="row mb-5">
+			<div class="col-2">
+				<button type="button" class="btn btn-danger mb-12"
+					data-toggle="modal" data-target="#testModal">勤怠を締める</button>
+			</div>
+		</div>
+	</div>
+	<!-- 確認モーダル画面 -->
+	<div class="modal fade" id="testModal" tabindex="-1" role="dialog"
+		aria-labelledby="basicModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">今月の勤怠ステータス変更確認画面</h4>
+				</div>
+				<div class="modal-body">
+					<label>本当に今月の勤怠を締めますか？</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger">勤怠を締める</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
