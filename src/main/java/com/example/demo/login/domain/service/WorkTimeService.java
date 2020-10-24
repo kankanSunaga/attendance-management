@@ -60,7 +60,6 @@ public class WorkTimeService {
 	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) {
 		return dao.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 	}
-
 	// 月の勤務時間（分）の合計を返す
 	public int samWorkTimeMinute(List<WorkTime> workTimes) {
 
