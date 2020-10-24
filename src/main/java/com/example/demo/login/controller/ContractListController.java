@@ -1,12 +1,11 @@
 package com.example.demo.login.controller;
 
-import java.io.IOException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,12 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IContext;
 
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
@@ -30,91 +30,115 @@ import com.example.demo.login.domain.service.WorkTimeService;
 
 @Controller
 public class ContractListController {
-
+	
 	@Autowired
 	UserService userService;
-
+	
 	@Autowired
 	ContractService contractService;
-
+	
 	@Autowired
 	WorkTimeService workTimeService;
+	
+	private String setStrYearMonth;
+	
+	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 
-	@GetMapping("/contracts") // sessionでuserId渡されるため静的URL
-	public String getContractList(Model model, HttpServletRequest request, HttpServletResponse response) {
-
+	public String getContractList(Model model, HttpServletRequest request) {
+						
 		// セッションの保持(userId)
 		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
-
+		int userId = (int)session.getAttribute("userId");
+		
 		List<Contract> contractList = contractService.selectMany(userId);
-
+		
 		model.addAttribute("contractList", contractList);
-
+		
 		return "login/contractList";
 	}
-
+	
 	@GetMapping("/contract/{contractId}")
-	public String getContractMonth(@ModelAttribute WorkTime form, Model model,
-			@PathVariable("contractId") int contractId) {
-
+	public String getContractMonth(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId")int contractId){
+		
 		List<WorkTime> contractMonthList = workTimeService.selectMany(contractId);
-
+		
 		// 「yyyy年MM月」と「yyyyMM」のStringを作成する処理
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-
-		for (int i = 0; i < contractMonthList.size(); i++) {
+		
+		for(int i = 0; i < contractMonthList.size(); i++) {
 			Map<String, String> map = new HashMap<String, String>();
 			WorkTime workTime = contractMonthList.get(i);
 			LocalDate localDate = workTime.getWorkDay();
-
-			// 2つのフォーマットの作成とLocalDateからStringに型の変換
+			
+			//2つのフォーマットの作成とLocalDateからStringに型の変換
 			DateTimeFormatter viewFormat = DateTimeFormatter.ofPattern("yyyy年MM月");
 			DateTimeFormatter urlFormat = DateTimeFormatter.ofPattern("yyyyMM");
 			String listYearMonth = localDate.format(viewFormat);
 			String urlYearMonth = localDate.format(urlFormat);
-
+			
 			map.put("view", listYearMonth);
 			map.put("url", urlYearMonth);
 			list.add(map);
 		}
-
+		
 		model.addAttribute("contractMonth", list);
-
-		// 会社名を取得
+		
+		
+		//会社名を取得
 		Contract contract = contractService.activeSelectOne(contractId);
-		String officeName = contract.getOfficeName();
+		String officeName = contract.getOfficeName() ;
 		model.addAttribute("officeName", officeName);
-
+		
 		return "login/contractMonth";
 	}
-
+	
+	
 	@GetMapping("/contract/{contractId}/{yearMonth}")
 	public String getContractDay(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
-			@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth,
-			LocalDate minWorkDay, LocalDate maxWorkDay) throws IOException {
-
-		model.addAttribute("yearMonthUrl", yearMonth);
-
+			HttpServletResponse response, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth) {
 		// yyyy-MM-01(月初のString)の作成
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(yearMonth);
 		stringBuilder.insert(4, "-");
 		stringBuilder.append("-01");
 		String strMinWorkDay = stringBuilder.toString();
-
+		
 		// 引数のminWorkDayとmaxWorkDayの値を代入
-		minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
-		maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
+		
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		model.addAttribute("contractDay", contractDayList);
-
-		// yyyy年MM月の作成
+		
+		//yyyy年MM月の作成
 		String strMonth = strMinWorkDay.replace("-01", "月");
 		String strYearMonth = strMonth.replace("-", "年");
-
+		
+		model.addAttribute("contractId", contractId);
 		model.addAttribute("yearMonth", strYearMonth);
+		model.addAttribute("yearMonthUrl", yearMonth);
+		
+		// セッション取得(userId)
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId");
 
+				
+		
+		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
+		
+		// 空のカレンダー作成
+		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
+		// 空のカレンダーにデータを追加
+		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
+		
+		
+		model.addAttribute("yearMonth", setStrYearMonth);
+		model.addAttribute("contract", setCalenderObject);
+		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
+
+		
+		
 		return "login/contractDay";
 	}
 }

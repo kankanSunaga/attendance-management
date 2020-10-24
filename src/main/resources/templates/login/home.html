@@ -25,6 +25,7 @@
 				<label>今月の勤務時間：</label><label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br><br>
 			</div>
 			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
+			<a class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
 		</div>
 	</div>
 </body>
