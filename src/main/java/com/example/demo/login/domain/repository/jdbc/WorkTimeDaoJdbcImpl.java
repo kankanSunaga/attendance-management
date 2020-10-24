@@ -102,18 +102,6 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
 			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
 			workTime.setContractId((int) map.get("contractId"));
-			
-			
-			// ******************** PDF用のフォーマットに変換 ********************
-			// workDayから日を取り出す
-			int dayNumber = workTime.getWorkDay().getDayOfMonth();
-			workTime.setDay(dayNumber);
-
-			// workDayから曜日を取り出す時のフォーマットを作成
-			DateTimeFormatter weekFormat = DateTimeFormatter.ofPattern("E", Locale.JAPANESE);
-			// workDayから曜日を取り出す
-			String dayOfWeek = workTime.getWorkDay().format(weekFormat);
-			workTime.setDayOfWeek(dayOfWeek);
 
 			// 時間用フォーマット作成
 			DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
