@@ -43,7 +43,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<p class="btn btn-primary" style="text-align: center">PDFをダウンロード</p>
+		<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 	</div>
 </body>
 </html>

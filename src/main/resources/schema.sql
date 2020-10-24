@@ -21,6 +21,15 @@ CREATE TABLE IF NOT EXISTS contract (
 	userId INT
 );
 
+
+CREATE TABLE IF NOT EXISTS month (
+ 	monthId INT IDENTITY(1, 1) PRIMARY KEY,
+ 	year INT,
+ 	month INT,
+ 	deadlineStatus BOOLEAN
+ );
+
+
 CREATE TABLE IF NOT EXISTS workTime (
 	workTimeId INT IDENTITY(1, 1) PRIMARY KEY,
 	workDay DATE,
@@ -28,5 +37,18 @@ CREATE TABLE IF NOT EXISTS workTime (
 	breakTime TIME,
 	endTime TIMESTAMP,
 	workTimeMinute INT,
-	contractId INT
+	contractId INT,
+	monthId INT
 );
+
+CREATE TABLE IF NOT EXISTS test (
+	testName VARCHAR(50),
+	testAge INT,
+	testDate DATE,
+	testTime TIME
+);
+
+CREATE TABLE IF NOT EXISTS monthTable (
+	workDay DATE
+);
+

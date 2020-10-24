@@ -2,8 +2,10 @@ package com.example.demo.login.domain.repository.jdbc;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +62,10 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 				.queryForList("SELECT * FROM workTime WHERE contractId = ? ORDER BY workDay DESC", contractId);
 
 		List<WorkTime> contractMonthList = new ArrayList<>();
-		
+
 		for (Map<String, Object> map : getList) {
 			WorkTime workTime = new WorkTime();
-			
+
 			workTime.setWorkTimeId((int) map.get("workTimeId"));
 			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
 			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
@@ -76,21 +78,23 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		}
 		return contractMonthList;
 	}
-	
+
 	// workTimeテーブルから月のデータを全件取得（日付で範囲検索）
-	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) throws DataAccessException {
-		
+	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay)
+			throws DataAccessException {
+
 		// LocalDateからsql.Dateに型変換（次のqueryでSQLで扱えるようにするため）
 		java.sql.Date sqlMinWorkDay = java.sql.Date.valueOf(minWorkDay);
 		java.sql.Date sqlMaxWorkDay = java.sql.Date.valueOf(maxWorkDay);
-		
-		List<Map<String, Object>> getList = jdbc
-				.queryForList("SELECT * FROM workTime WHERE contractId = ? AND workDay >= ? AND workDay <= ? ORDER BY workDay ASC", contractId, sqlMinWorkDay, sqlMaxWorkDay);
-		
+
+		List<Map<String, Object>> getList = jdbc.queryForList(
+				"SELECT * FROM workTime WHERE contractId = ? AND workDay >= ? AND workDay <= ? ORDER BY workDay ASC",
+				contractId, sqlMinWorkDay, sqlMaxWorkDay);
+
 		List<WorkTime> contractDayList = new ArrayList<>();
 		for (Map<String, Object> map : getList) {
 			WorkTime workTime = new WorkTime();
-			
+
 			workTime.setWorkTimeId((int) map.get("workTimeId"));
 			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
 			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
@@ -98,10 +102,19 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
 			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
 			workTime.setContractId((int) map.get("contractId"));
-			
+
+			// 時間用フォーマット作成
+			DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
+			// startTimeのフォーマットを変更
+			String stringStartTime = workTime.getStartTime().format(timeFormat);
+			workTime.setStringStartTime(stringStartTime);
+			// endTimeのフォーマットを変更
+			String stringEndTime = workTime.getEndTime().format(timeFormat);
+			workTime.setStringEndTime(stringEndTime);
+			// ******************** PDF用のフォーマットに変換 ********************
+
 			contractDayList.add(workTime);
 		}
 		return contractDayList;
 	}
-	
 }

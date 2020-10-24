@@ -122,15 +122,23 @@ public class ContractListController {
 		// セッション取得(userId)
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
+
+				
+		
+		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		
 		// 空のカレンダー作成
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 		// 空のカレンダーにデータを追加
 		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
-				
+		
+		
 		model.addAttribute("yearMonth", setStrYearMonth);
 		model.addAttribute("contract", setCalenderObject);
-						
+		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
+
+		
+		
 		return "login/contractDay";
 	}
 }
