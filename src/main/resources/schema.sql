@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS month (
  	monthId INT IDENTITY(1, 1) PRIMARY KEY,
  	year INT,
  	month INT,
- 	deadlineStatus BOOLEAN
+ 	deadlineStatus BOOLEAN,
+ 	requestStatus BOOLEAN
  );
 
 

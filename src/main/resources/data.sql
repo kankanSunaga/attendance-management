@@ -25,8 +25,8 @@ VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3);
 
 
 /*月のステータステーブル*/
- INSERT INTO month (monthId, year, month, deadlineStatus)
- VALUES(1, 2020, 9, 'false');
+ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus)
+ VALUES(1, 2020, 9, 'false', 'false');
 
 
 /*仕事詳細テーブル1-1（2020年9月1日）*/
