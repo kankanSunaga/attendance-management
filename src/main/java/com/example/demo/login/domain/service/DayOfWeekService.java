@@ -1,30 +1,36 @@
 package com.example.demo.login.domain.service;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Locale;
-
 
 @Service
 public class DayOfWeekService {
-	public static boolean hasHoliday(LocalDate termination) throws IOException{
-		
-		//LocalDate型の変数を曜日にして、String型に変換
+
+	@Autowired
+	DayOfWeekService dayOfWeekService;
+
+	public boolean hasHoliday(LocalDate termination) throws IOException {
+
+		// LocalDate型の変数を曜日にして、String型に変換
 		String holiday = termination.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-		//System.out.println(holiday);
-		
-		//土日だったらtrueを返す
-		if (holiday.equals("Sunday")||holiday.equals("Saturday")) {
+		// System.out.println(holiday);
+
+		// 土日だったらtrueを返す
+		if (holiday.equals("Sunday") || holiday.equals("Saturday")) {
 			return true;
 		}
-		
-		//祝日判定APIを叩いている
+
+		// 祝日判定APIを叩いている
 		final String API_URL = "http://s-proj.com/utils/checkHoliday.php?kind=h&date=" + termination;
 
 		URL url = null;
@@ -45,16 +51,30 @@ public class DayOfWeekService {
 		} catch (IOException e) {
 			e.printStackTrace();
 
-		}finally {
+		} finally {
 			isr.close();
 			br.close();
 		}
-		
-		//祝日かどうかの判定
+
+		// 祝日かどうかの判定
 		if (writeContent.equals("holiday")) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
-	}	
+	}
+
+	public LocalDate getLastWeekDay(LocalDate termination) throws IOException {
+
+		LocalDate lastDate = termination.with(TemporalAdjusters.lastDayOfMonth());
+
+		while (true) {
+			if (dayOfWeekService.hasHoliday(lastDate)) {
+				lastDate = lastDate.minusDays(1);
+			} else {
+				break;
+			}
+		}
+		return lastDate;
+	}
 }
