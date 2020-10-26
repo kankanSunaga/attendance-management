@@ -3,7 +3,6 @@ package com.example.demo.login.domain.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +22,6 @@ public class DayOfWeekService {
 
 		// LocalDate型の変数を曜日にして、String型に変換
 		String holiday = termination.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-		// System.out.println(holiday);
 
 		// 土日だったらtrueを返す
 		if (holiday.equals("Sunday") || holiday.equals("Saturday")) {
