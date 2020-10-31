@@ -17,23 +17,18 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>名前</th>
-						<th>申請時間</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th >富田</th>
-						<td>10:00</td>
+					<tr th:each ="requestUser: ${requestUserList}">
+						<td th:text="${requestUser.userName}"></td>
 						<td>
-							<!--許可ボタン -->
-							<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
-							<!--拒否ボタン -->
-							<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">拒否</button>
+						<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
+						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">拒否</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<!--許可ボタンのモーダル -->
 			<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -50,7 +45,6 @@
 					</div>
 				</div>
 			</div>
-			<!--拒否ボタンのモーダル -->
 			<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
