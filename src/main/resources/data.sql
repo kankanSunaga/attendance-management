@@ -25,8 +25,18 @@ VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3);
 
 
 /*月のステータステーブル*/
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus)
- VALUES(1, 2020, 9, 'false', 'false');
+ INSERT INTO month (contractId, monthId, year, month, deadlineStatus, requestStatus)
+ VALUES(1, 1, 2020, 9, 'true', 'false');
+ 
+ INSERT INTO month (contractId, monthId, year, month, deadlineStatus, requestStatus)
+ VALUES(1, 2, 2020, 10, 'true', 'false');
+ 
+ INSERT INTO month (contractId, monthId, year, month, deadlineStatus, requestStatus)
+ VALUES(2, 3, 2020, 10, 'true', 'false');
+ 
+ INSERT INTO month (contractId, monthId, year, month, deadlineStatus, requestStatus)
+ VALUES(2, 4, 2020, 10, 'true', 'false');
+ 
 
 
 /*仕事詳細テーブル1-1（2020年9月1日）*/
