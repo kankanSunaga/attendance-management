@@ -44,9 +44,12 @@ public class ApplyListController {
 	
 	//動的URLの作成
 	@GetMapping("/applyDetail/{userId}")
-	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
-			@PathVariable("userId")int userId) {
+	public String getUserDetail(@ModelAttribute SignupForm form, Model model, @PathVariable("userId")int userId) {
+		
 		model.addAttribute("contents","admin/applyDetail::admin_contents");
+		
+		//TODO selectOneメソッドではWHERE句がなく、未承認ユーザーのみの取得はできないので、
+		//未承認ユーザーを1件取得する処理を作成する
 		
 		User user = userService.selectOne(userId);
 		
