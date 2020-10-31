@@ -32,17 +32,17 @@ import com.example.demo.login.domain.repository.MonthDao;
  		
  		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user INNER JOIN contract ON user.userId = contract.userId INNER JOIN month ON contract.contractId=month.contractId WHERE requestStatus = 'true'");
  		
- 		List<User> RuquestuserList = new ArrayList<>();
+ 		List<User> RuquestUserList = new ArrayList<>();
  		
  		for (Map<String, Object> map : getList) {
 			User user = new User();
 
 			user.setUserName((String) map.get("UserName"));
 			
-			RuquestuserList.add(user);
+			RuquestUserList.add(user);
 		}
  		
-		return RuquestuserList;
+		return RuquestUserList;
  		
  	}
 
