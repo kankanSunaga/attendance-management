@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS month (
  	year INT,
  	month INT,
  	deadlineStatus BOOLEAN,
- 	requestStatus BOOLEAN
+ 	requestStatus BOOLEAN,
+ 	contractId INT
  );
 
 

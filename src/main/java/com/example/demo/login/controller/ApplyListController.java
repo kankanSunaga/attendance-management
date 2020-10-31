@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserService;
 @Controller
 public class ApplyListController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MonthService monthService;
 	
 	@GetMapping("/applyList")
 	public String getApplyList(Model model){
@@ -36,6 +40,12 @@ public class ApplyListController {
 	
 	@GetMapping("/changeApplyList")
 	public String getChangeApplyList(Model model){
+		
+		List<User> requestUserList= monthService .getRequestUsers();
+		
+		model.addAttribute("requestUserList",requestUserList);
+		
+		System.out.println(requestUserList);
 		
 		return "admin/changeApplyList";
 		

@@ -17,13 +17,12 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>名前</th>
-						<th>申請時間</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<th >富田</th>
-						<td>10:00</td>
+						 <tr th:each ="requestUser: ${requestUserList}">
+						<td th:text="${requestUser.userName}"></td>
 						<td>
 							<!--許可ボタン -->
 							<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
