@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
+import com.example.demo.login.domain.model.IdList;
 import com.example.demo.login.domain.model.User;
 
 
@@ -30,5 +31,6 @@ public interface UserDao {
 	// emailからユーザーIDを取得する
 	public User selectByEmail(String email) throws DataAccessException;
 	
+	public IdList selectId(int userId) throws DataAccessException;
 }
 
