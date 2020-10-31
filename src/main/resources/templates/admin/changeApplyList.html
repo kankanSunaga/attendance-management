@@ -20,14 +20,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						 <tr th:each ="requestUser: ${requestUserList}">
+					<tr th:each ="requestUser: ${requestUserList}">
 						<td th:text="${requestUser.userName}"></td>
 						<td>
-							<!--許可ボタン -->
-							<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
-							<!--拒否ボタン -->
-							<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">拒否</button>
+						<!--許可ボタン -->
+						<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
+						<!--拒否ボタン -->
+						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">拒否</button>
 						</td>
 					</tr>
 				</tbody>

@@ -45,8 +45,6 @@ public class ApplyListController {
 		
 		model.addAttribute("requestUserList",requestUserList);
 		
-		System.out.println(requestUserList);
-		
 		return "admin/changeApplyList";
 		
 	}
