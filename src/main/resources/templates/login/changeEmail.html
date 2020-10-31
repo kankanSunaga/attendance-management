@@ -15,7 +15,7 @@
 	<!-- コンテンツ -->
 	<br><br>
 	<div class="text-center">
-		<form method="post" th:action="@{/changeEmail}">
+		<form method="post" th:action="@{/changeEmail}" th:object="${changeEmailForm}">
 			<!-- changeEmail画面 -->
 			<div class="container">
 				<h1>メールアドレス変更画面</h1>
@@ -23,20 +23,26 @@
 				<!-- 現在のメールアドレスの表示 -->
 				<div class="col-sm-5 jumbotron">
 					<label>現在登録されているメールアドレス</label>
-					<h4>prin@xxx.co.jp</h4>
+					<h4 th:text="${user.email}"></h4>
 				</div>
 				<!-- 新しいメールアドレスの入力 -->
 				<div class="col-sm-3">
 					<label>新しいメールアドレスの入力</label>
-					<input class="form-control" type="text" name="newPassword" required>
+					<input type="text" th:field="*{newEmail}" name="newEmail" required>
 					<br>
 				</div>
 				<!-- 新しいメールアドレスの確認 -->
 				<div class="col-sm-3">
 					<label>新しいメールアドレスの確認</label>
-					<input class="form-control" type="text" name="newConfirmPassword" required>
+					<input type="text" th:field="*{newConfirmEmail}" name="newConfirmEmail" required>
 					<br>
 				</div>
+				<!-- エラーメッセージの一覧表示 -->
+        		<br/>
+				<div class = errerMessege th:each="error:${#fields.detailedErrors()}">
+					<span th:text="${error.message}">Error message</span>
+				</div>
+				<br>
 			</div>
 			<!-- モーダルを開くボタン -->
 			<div class="container">
@@ -57,7 +63,7 @@
 							<label>本当にメールアドレスを変更しますか？</label>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-danger">変更する</button>
+							<button type="submit" class="btn btn-danger">変更する</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 						</div>
 					</div>

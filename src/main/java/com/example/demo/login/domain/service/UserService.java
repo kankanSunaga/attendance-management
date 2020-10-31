@@ -26,14 +26,17 @@ public class UserService {
     public int countPermission() {
     	return dao.countPermission() ;
     }
+    
     //未承認ユーザー取得メソッド
     public List<User> selectPermission(){
     	return dao.selectPermission();    	
     }
-    //１件取得用メッソド
+    
+    //１件取得用メソッド
     public User selectOne(int userId) {
     	return dao.selectOne(userId);
     }
+    
     //承認ステータス更新用メソッド
     public boolean updatePermission(User user) {
     	
@@ -45,6 +48,7 @@ public class UserService {
     	}
     	return result;
     }
+    
     //凍結ステータス更新用メソッド
     public boolean updateFrozen(User user) {
     	
@@ -63,5 +67,17 @@ public class UserService {
     	
     	return userId;
     }
+    
+
+    public boolean updateEmail(User user) {
+    	System.out.println(user);
+    	int status = dao.updateEmail(user);
+    	boolean updateEmailResult = false;
+    	if(status > 0) {
+    		updateEmailResult = true;
+    	}
+    	return updateEmailResult;
+    }
+    
 }
 
