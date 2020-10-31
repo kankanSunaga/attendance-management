@@ -24,18 +24,12 @@ public class ApplyListController {
 	
 	@GetMapping("/applyList")
 	public String getApplyList(Model model){
-		//コンテンツ部分に未承認ユーザー一覧を表示する文字列登録
-		model.addAttribute("contents","admin/applyList::admin_contents");
 		
-		//未承認ユーザー一覧の生成
 		List<User> userList= userService.selectPermission();
 		
-		//Modelにユーザーリストを登録
 		model.addAttribute("userList",userList);
-		
-		
-		return "admin/applyList";
-		
+				
+		return "admin/applyList";		
 	}
 	
 	@GetMapping("/changeApplyList")
@@ -49,8 +43,6 @@ public class ApplyListController {
 		
 	}
 	
-	
-	//動的URLの作成
 	@GetMapping("/applyDetail/{userId}")
 	public String getUserDetail(@ModelAttribute SignupForm form, Model model,
 			@PathVariable("userId")int userId) {
@@ -58,7 +50,6 @@ public class ApplyListController {
 		
 		User user = userService.selectOne(userId);
 		
-		//Userクラスをフォームクラスに変換
 		form.setUserId(user.getUserId());
 		form.setUserName(user.getUserName());
 		form.setEmail(user.getEmail());
@@ -68,7 +59,6 @@ public class ApplyListController {
 		form.setFrozen(user.isFrozen());
 		form.setRequestedAt(user.getRequestedAt());
 		
-		//Modelに登録
 		model.addAttribute("signupForm",form);
 		
 		return "admin/applyDetail";
