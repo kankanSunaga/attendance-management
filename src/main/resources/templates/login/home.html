@@ -25,20 +25,21 @@
 				<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}"
 					th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
 				<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
-				<label>今月の勤務時間：</label><label
-					th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label><br>
-				<br>
+				<label>今月の勤務時間：</label>
+				<label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label>
 			</div>
-			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a> <a
-				class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
+			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
+			<a class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
 		</div>
 	</div>
 	<br>
 	<!-- 勤怠を締めるボタン -->
-	<div class="container">
+	<div class="container text-center">
 		<div class="row mb-5">
 			<div class="col-2">
-				<button th:if="${deadlineStatus}" type="button" class="btn btn-danger mb-12"
+				<label th:if="${deadline}">勤怠を締め切ってください。<br>締め切らなかった場合毎月1日に自動で締められます。</label>
+				<br>
+				<button th:if="${deadline}" type="button" class="btn btn-danger mb-12"
 					data-toggle="modal" data-target="#testModal">勤怠を締める</button>
 			</div>
 		</div>
