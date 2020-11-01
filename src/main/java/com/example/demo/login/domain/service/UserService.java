@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.IdList;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.UserDao;
 
@@ -67,9 +66,5 @@ public class UserService {
 	// emailで検索したユーザーのuserIdを返却
 	public User selectByEmail(String email) {
 		return dao.selectByEmail(email);
-	}
-
-	public IdList selectId(int userId) {
-		return dao.selectId(userId);
 	}
 }

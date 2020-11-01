@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.login.domain.model.IdList;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.UserDao;
 
@@ -138,18 +137,5 @@ public class UserDaoJdbcImpl implements UserDao {
 		user.setRequestedAt((String) map.get("RequestedAt"));
 
 		return user;
-	}
-
-	public IdList selectId(int userId) throws DataAccessException {
-		Map<String, Object> map = jdbc.queryForMap(
-				"SELECT MAX(contract.contractId), MAX(month.monthId) FROM user INNER JOIN contract ON user.userId = contract.userId INNER JOIN month ON contract.contractId = month.contractId WHERE user.userId = ?",
-				userId);
-
-		IdList idList = new IdList();
-
-		idList.setContractId((int) map.get("MAX(contract.contractId)"));
-		idList.setMonthId((int) map.get("MAX(month.monthId)"));
-
-		return idList;
 	}
 }

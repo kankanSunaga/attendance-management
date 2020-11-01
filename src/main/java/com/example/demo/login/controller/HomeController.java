@@ -91,18 +91,19 @@ public class HomeController {
 		LocalDate nowDate = LocalDate.now();
 
 		// 各ID取得
-		int contractId = userService.selectId(userId).getContractId();
-		int monthId = userService.selectId(userId).getMonthId();
+		int contractId = contractService.latestContractId(userId).getContractId();
+		int monthId = monthService.latestMonthId(userId).getMonthId();
+		System.out.println(contractId);
 
 		// 最終平日判定
 		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);
 
 		// ステータス情報取得
-		boolean deadlineStetus = monthService.deadlineCheck(userId, contractId, monthId);
+		boolean deadline = monthService.deadlineCheck(userId, contractId, monthId);
 
 		// modelにつっこむ
 		model.addAttribute("lastWeekDay", lastWeekDay);
-		model.addAttribute("deadlineStatus", deadlineStetus);
+		model.addAttribute("deadline", deadline);
 
 		return "login/home";
 	}

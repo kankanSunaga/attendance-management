@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 import com.example.demo.login.domain.model.User;
-
 import com.example.demo.login.domain.model.Month;
 
 public interface MonthDao {
@@ -15,4 +14,6 @@ public interface MonthDao {
 	public List<User> getRequestUsers() throws DataAccessException;
 
 	public Month selectMonthTable(int userId, int contractId, int monthId) throws DataAccessException;
+	
+	public Month latestMonthId(int userId) throws DataAccessException;
 }

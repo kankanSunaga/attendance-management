@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.MonthDao;
-
 import com.example.demo.login.domain.model.Month;
 
 @Repository
@@ -62,5 +61,24 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		month.setRequestStatus((boolean) map.get("requestStatus"));
 
 		return month;
+	}
+
+	public Month latestMonthId(int userId) throws DataAccessException {
+		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
+						+ " INNER JOIN contract ON user.userId = contract.userId"
+						+ " INNER JOIN month ON contract.contractId = month.contractId"
+						+ " WHERE user.userId = ?"
+						+ " ORDER BY monthId DESC LIMIT 1", userId);
+
+		Month latestMonth = new Month();
+
+		latestMonth.setMonthId((int) map.get("monthId"));
+		latestMonth.setYear((int) map.get("year"));
+		latestMonth.setMonth((int) map.get("month"));
+		latestMonth.setDeadlineStatus((boolean) map.get("deadlineStatus"));
+		latestMonth.setRequestStatus((boolean) map.get("requestStatus"));
+		latestMonth.setContractId((int) map.get("contractId"));
+
+		return latestMonth;
 	}
 }

@@ -23,11 +23,10 @@ public class MonthService {
 	@Autowired
 	MonthService monthService;
 
- 	
- 	public List<User> getRequestUsers(){
+	public List<User> getRequestUsers() {
 		return dao.getRequestUsers();
- 		
- 	}
+
+	}
 
 	public void updateToDeadline() {
 
@@ -55,6 +54,10 @@ public class MonthService {
 			}
 		}
 		return stetus;
+	}
+
+	public Month latestMonthId(int userId) {
+		return dao.latestMonthId(userId);
 	}
 
 }

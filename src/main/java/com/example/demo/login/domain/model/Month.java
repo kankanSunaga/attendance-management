@@ -10,5 +10,5 @@ public class Month {
  	private int month;
  	private boolean deadlineStatus;
  	private boolean requestStatus;
-
+ 	private int contractId;
 }
