@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS contract (
 
 
 CREATE TABLE IF NOT EXISTS month (
+	userId INT,
+	contractId INT,
  	monthId INT IDENTITY(1, 1) PRIMARY KEY,
  	year INT,
  	month INT,
@@ -48,8 +50,3 @@ CREATE TABLE IF NOT EXISTS test (
 	testDate DATE,
 	testTime TIME
 );
-
-CREATE TABLE IF NOT EXISTS monthTable (
-	workDay DATE
-);
-
