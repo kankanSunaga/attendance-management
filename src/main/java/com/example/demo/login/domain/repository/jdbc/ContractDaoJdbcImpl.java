@@ -126,13 +126,14 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return contract;
 	}
 
-	public Contract latestContractId(int userId) throws DataAccessException {
+	public Contract latestContract(int userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ?"
+						+ " WHERE user.userId = ? "
 						+ " ORDER BY contractId DESC LIMIT 1", userId);
 
+		System.out.println(map);
 		Contract latestContract = new Contract();
 
 		latestContract.setContractId((int) map.get("contractId"));

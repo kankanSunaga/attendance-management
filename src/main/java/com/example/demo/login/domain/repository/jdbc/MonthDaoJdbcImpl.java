@@ -63,11 +63,11 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return month;
 	}
 
-	public Month latestMonthId(int userId) throws DataAccessException {
+	public Month latestMonth(int userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ?"
+						+ " WHERE user.userId = ? "
 						+ " ORDER BY monthId DESC LIMIT 1", userId);
 
 		Month latestMonth = new Month();

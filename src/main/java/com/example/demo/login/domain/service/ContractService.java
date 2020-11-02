@@ -45,7 +45,7 @@ public class ContractService {
 		return list.size() >= 1;
 	}
 	
-	public Contract latestContractId(int userId) {
-		return dao.latestContractId(userId);
+	public Contract latestContract(int userId) {
+		return dao.latestContract(userId);
 	}
 }

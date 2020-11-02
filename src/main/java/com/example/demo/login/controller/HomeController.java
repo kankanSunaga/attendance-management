@@ -91,9 +91,8 @@ public class HomeController {
 		LocalDate nowDate = LocalDate.now();
 
 		// 各ID取得
-		int contractId = contractService.latestContractId(userId).getContractId();
-		int monthId = monthService.latestMonthId(userId).getMonthId();
-		System.out.println(contractId);
+		int contractId = contractService.latestContract(userId).getContractId();
+		int monthId = monthService.latestMonth(userId).getMonthId();
 
 		// 最終平日判定
 		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);

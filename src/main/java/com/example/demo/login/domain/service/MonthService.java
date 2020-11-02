@@ -56,8 +56,8 @@ public class MonthService {
 		return stetus;
 	}
 
-	public Month latestMonthId(int userId) {
-		return dao.latestMonthId(userId);
+	public Month latestMonth(int userId) {
+		return dao.latestMonth(userId);
 	}
 
 }
