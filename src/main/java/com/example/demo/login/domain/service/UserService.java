@@ -80,4 +80,14 @@ public class UserService {
     	return updateEmailResult;
     }
     
+    public boolean updatePassword(User user) {
+    	int status = dao.updatePassword(user);
+    	boolean updatePasswordResult = false;
+    	if(status > 0) {
+    		updatePasswordResult = true;
+    	}
+    	
+    	return updatePasswordResult;
+    }
+    
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.ChangeEmailForm;
+import com.example.demo.login.domain.model.ChangePasswordForm;
 import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
@@ -28,16 +29,38 @@ public class HamburgerMenuController {
 	UserService userService;
 	
 	@GetMapping("/changePassword")
-	public String getChangePassword(Model model, HttpServletRequest request) {
+	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) {
 						
 		HttpSession session = request.getSession();
-		session.getAttribute("userId");
+		int userId = (int)session.getAttribute("userId");
+		
+		User user = userService.selectOne(userId);
+		model.addAttribute("user", user);
 		
 		return "login/changePassword";
 		
 	}
 	
 	
+	@PostMapping("/changePassword")
+	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form,  BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		if (bindingResult.hasErrors()) {
+        	return getChangePassword(form, request, model);
+        }
+		
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		User user = userService.selectOne(userId);
+		user.setPassword(form.getNewPassword());
+		userService.updatePassword(user);
+		
+		return "redirect:/changePassword";
+		
+	}
+	
+
 	@GetMapping("/changeEmail")
 	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) {
 		
@@ -66,7 +89,7 @@ public class HamburgerMenuController {
 		user.setEmail(form.getNewEmail());
 		userService.updateEmail(user);
 		
-		return "forward:login/changeEmail";
+		return "redirect:/changeEmail";
 		
 	}
 	
@@ -91,3 +114,4 @@ public class HamburgerMenuController {
 	}
 	
 }
+

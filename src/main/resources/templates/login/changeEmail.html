@@ -37,7 +37,6 @@
 					<input type="text" th:field="*{newConfirmEmail}" name="newConfirmEmail" required>
 					<br>
 				</div>
-				<!-- エラーメッセージの一覧表示 -->
         		<br/>
 				<div class = errerMessege th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>
