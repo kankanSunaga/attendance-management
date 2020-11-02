@@ -133,7 +133,6 @@ public class ContractDaoJdbcImpl implements ContractDao {
 						+ " WHERE user.userId = ? "
 						+ " ORDER BY contractId DESC LIMIT 1", userId);
 
-		System.out.println(map);
 		Contract latestContract = new Contract();
 
 		latestContract.setContractId((int) map.get("contractId"));
