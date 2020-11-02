@@ -22,4 +22,5 @@ public interface ContractDao {
 	// Contractテーブルから特定のユーザーのデータ取得
 	public List<Contract> selectByUserId(int userId) throws DataAccessException;
 	
+	Contract latestContract(int userId) throws DataAccessException;
 }

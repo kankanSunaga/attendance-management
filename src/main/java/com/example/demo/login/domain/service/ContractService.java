@@ -43,7 +43,9 @@ public class ContractService {
 		List<Contract> list = dao.selectByUserId(userId);
 
 		return list.size() >= 1;
-
 	}
 	
+	public Contract latestContract(int userId) {
+		return dao.latestContract(userId);
+	}
 }

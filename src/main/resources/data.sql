@@ -41,7 +41,6 @@ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId
  VALUES(5, 2020, 9, 'false', 'true',3);
  
 
-
 /*仕事詳細テーブル1-1（2020年9月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
 VALUES(1, '2020-09-01', '2020-09-01 09:00:00', '12:00:00', '2020-09-01 17:00:00', 420, 1, 2);
