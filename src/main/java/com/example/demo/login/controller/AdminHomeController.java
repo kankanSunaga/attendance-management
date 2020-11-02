@@ -24,7 +24,8 @@ public class AdminHomeController {
 		int countPermission = userService.countPermission();
 		model.addAttribute("countPermission",countPermission);
 		
-		int RuquestUserCount = monthService.ruquestUserCount();
+		int ruquestUserCount = monthService.ruquestUserCount();
+		model.addAttribute("ruquestUserCount",ruquestUserCount);
 		return "admin/adminHome";
 	}
 
