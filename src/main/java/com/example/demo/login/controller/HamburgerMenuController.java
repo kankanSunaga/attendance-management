@@ -1,5 +1,7 @@
 package com.example.demo.login.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,9 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
@@ -26,60 +32,56 @@ public class HamburgerMenuController {
 	@GetMapping("/changePassword")
 	public String getChangePassword(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
-		// SpringSecurityのセッションの呼出(emailの呼出)
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		// emailで検索したユーザーのuserIdの取得
-		User user = userService.selectByEmail(auth.getName());
-						
-		// セッションの保持(userId)
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUserId());
+		session.getAttribute("userId");
 		
 		return "login/changePassword";
 	}
 	
 	@GetMapping("/changeEmail")
-	public String getChangeEmail(Model model, HttpServletRequest request, HttpServletResponse response) {
-		// SpringSecurityのセッションの呼出(emailの呼出)
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		// emailで検索したユーザーのuserIdの取得
-		User user = userService.selectByEmail(auth.getName());
-								
-		// セッションの保持(userId)
+	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) {
+		
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUserId());
+		int userId = (int)session.getAttribute("userId");
+		
+		User user = userService.selectOne(userId);
+		model.addAttribute("user", user);
 		
 		return "login/changeEmail";
+		
+	}
+	
+	
+	@PostMapping("/changeEmail")
+	public String postChengeEmail(@ModelAttribute @Validated ChangeEmailForm form,  BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		if (bindingResult.hasErrors()) {
+        	return getChangeEmail(form, request, model);
+        }
+		
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		User user = userService.selectOne(userId);
+		user.setEmail(form.getNewEmail());
+		userService.updateEmail(user);
+		
+		return "redirect:/changeEmail";
+		
 	}
 	
 	@GetMapping("/changeContractTime")
 	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
-		// SpringSecurityのセッションの呼出(emailの呼出)
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		// emailで検索したユーザーのuserIdの取得
-		User user = userService.selectByEmail(auth.getName());
-								
-		// セッションの保持(userId)
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUserId());
+		session.getAttribute("userId");
 		
 		return "login/changeContractTime";
 	}
 	
 	@GetMapping("/changeContract")
 	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
-		// SpringSecurityのセッションの呼出(emailの呼出)
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		// emailで検索したユーザーのuserIdの取得
-		User user = userService.selectByEmail(auth.getName());
-								
-		// セッションの保持(userId)
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUserId());
+		session.getAttribute("userId");
 		
 		return "login/changeContract";
 	}

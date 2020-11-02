@@ -13,7 +13,7 @@ public class UserService {
 	@Autowired
 	UserDao dao;
 
-	// insert用メソッド
+	
 	public boolean insert(User user) {
 
 		int rowNumber = dao.insertOne(user);
@@ -24,22 +24,22 @@ public class UserService {
 		return result;
 	}
 
-	// カウント用メソッド
+	
 	public int countPermission() {
 		return dao.countPermission();
 	}
 
-	// 未承認ユーザー取得メソッド
+	
 	public List<User> selectPermission() {
 		return dao.selectPermission();
 	}
 
-	// １件取得用メッソド
+	
 	public User selectOne(int userId) {
 		return dao.selectOne(userId);
 	}
 
-	// 承認ステータス更新用メソッド
+	
 	public boolean updatePermission(User user) {
 
 		int rowNumber = dao.updatePermission(user);
@@ -51,7 +51,7 @@ public class UserService {
 		return result;
 	}
 
-	// 凍結ステータス更新用メソッド
+	
 	public boolean updateFrozen(User user) {
 
 		int rowNumber = dao.updateFrozen(user);
@@ -63,8 +63,20 @@ public class UserService {
 		return result;
 	}
 
-	// emailで検索したユーザーのuserIdを返却
+	
 	public User selectByEmail(String email) {
 		return dao.selectByEmail(email);
 	}
+	
+	
+	public boolean updateEmail(User user) {
+     	int status = dao.updateEmail(user);
+     	boolean updateEmailResult = false;
+     	if(status > 0) {
+     		updateEmailResult = true;
+     	}
+
+     	return updateEmailResult;
+     }
+	
 }
