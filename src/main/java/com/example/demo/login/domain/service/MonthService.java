@@ -25,13 +25,13 @@ public class MonthService {
 
 	}
 	
-	public int RuquestUserCount() {
+	public int ruquestUserCount() {
 		
-		List<User> RuquestUserList = getRequestUsers();
+		List<User> ruquestUserList = getRequestUsers();
 		
-		int RuquestUserCount = RuquestUserList.size();
+		int ruquestUserCount = ruquestUserList.size();
 		
-		return RuquestUserCount;
+		return ruquestUserCount;
 		
 	}
 
