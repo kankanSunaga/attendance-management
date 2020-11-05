@@ -3,6 +3,7 @@ package com.example.demo.login.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.login.domain.model.User;
@@ -10,8 +11,12 @@ import com.example.demo.login.domain.repository.UserDao;
 
 @Service
 public class UserService {
+	
 	@Autowired
 	UserDao dao;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	
 	public boolean insert(User user) {
@@ -78,5 +83,23 @@ public class UserService {
 
      	return updateEmailResult;
      }
+	
+	
+	public boolean updatePassword(int userId, String oldPassword, String newPassword) {
+		
+		String encodedPassword = dao.selectOne(userId).getPassword();
+		boolean status = false;
+		
+		if(passwordEncoder.matches(oldPassword, encodedPassword)) {
+			User user = selectOne(userId);
+			user.setNewPassword(newPassword);
+			dao.updatePassword(user);
+			status = true;
+			
+		}
+		
+		return status;
+    	
+    }
 	
 }
