@@ -29,6 +29,5 @@ public interface UserDao {
 	
 	// emailからユーザーIDを取得する
 	public User selectByEmail(String email) throws DataAccessException;
-	
 }
 

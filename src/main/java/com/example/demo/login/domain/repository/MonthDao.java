@@ -1,12 +1,19 @@
 package com.example.demo.login.domain.repository;
 
- import org.springframework.dao.DataAccessException;
+import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 
- public interface MonthDao {
+import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.model.Month;
 
- 	// 締め切りステータスを変更する
- 	public int updateToDeadline(int year, int month) throws DataAccessException;
+public interface MonthDao {
 
- } 
- 
+	public int updateToDeadline(int year, int month) throws DataAccessException;
+
+	public List<User> getRequestUsers() throws DataAccessException;
+
+	public Month selectMonthTable(int userId, int contractId, int monthId) throws DataAccessException;
+	
+	public Month latestMonth(int userId) throws DataAccessException;
+}
