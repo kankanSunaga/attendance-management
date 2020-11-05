@@ -88,15 +88,17 @@ public class UserService {
 	public boolean updatePassword(int userId, String oldPassword, String newPassword) {
 		
 		String encodedPassword = dao.selectOne(userId).getPassword();
+		
 		boolean status = false;
 		
 		if(passwordEncoder.matches(oldPassword, encodedPassword)) {
 			User user = selectOne(userId);
 			user.setNewPassword(newPassword);
 			dao.updatePassword(user);
+			
 			status = true;
 			
-		}
+		} 
 		
 		return status;
     	

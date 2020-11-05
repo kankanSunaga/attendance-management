@@ -54,7 +54,7 @@ public class HamburgerMenuController {
 		
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
 		
-		return "redirect:/changePassword";
+		return "login/changePassword";
 		
 	}
 	
@@ -108,4 +108,6 @@ public class HamburgerMenuController {
 		
 		return "login/changeContract";
 	}
+	
 }
+
