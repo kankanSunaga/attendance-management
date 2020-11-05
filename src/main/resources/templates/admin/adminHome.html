@@ -33,7 +33,8 @@
 	    		</br>
 	    		<label th:text = "'勤務変更の申請数 :  ' + ${ruquestUserCount}"></label>
 	　　　	</div>
-		<button type="button" class="btn btn-success">申請一覧</button>
+		<a type="button" class="btn btn-success" th:href="@{'/applyList'}">新規申請一覧</a>
+		<a type="button" class="btn btn-success" th:href="@{'/changeApplyList'}">勤務変更申請一覧</a>
 		</div>
 	</div>
 </body>
