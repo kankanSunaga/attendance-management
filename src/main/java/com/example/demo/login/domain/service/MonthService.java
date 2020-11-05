@@ -20,12 +20,19 @@ public class MonthService {
 	@Autowired
 	DayOfWeekService dayOfWeekService;
 
-	@Autowired
-	MonthService monthService;
-
 	public List<User> getRequestUsers() {
 		return dao.getRequestUsers();
 
+	}
+	
+	public int ruquestUserCount() {
+		
+		List<User> ruquestUserList = getRequestUsers();
+		
+		int ruquestUserCount = ruquestUserList.size();
+		
+		return ruquestUserCount;
+		
 	}
 
 	public void updateToDeadline() {
@@ -42,7 +49,7 @@ public class MonthService {
 
 		LocalDate nowDate = LocalDate.now();
 		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);
-		boolean stetus = monthService.selectMonthTable(userId, contractId, monthId).isDeadlineStatus();
+		boolean stetus = selectMonthTable(userId, contractId, monthId).isDeadlineStatus();
 
 		if (stetus) {
 			stetus = false;
