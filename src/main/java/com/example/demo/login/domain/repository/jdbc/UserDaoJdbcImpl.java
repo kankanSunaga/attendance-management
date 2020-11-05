@@ -129,5 +129,13 @@ public class UserDaoJdbcImpl implements UserDao {
 		return statusNumber;
 	}
 	
+	@Override
+	public int updatePassword(User user) throws DataAccessException {
+		String password = passwordEncoder.encode(user.getPassword());
+		int statusNumber = jdbc.update("UPDATE user SET password = ? WHERE userId = ?", password, user.getUserId());
+		return statusNumber;
+		
+	}
+	
 }
 

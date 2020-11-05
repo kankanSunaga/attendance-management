@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.ChangeEmailForm;
+import com.example.demo.login.domain.model.ChangePasswordForm;
 import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
@@ -30,13 +29,35 @@ public class HamburgerMenuController {
 	UserService userService;
 	
 	@GetMapping("/changePassword")
-	public String getChangePassword(Model model, HttpServletRequest request, HttpServletResponse response) {
-		
+	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) {
+						
 		HttpSession session = request.getSession();
-		session.getAttribute("userId");
+		int userId = (int)session.getAttribute("userId");
+		
+		User user = userService.selectOne(userId);
+		model.addAttribute("user", user);
 		
 		return "login/changePassword";
+		
 	}
+	
+	
+	@PostMapping("/changePassword")
+	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form,  BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		if (bindingResult.hasErrors()) {
+        	return getChangePassword(form, request, model);
+        }
+		
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
+		
+		return "login/changePassword";
+		
+	}
+	
 	
 	@GetMapping("/changeEmail")
 	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) {
@@ -70,6 +91,7 @@ public class HamburgerMenuController {
 		
 	}
 	
+	
 	@GetMapping("/changeContractTime")
 	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -78,6 +100,7 @@ public class HamburgerMenuController {
 		return "login/changeContractTime";
 	}
 	
+	
 	@GetMapping("/changeContract")
 	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -85,4 +108,6 @@ public class HamburgerMenuController {
 		
 		return "login/changeContract";
 	}
+	
 }
+
