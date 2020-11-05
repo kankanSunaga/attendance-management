@@ -56,7 +56,7 @@ public class HomeController {
 		model.addAttribute("today", formatChangedToday);
 
 		// 月の合計勤務時間を算出
-		List<WorkTime> monthDataList = workTimeService.selectMonthData();
+		List<WorkTime> monthDataList = workTimeService.selectMonthData(userId);
 		int totalWorkTimeMinute = 0;
 		for (int i = 0; i < monthDataList.size(); i++) {
 			WorkTime workTime = monthDataList.get(i);
