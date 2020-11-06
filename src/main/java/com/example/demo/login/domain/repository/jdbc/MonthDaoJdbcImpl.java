@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.MonthDao;
+import com.example.demo.login.domain.service.DateTimeUtilityService;
 import com.example.demo.login.domain.model.Month;
 
 @Repository
@@ -18,6 +19,9 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 	@Autowired
 	JdbcTemplate jdbc;
+	
+	@Autowired
+	DateTimeUtilityService dateTimeUtilityService;
 
 	@Override
 	public int updateToDeadline(int year, int month) throws DataAccessException {
@@ -67,7 +71,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ? "
+						+ " WHERE user.userId = ?"
 						+ " ORDER BY monthId DESC LIMIT 1", userId);
 
 		Month latestMonth = new Month();
@@ -80,5 +84,29 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		latestMonth.setContractId((int) map.get("contractId"));
 
 		return latestMonth;
+	}
+	
+	public Month selectOneMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
+		
+		
+		int year = dateTimeUtilityService.getYearAndMonth(yearMonth).get("year");
+		int month = dateTimeUtilityService.getYearAndMonth(yearMonth).get("month");
+		
+		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
+						+ " INNER JOIN contract ON user.userId = contract.userId"
+						+ " INNER JOIN month ON contract.contractId = month.contractId"
+						+ " WHERE user.userId = ? AND contract.contractId = ? AND month.year = ? AND month.month = ?", userId, contractId, year, month);
+		
+		Month selectMonth = new Month();
+
+		selectMonth.setMonthId((int) map.get("monthId"));
+		selectMonth.setYear((int) map.get("year"));
+		selectMonth.setMonth((int) map.get("month"));
+		selectMonth.setDeadlineStatus((boolean) map.get("deadlineStatus"));
+		selectMonth.setRequestStatus((boolean) map.get("requestStatus"));
+		selectMonth.setContractId((int) map.get("contractId"));
+
+		return selectMonth;
+	
 	}
 }

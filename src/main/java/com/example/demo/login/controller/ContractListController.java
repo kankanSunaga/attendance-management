@@ -19,12 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.context.IContext;
 
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
@@ -40,7 +39,10 @@ public class ContractListController {
 	@Autowired
 	WorkTimeService workTimeService;
 	
-	private String setStrYearMonth;
+	@Autowired
+	MonthService monthService;
+	
+//	private String setStrYearMonth;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 
@@ -131,12 +133,14 @@ public class ContractListController {
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 		// 空のカレンダーにデータを追加
 		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
+
 		
 		
-		model.addAttribute("yearMonth", setStrYearMonth);
+		int displayStatus = contractService.selectDisplay(yearMonth, userId, contractId);
+		
 		model.addAttribute("contract", setCalenderObject);
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
-
+		model.addAttribute("displayStatus", displayStatus);
 		
 		
 		return "login/contractDay";

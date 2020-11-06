@@ -22,6 +22,9 @@ public class MonthService {
 
 	@Autowired
 	MonthService monthService;
+	
+	@Autowired
+	WorkTimeService workTimeService;
 
 	public List<User> getRequestUsers() {
 		return dao.getRequestUsers();
@@ -59,5 +62,8 @@ public class MonthService {
 	public Month latestMonth(int userId) {
 		return dao.latestMonth(userId);
 	}
-
+	
+	public Month selectOneMonthTable(int userId, int contractId, String yearMonth) {
+		return dao.selectOneMonthTable(userId, contractId, yearMonth);
+	}
 }
