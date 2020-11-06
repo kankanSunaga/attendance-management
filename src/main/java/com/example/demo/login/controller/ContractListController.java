@@ -42,7 +42,6 @@ public class ContractListController {
 	@Autowired
 	MonthService monthService;
 	
-//	private String setStrYearMonth;
 	
 	@GetMapping("/contracts")//sessionでuserId渡されるため静的URL
 
