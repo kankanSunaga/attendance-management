@@ -21,7 +21,7 @@ VALUES(2, 170, '09:00', '01:00', '18:00', '2021-09-01','KAN', '2022-08-31', 1);
 
 /*契約テーブル3-1*/
 INSERT INTO contract (contractId, contractTime, startTime,breakTime,endTime,startDate,officeName, endDate, userId)
-VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3); 
+VALUES(3, 170, '07:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3); 
 
 
 /*月のステータステーブル*/
