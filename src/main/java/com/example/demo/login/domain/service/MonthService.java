@@ -22,24 +22,23 @@ public class MonthService {
 
 	@Autowired
 	MonthService monthService;
-	
+
 	@Autowired
 	WorkTimeService workTimeService;
-
 
 	public List<User> getRequestUsers() {
 		return dao.getRequestUsers();
 
 	}
-	
+
 	public int ruquestUserCount() {
-		
+
 		List<User> ruquestUserList = getRequestUsers();
-		
+
 		int ruquestUserCount = ruquestUserList.size();
-		
+
 		return ruquestUserCount;
-		
+
 	}
 
 	public void updateToDeadline() {
@@ -48,24 +47,18 @@ public class MonthService {
 		dao.updateToDeadline(lastMonthDate.getYear(), lastMonthDate.getMonthValue());
 	}
 
-	public Month selectMonthTable(int userId, int contractId, int monthId) {
-		return dao.selectMonthTable(userId, contractId, monthId);
-	}
-
-	public boolean deadlineCheck(int userId, int contractId, int monthId) throws IOException {
+	public boolean deadlineCheck(int userId, int contractId, String yearMonth) throws IOException {
 
 		LocalDate nowDate = LocalDate.now();
 		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);
-		boolean stetus = selectMonthTable(userId, contractId, monthId).isDeadlineStatus();
+		boolean stetus = selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
 
 		if (stetus) {
 			stetus = false;
+		} else if (nowDate.isAfter(lastWeekDay)) {
+			stetus = true;
 		} else {
-			if (nowDate.isAfter(lastWeekDay)) {
-				stetus = true;
-			} else {
-				stetus = false;
-			}
+			stetus = false;
 		}
 		return stetus;
 	}
@@ -73,8 +66,8 @@ public class MonthService {
 	public Month latestMonth(int userId) {
 		return dao.latestMonth(userId);
 	}
-	
-	public Month selectOneMonthTable(int userId, int contractId, String yearMonth) {
-		return dao.selectOneMonthTable(userId, contractId, yearMonth);
+
+	public Month selectMonthTable(int userId, int contractId, String yearMonth) {
+		return dao.selectMonthTable(userId, contractId, yearMonth);
 	}
 }

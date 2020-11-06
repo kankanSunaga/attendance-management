@@ -127,11 +127,4 @@ public class WorkTimeService {
 		}
 		return calender;
 	}
-	
-	public String toStringDate(LocalDate localDate, String format) {
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
-        
-        return localDate.format(dateTimeFormatter);
-    }
 }

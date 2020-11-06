@@ -13,12 +13,12 @@ public class ContractService {
 
 	@Autowired
 	ContractDao dao;
-	
+
 	@Autowired
 	MonthService monthService;
-	
+
 	@Autowired
-	WorkTimeService workTimeService;
+	DateTimeUtilityService dateTimeUtilityService;
 
 	// insertメソッド
 	public boolean insert(Contract contract) {
@@ -57,17 +57,16 @@ public class ContractService {
 	}
 
 	public int selectDisplay(String yearMonth, int userId, int contractId) {
-		int monthId = monthService.selectOneMonthTable(userId, contractId, yearMonth).getMonthId();
-		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, monthId).isDeadlineStatus();
-		boolean requestStatus = monthService.selectMonthTable(userId, contractId, monthId).isRequestStatus();
-		
+
+		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
+		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
+
 		LocalDate nowDate = LocalDate.now();
-		LocalDate lastMonth = nowDate.minusMonths(2);
-		String stringLastMonth = workTimeService.toStringDate(lastMonth, "yyyyMM");
-		
-		
-		// 0.初期, 1.入力フォーム表示, 2.申請中ボタン表示, 3.ボタン表示, 4.ボタン非表示
-		int status = 0;
+		LocalDate lastMonth = nowDate.minusMonths(1);
+		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");
+
+		// 1.セレクトボックス表示, 2.申請中ボタン表示, 3.ボタン表示, 0.その他
+		int status;
 		if (!(deadlineStatus)) {
 			status = 1;
 		} else if (requestStatus) {
@@ -75,6 +74,7 @@ public class ContractService {
 		} else if (yearMonth.equals(stringLastMonth)) {
 			status = 3;
 		} else {
+			status = 0;
 		}
 
 		return status;

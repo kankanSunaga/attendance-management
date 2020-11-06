@@ -1,6 +1,7 @@
 package com.example.demo.login.domain.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,5 +26,11 @@ public class DateTimeUtilityService {
 
 		return map;
 	}
+	
+	public String toStringDate(LocalDate localDate, String format) {
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+        
+        return localDate.format(dateTimeFormatter);
+    }
 }

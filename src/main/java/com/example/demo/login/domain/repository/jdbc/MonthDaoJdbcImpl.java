@@ -22,6 +22,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	
 	@Autowired
 	DateTimeUtilityService dateTimeUtilityService;
+	
 
 	@Override
 	public int updateToDeadline(int year, int month) throws DataAccessException {
@@ -49,24 +50,6 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return RuquestUserList;
 	}
 
-	@Override
-	public Month selectMonthTable(int userId, int contractId, int monthId) throws DataAccessException {
-
-		Map<String, Object> map = jdbc.queryForMap(
-				"SELECT * FROM user INNER JOIN contract ON user.userId = contract.userId INNER JOIN month ON contract.contractId = month.contractId WHERE user.userId = ? AND contract.contractId = ? AND month.monthId = ?",
-				userId, contractId, monthId);
-
-		Month month = new Month();
-
-		month.setMonthId((int) map.get("monthId"));
-		month.setYear((int) map.get("year"));
-		month.setMonth((int) map.get("month"));
-		month.setDeadlineStatus((boolean) map.get("deadlineStatus"));
-		month.setRequestStatus((boolean) map.get("requestStatus"));
-
-		return month;
-	}
-
 	public Month latestMonth(int userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
@@ -86,17 +69,16 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return latestMonth;
 	}
 	
-	public Month selectOneMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
-		
-		
+	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
+
 		int year = dateTimeUtilityService.getYearAndMonth(yearMonth).get("year");
 		int month = dateTimeUtilityService.getYearAndMonth(yearMonth).get("month");
-		
+
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
 						+ " WHERE user.userId = ? AND contract.contractId = ? AND month.year = ? AND month.month = ?", userId, contractId, year, month);
-		
+
 		Month selectMonth = new Month();
 
 		selectMonth.setMonthId((int) map.get("monthId"));
@@ -107,6 +89,5 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		selectMonth.setContractId((int) map.get("contractId"));
 
 		return selectMonth;
-	
 	}
 }

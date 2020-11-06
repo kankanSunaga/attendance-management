@@ -12,10 +12,8 @@ public interface MonthDao {
 	public int updateToDeadline(int year, int month) throws DataAccessException;
 
 	public List<User> getRequestUsers() throws DataAccessException;
-
-	public Month selectMonthTable(int userId, int contractId, int monthId) throws DataAccessException;
 	
 	public Month latestMonth(int userId) throws DataAccessException;
 	
-	public Month selectOneMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException;
+	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException;
 }
