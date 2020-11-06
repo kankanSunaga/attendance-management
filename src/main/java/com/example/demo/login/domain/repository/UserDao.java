@@ -25,7 +25,7 @@ public interface UserDao {
 	
 	public int updateEmail(User user) throws DataAccessException;
 	
-	public int updatePassword(User user) throws DataAccessException;
+	public int updatePassword(User user, String newPassword) throws DataAccessException;
 	
 }
 

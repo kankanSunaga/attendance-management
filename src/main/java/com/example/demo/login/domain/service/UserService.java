@@ -93,8 +93,7 @@ public class UserService {
 		
 		if(passwordEncoder.matches(oldPassword, encodedPassword)) {
 			User user = selectOne(userId);
-			user.setNewPassword(newPassword);
-			dao.updatePassword(user);
+			dao.updatePassword(user, newPassword);
 			
 			status = true;
 			
@@ -102,6 +101,7 @@ public class UserService {
 		
 		return status;
     	
-    }
-	
+    }	
+
 }
+

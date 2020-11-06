@@ -130,12 +130,12 @@ public class UserDaoJdbcImpl implements UserDao {
 	}
 	
 	@Override
-	public int updatePassword(User user) throws DataAccessException {
+	public int updatePassword(User user, String newPassword) throws DataAccessException {
+
 		String password = passwordEncoder.encode(user.getPassword());
 		int statusNumber = jdbc.update("UPDATE user SET password = ? WHERE userId = ?", password, user.getUserId());
 		return statusNumber;
 		
 	}
-	
-}
 
+}
