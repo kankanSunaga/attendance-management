@@ -29,8 +29,8 @@ public class WorkTimeService {
 	}
 
 	// その月のデータ取得用メソッド
-	public List<WorkTime> selectMonthData() {
-		return dao.selectMonthData();
+	public List<WorkTime> selectMonthData(int userId) {
+		return dao.selectMonthData(userId);
 	}
 
 	public List<String> selectCalendar() {
