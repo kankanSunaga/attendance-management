@@ -37,8 +37,7 @@ public class DateTimeUtilityService {
 	public String toStringYearMonth(int year, int month) {
 
 		String stringYear = Integer.toString(year);
-		String stringMonth = Integer.toString(month);
-		
+		String stringMonth = String.format("%02d", month);		
 		String stringYearMonth = stringYear + stringMonth;
 		
 		return stringYearMonth;
