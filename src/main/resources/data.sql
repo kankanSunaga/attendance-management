@@ -29,13 +29,16 @@ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId
  VALUES(1, 2020, 8, 'false', 'false',1);
 
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(2, 2020, 9, 'false', 'true',1);
+ VALUES(2, 2020, 9, 'true', 'false',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(3, 2020, 10, 'false', 'false',1);
+ VALUES(3, 2020, 10, 'false', 'true',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
  VALUES(4, 2020, 11, 'false', 'false',1);
+ 
+ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+ VALUES(6, 2021, 8, 'false', 'false',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
  VALUES(5, 2020, 9, 'false', 'true',3);
