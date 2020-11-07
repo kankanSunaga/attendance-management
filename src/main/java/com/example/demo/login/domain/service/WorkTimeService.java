@@ -75,10 +75,10 @@ public class WorkTimeService {
 	
 	// 月の１日のデータを取得(yyyyMMdd)
 	public LocalDate BeginningOfMonth(String yearMonth) {
-		
+
 		String strYearMonthDay = yearMonth + "01";
 		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
-		
+
 		return BeginningOfMonth;
 	}
 	
