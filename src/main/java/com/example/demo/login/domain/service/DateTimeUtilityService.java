@@ -33,4 +33,14 @@ public class DateTimeUtilityService {
         
         return localDate.format(dateTimeFormatter);
     }
+	
+	public String toStringYearMonth(int year, int month) {
+
+		String stringYear = Integer.toString(year);
+		String stringMonth = Integer.toString(month);
+		
+		String stringYearMonth = stringYear + stringMonth;
+		
+		return stringYearMonth;
+	}
 }
