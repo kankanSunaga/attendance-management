@@ -31,11 +31,6 @@ public class ContractService {
 	}
 
 	// Contractテーブルのデータ取得
-	public Contract selectOne() {
-		return dao.selectOne();
-	}
-
-	// Contractテーブルのデータ取得
 	public Contract activeSelectOne(int contractId) {
 		return dao.activeSelectOne(contractId);
 	}
