@@ -56,7 +56,7 @@ public class HomeController {
 		model.addAttribute("today", formatChangedToday);
 
 		// 月の合計勤務時間を算出
-		List<WorkTime> monthDataList = workTimeService.selectMonthData();
+		List<WorkTime> monthDataList = workTimeService.selectMonthData(userId);
 		int totalWorkTimeMinute = 0;
 		for (int i = 0; i < monthDataList.size(); i++) {
 			WorkTime workTime = monthDataList.get(i);
@@ -77,7 +77,7 @@ public class HomeController {
 		model.addAttribute("monthDataList", monthDataList);
 
 		// 契約勤務時間を取得（Contractテーブルより取得）
-		Contract contract = contractService.selectOne();
+		Contract contract = contractService.latestContract(userId);
 		int contractTime = contract.getContractTime();
 
 		// 残りの契約時間の算出（契約時間から月の合計勤務時間を引く）

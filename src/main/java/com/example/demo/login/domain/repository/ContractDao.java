@@ -10,9 +10,6 @@ public interface ContractDao {
 	// Contractテーブルに1件insert
 	public int insertOne(Contract contract) throws DataAccessException;
 	
-	// Contractテーブルからデータ取得
-	public Contract selectOne() throws DataAccessException;
-	
 	// Contractテーブルからデータ取得（動的）
 	public Contract activeSelectOne(int contractId) throws DataAccessException;
 	

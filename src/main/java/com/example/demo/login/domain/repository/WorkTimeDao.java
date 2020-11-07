@@ -13,7 +13,7 @@ public interface WorkTimeDao {
 	public int insertOne(WorkTime workTime) throws DataAccessException;
 	
 	// workTimeテーブルから今月のデータを取得
-	public List<WorkTime> selectMonthData() throws DataAccessException;
+	public List<WorkTime> selectMonthData(int userId) throws DataAccessException;
 	
 	// workTimeテーブルから月のデータを全件取得
 	public List<WorkTime> selectMany(int contractId) throws DataAccessException;

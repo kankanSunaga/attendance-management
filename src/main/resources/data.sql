@@ -21,7 +21,7 @@ VALUES(2, 170, '09:00', '01:00', '18:00', '2021-09-01','KAN', '2022-08-31', 1);
 
 /*契約テーブル3-1*/
 INSERT INTO contract (contractId, contractTime, startTime,breakTime,endTime,startDate,officeName, endDate, userId)
-VALUES(3, 170, '09:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3); 
+VALUES(3, 170, '07:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3); 
 
 
 /*月のステータステーブル*/
@@ -29,13 +29,16 @@ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId
  VALUES(1, 2020, 8, 'false', 'false',1);
 
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(2, 2020, 9, 'false', 'true',1);
+ VALUES(2, 2020, 9, 'true', 'false',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(3, 2020, 10, 'false', 'false',1);
+ VALUES(3, 2020, 10, 'false', 'true',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
  VALUES(4, 2020, 11, 'false', 'false',1);
+ 
+ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+ VALUES(6, 2021, 8, 'false', 'false',1);
  
  INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
  VALUES(5, 2020, 9, 'false', 'true',3);

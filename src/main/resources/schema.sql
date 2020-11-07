@@ -43,10 +43,3 @@ CREATE TABLE IF NOT EXISTS workTime (
 	contractId INT,
 	monthId INT
 );
-
-CREATE TABLE IF NOT EXISTS test (
-	testName VARCHAR(50),
-	testAge INT,
-	testDate DATE,
-	testTime TIME
-);

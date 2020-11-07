@@ -35,20 +35,15 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return job;
 	}
 
-	// workTimeテーブルから今月のデータを取得
-	public List<WorkTime> selectMonthData() throws DataAccessException {
+	public List<WorkTime> selectMonthData(int userId) throws DataAccessException {
 
 		List<Map<String, Object>> getList = jdbc
-				.queryForList("SELECT * FROM workTime WHERE month(workDay) = month(now())");
+				.queryForList("SELECT * FROM user INNER JOIN contract ON user.userId = contract.userId INNER JOIN workTime ON contract.contractId=workTime.contractId WHERE month(workDay) = month(now()) AND user.userId=?",userId);
 
 		List<WorkTime> monthDataList = new ArrayList<>();
 
 		for (Map<String, Object> map : getList) {
 			WorkTime workTime = new WorkTime();
-			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
-			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
-			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
-			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
 			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
 			monthDataList.add(workTime);
 		}
