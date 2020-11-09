@@ -16,7 +16,7 @@ public class DateTimeUtilityService {
 
 	public Map<String, Integer> getYearAndMonth(String yearMonth) {
 		
-		LocalDate createDate = workTimeService.BeginningOfMonth(yearMonth);
+		LocalDate createDate = BeginningOfMonth(yearMonth);
 		int year = createDate.getYear();
 		int month = createDate.getMonthValue();
 
@@ -41,5 +41,13 @@ public class DateTimeUtilityService {
 		String stringYearMonth = stringYear + stringMonth;
 		
 		return stringYearMonth;
+	}
+	
+	public LocalDate BeginningOfMonth(String yearMonth) {
+
+		String strYearMonthDay = yearMonth + "01";
+		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+		return BeginningOfMonth;
 	}
 }
