@@ -19,6 +19,9 @@ public class WorkTimeService {
 
 	@Autowired
 	WorkTimeDao dao;
+	
+	@Autowired
+	DateTimeUtilityService dateTimeUtilityService;
 
 	// insert用メソッド
 	public boolean insert(WorkTime workTime) {
@@ -72,28 +75,16 @@ public class WorkTimeService {
 		return samMinute;
 	}
 
-	
-	// 月の１日のデータを取得(yyyyMMdd)
-	public LocalDate BeginningOfMonth(String yearMonth) {
-
-		String strYearMonthDay = yearMonth + "01";
-		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-		return BeginningOfMonth;
-	}
-	
 	// 空の月のカレンダー作成(1~月末)
 	public LinkedHashMap<String, Object> calender(String yearMonth) {
 
 		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
 
-		
-
 		// 月の最大日数
-		LocalDate lastDayOfMonth = BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate lastDayOfMonth = dateTimeUtilityService.BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
 		int maxDay = lastDayOfMonth.getDayOfMonth();
 		
-		LocalDate BeginningOfMonth = BeginningOfMonth(yearMonth);
+		LocalDate BeginningOfMonth = dateTimeUtilityService.BeginningOfMonth(yearMonth);
 		
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
@@ -116,7 +107,7 @@ public class WorkTimeService {
 	// 空のカレンダーにデータをセット
 	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
 		
-		LocalDate minDay = BeginningOfMonth(yearMonth);
+		LocalDate minDay = dateTimeUtilityService.BeginningOfMonth(yearMonth);
 		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
 		
 		List<WorkTime> workTimes = rangedSelectMany(contractId, minDay, maxDay);
