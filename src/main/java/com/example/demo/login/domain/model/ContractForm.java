@@ -35,4 +35,5 @@ public class ContractForm {
 	@NotBlank
 	private String officeName; //勤務会社名
 	
+	private int userId;
 }

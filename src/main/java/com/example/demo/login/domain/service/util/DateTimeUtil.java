@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.login.domain.service.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +8,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.domain.service.WorkTimeService;
+
 @Service
-public class DateTimeUtilityService {
+public class DateTimeUtil {
 
 	@Autowired
 	WorkTimeService workTimeService;
