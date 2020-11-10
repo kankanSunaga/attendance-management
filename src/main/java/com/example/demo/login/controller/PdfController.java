@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
-import com.example.demo.login.domain.service.DateTimeUtilityService;
 import com.example.demo.login.domain.service.DayOfWeekService;
 import com.example.demo.login.domain.service.PdfService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 
 @Controller
 public class PdfController {
@@ -44,7 +44,7 @@ public class PdfController {
 	DayOfWeekService dayOfWeekService;
 
 	@Autowired
-	DateTimeUtilityService dateTimeUtilityService;
+	DateTimeUtil dateTimeUtil;
 
 	@GetMapping("/contract/{contractId}/{yearMonth}/pdfDownload")
 	public void getPdfDownload(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
@@ -54,13 +54,13 @@ public class PdfController {
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
 
-		LocalDate minWorkDay = dateTimeUtilityService.BeginningOfMonth(yearMonth);
+		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 
 		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
 
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 
-		String strYearMonth = dateTimeUtilityService.toStringDate(minWorkDay, "yyyy年MM月");
+		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
 
 		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response);
 
