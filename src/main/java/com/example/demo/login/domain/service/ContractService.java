@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.repository.ContractDao;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 
 @Service
 public class ContractService {
@@ -18,16 +20,24 @@ public class ContractService {
 	MonthService monthService;
 
 	@Autowired
-	DateTimeUtilityService dateTimeUtilityService;
+	DateTimeUtil dateTimeUtilityService;
 
-	// insertメソッド
-	public boolean insert(Contract contract) {
-		int rowNumber = dao.insertOne(contract);
-		boolean result = false;
-		if (rowNumber > 0) {
-			result = true;
-		}
-		return result;
+	public void insertOne(Contract contract) {
+		dao.insertOne(contract);
+	}
+
+	public Contract setInsertOne(ContractForm form) {
+		Contract contract = new Contract();
+
+		contract.setContractTime(form.getContractTime());
+		contract.setStartTime(form.getStartTime());
+		contract.setBreakTime(form.getBreakTime());
+		contract.setEndTime(form.getEndTime());
+		contract.setStartDate(form.getStartDate());
+		contract.setOfficeName(form.getOfficeName());
+		contract.setUserId(form.getUserId());
+
+		return contract;
 	}
 
 	// Contractテーブルのデータ取得
@@ -52,7 +62,6 @@ public class ContractService {
 	}
 
 	public int selectDisplay(String yearMonth, int userId, int contractId) {
-
 		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
 		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
 
