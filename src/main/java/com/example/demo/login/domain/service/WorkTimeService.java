@@ -1,7 +1,9 @@
 package com.example.demo.login.domain.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.login.domain.model.WorkTime;
+import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.repository.WorkTimeDao;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 
 @Service
 public class WorkTimeService {
@@ -21,19 +25,56 @@ public class WorkTimeService {
 	WorkTimeDao dao;
 	
 	@Autowired
-	DateTimeUtilityService dateTimeUtilityService;
+	DateTimeUtil dateTimeUtil;
+	
+	@Autowired
+	ContractService contractService;
+	
+	@Autowired
+	MonthService monthService;
 
 	// insert用メソッド
-	public boolean insert(WorkTime workTime) {
+	public void insertOne(WorkTime workTime) {
 
-		int rowNumber = dao.insertOne(workTime);
-
-		return rowNumber > 0;
+		dao.insertOne(workTime);
 	}
 
 	// その月のデータ取得用メソッド
 	public List<WorkTime> selectMonthData(int userId) {
+		
 		return dao.selectMonthData(userId);
+	}
+	
+	public int getWorkTimeMinute(WorkTimeForm form) {
+		
+		int startTimeMinute = form.getStartTime().get(ChronoField.MINUTE_OF_DAY);
+		int breakTimeMinute = form.getBreakTime().get(ChronoField.MINUTE_OF_DAY);
+		int endTimeMinute = form.getEndTime().get(ChronoField.MINUTE_OF_DAY);
+		int workTimeMinute = endTimeMinute - (startTimeMinute + breakTimeMinute);
+
+		return workTimeMinute;
+	}
+	
+	public WorkTime setWorkTime(WorkTimeForm form, int userId) {
+		
+		WorkTime workTime = new WorkTime();
+		
+		workTime.setWorkTimeMinute(getWorkTimeMinute(form));
+		workTime.setContractId(contractService.latestContract(userId).getContractId());
+		workTime.setMonthId(monthService.latestMonth(userId).getMonthId());
+		
+		workTime.setWorkDay(form.getWorkDay());
+		workTime.setStartTime(LocalDateTime.of(form.getWorkDay(), form.getStartTime()));
+		workTime.setBreakTime(form.getBreakTime());
+
+		if (form.isOverTimeFlag()) {
+			workTime.setEndTime(LocalDateTime.of(form.getWorkDay().plusDays(1), form.getEndTime()));
+			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + 1440);
+		} else {
+			workTime.setEndTime(LocalDateTime.of(form.getWorkDay(), form.getEndTime()));
+			workTime.setWorkTimeMinute(getWorkTimeMinute(form));			
+		}
+		return workTime;
 	}
 
 	public List<String> selectCalendar() {
@@ -81,10 +122,10 @@ public class WorkTimeService {
 		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
 
 		// 月の最大日数
-		LocalDate lastDayOfMonth = dateTimeUtilityService.BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate lastDayOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
 		int maxDay = lastDayOfMonth.getDayOfMonth();
 		
-		LocalDate BeginningOfMonth = dateTimeUtilityService.BeginningOfMonth(yearMonth);
+		LocalDate BeginningOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth);
 		
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
@@ -107,7 +148,7 @@ public class WorkTimeService {
 	// 空のカレンダーにデータをセット
 	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
 		
-		LocalDate minDay = dateTimeUtilityService.BeginningOfMonth(yearMonth);
+		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
 		
 		List<WorkTime> workTimes = rangedSelectMany(contractId, minDay, maxDay);
