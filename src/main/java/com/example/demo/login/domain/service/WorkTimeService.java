@@ -58,10 +58,9 @@ public class WorkTimeService {
 	public WorkTime setWorkTime(WorkTimeForm form, int userId) {
 
 		WorkTime workTime = new WorkTime();
+		int overTime = 1440;
 
 		workTime.setWorkTimeMinute(getWorkTimeMinute(form));
-		workTime.setContractId(contractService.latestContract(userId).getContractId());
-		workTime.setMonthId(monthService.latestMonth(userId).getMonthId());
 
 		workTime.setWorkDay(form.getWorkDay());
 		workTime.setStartTime(LocalDateTime.of(form.getWorkDay(), form.getStartTime()));
@@ -69,7 +68,7 @@ public class WorkTimeService {
 
 		if (form.isOverTimeFlag()) {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay().plusDays(1), form.getEndTime()));
-			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + 1440);
+			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + overTime);
 		} else {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay(), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form));
