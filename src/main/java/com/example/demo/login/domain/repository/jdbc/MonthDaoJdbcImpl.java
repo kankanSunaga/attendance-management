@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.MonthDao;
-import com.example.demo.login.domain.service.DateTimeUtilityService;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 import com.example.demo.login.domain.model.Month;
 
 @Repository
@@ -21,7 +21,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	JdbcTemplate jdbc;
 	
 	@Autowired
-	DateTimeUtilityService dateTimeUtilityService;
+	DateTimeUtil dateTimeUtil;
 	
 
 	@Override
@@ -71,8 +71,8 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	
 	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
 
-		int year = dateTimeUtilityService.getYearAndMonth(yearMonth).get("year");
-		int month = dateTimeUtilityService.getYearAndMonth(yearMonth).get("month");
+		int year = dateTimeUtil.getYearAndMonth(yearMonth).get("year");
+		int month = dateTimeUtil.getYearAndMonth(yearMonth).get("month");
 
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
