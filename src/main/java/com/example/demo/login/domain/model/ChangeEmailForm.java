@@ -20,9 +20,8 @@ public class ChangeEmailForm {
 	private String newConfirmEmail;
 	
 	@AssertTrue
-	private boolean isConfirmEmail() {
+	private boolean isDataValidOfEmail() {
 		return newEmail.equals(newConfirmEmail);
 	}
 	
 }
-

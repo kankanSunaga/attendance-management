@@ -72,15 +72,8 @@ public class UserService {
 		return dao.selectByEmail(email);
 	}
 	
-public boolean updateEmail(User user) {
-		
-     	int status = dao.updateEmail(user);
-     	boolean updateEmailResult = false;
-     	if(status > 0) {
-     		updateEmailResult = true;
-     	}
-
-     	return updateEmailResult;
+	public int updateEmail(User user) {
+		return dao.updateEmail(user);
      }
 	
 	

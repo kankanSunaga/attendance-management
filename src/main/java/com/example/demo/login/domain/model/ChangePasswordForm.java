@@ -24,11 +24,11 @@ public class ChangePasswordForm {
 	private String newConfirmPassword = "";
 	
 	@AssertTrue
-	public boolean isDataValid() {
+	public boolean isDataValidOfPassword() {
 		if (!newPassword.equals(newConfirmPassword)) {
 			return false;
 		}
-    return true;
+		return true;
 		
 	}
 	

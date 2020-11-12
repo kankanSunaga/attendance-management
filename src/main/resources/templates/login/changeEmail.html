@@ -20,30 +20,25 @@
 			<div class="container">
 				<h1>メールアドレス変更画面</h1>
 				<br>
-				
 				<div class="col-sm-5 jumbotron">
 					<label>現在登録されているメールアドレス</label>
 					<h4 th:text="${user.email}"></h4>
 				</div>
-				
 				<div class="col-sm-3">
 					<label>新しいメールアドレスの入力</label>
-					<input type="text" th:field="*{newEmail}" name="newEmail" required>
-					<br>
+					<input type="text" th:field="*{newEmail}" name="newEmail">
+					<br></br>
 				</div>
-				
 				<div class="col-sm-3">
 					<label>新しいメールアドレスの確認</label>
-					<input type="text" th:field="*{newConfirmEmail}" name="newConfirmEmail" required>
+					<input type="text" th:field="*{newConfirmEmail}" name="newConfirmEmail">
+					<br>
+					<div th:each="error:${#fields.detailedErrors()}">
+						<span th:text="${error.message}">Error message</span>
+					</div>
 					<br>
 				</div>
-        		<br/>
-				<div class = errerMessege th:each="error:${#fields.detailedErrors()}">
-					<span th:text="${error.message}">Error message</span>
-				</div>
-				<br>
 			</div>
-			
 			<div class="container">
 				<div class="row mb-5">
 					<div class="col-2">
@@ -51,7 +46,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
