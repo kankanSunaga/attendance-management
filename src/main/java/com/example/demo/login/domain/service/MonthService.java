@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.MonthDao;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 
 @Service
 public class MonthService {
@@ -25,6 +26,12 @@ public class MonthService {
 
 	@Autowired
 	WorkTimeService workTimeService;
+
+	@Autowired
+	ContractService contractService;
+
+	@Autowired
+	DateTimeUtil dateTimeUtil;
 
 	public List<User> getRequestUsers() {
 		return dao.getRequestUsers();
@@ -69,5 +76,29 @@ public class MonthService {
 
 	public Month selectMonthTable(int userId, int contractId, String yearMonth) {
 		return dao.selectMonthTable(userId, contractId, yearMonth);
+	}
+
+	public void insertOne(Month month) {
+		dao.insertOne(month);
+	}
+
+	public Month setMonth(int userId) {
+
+		LocalDate nowDate = LocalDate.now();
+		String nowYearMonth = dateTimeUtil.toStringDate(nowDate, "yyyyMM");
+		int year = dateTimeUtil.getYearAndMonth(nowYearMonth).get("year");
+		int month = dateTimeUtil.getYearAndMonth(nowYearMonth).get("month");
+
+		int contractId = contractService.latestContract(userId).getContractId();
+
+		Month monthData = new Month();
+
+		monthData.setYear(year);
+		monthData.setMonth(month);
+		monthData.setDeadlineStatus(false);
+		monthData.setRequestStatus(false);
+		monthData.setContractId(contractId);
+
+		return monthData;
 	}
 }

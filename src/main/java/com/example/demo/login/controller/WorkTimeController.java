@@ -17,6 +17,8 @@ import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.transaction.WorkTimeTransaction;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
@@ -36,6 +38,12 @@ public class WorkTimeController {
 
 	@Autowired
 	SessionUtil sessionUtil;
+
+	@Autowired
+	DateTimeUtil dateTimeUtil;
+
+	@Autowired
+	WorkTimeTransaction workTimeTransaction;
 
 	@GetMapping("/workTime")
 	public String getWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request,
@@ -60,8 +68,12 @@ public class WorkTimeController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
-
+		if (dateTimeUtil.checkYearMonth(userId)) {
+			workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
+		} else {
+			workTimeTransaction.insertMonthAndWork(form, userId);
+		}
+		
 		return "login/workTime";
 	}
 }
