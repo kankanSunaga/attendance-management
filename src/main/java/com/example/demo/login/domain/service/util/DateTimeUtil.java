@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.login.domain.service.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,15 +8,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.domain.service.WorkTimeService;
+
 @Service
-public class DateTimeUtilityService {
+public class DateTimeUtil {
 
 	@Autowired
 	WorkTimeService workTimeService;
 
 	public Map<String, Integer> getYearAndMonth(String yearMonth) {
 		
-		LocalDate createDate = workTimeService.BeginningOfMonth(yearMonth);
+		LocalDate createDate = BeginningOfMonth(yearMonth);
 		int year = createDate.getYear();
 		int month = createDate.getMonthValue();
 
@@ -41,5 +43,13 @@ public class DateTimeUtilityService {
 		String stringYearMonth = stringYear + stringMonth;
 		
 		return stringYearMonth;
+	}
+	
+	public LocalDate BeginningOfMonth(String yearMonth) {
+
+		String strYearMonthDay = yearMonth + "01";
+		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+		return BeginningOfMonth;
 	}
 }

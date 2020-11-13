@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
-import com.example.demo.login.domain.service.DateTimeUtilityService;
 import com.example.demo.login.domain.service.DayOfWeekService;
 import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 
 @Controller
 public class HomeController {
@@ -44,7 +44,7 @@ public class HomeController {
 	private MonthService monthService;
 
 	@Autowired
-	private DateTimeUtilityService dateTimeUtilityService;
+	private DateTimeUtil dateTimeUtil;
 
 	@GetMapping("/home")
 	public String getHome(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -99,7 +99,7 @@ public class HomeController {
 		int year = monthService.latestMonth(userId).getYear();
 		int month = monthService.latestMonth(userId).getMonth();
 		
-		String yearMonth = dateTimeUtilityService.toStringYearMonth(year, month);
+		String yearMonth = dateTimeUtil.toStringYearMonth(year, month);
 
 		// 最終平日判定
 		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);

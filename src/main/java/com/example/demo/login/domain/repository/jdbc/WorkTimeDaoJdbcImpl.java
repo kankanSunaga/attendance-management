@@ -23,16 +23,14 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 	JdbcTemplate jdbc;
 
 	// WorkTimeテーブルにデータを1件insert.
-	public int insertOne(WorkTime workTime) throws DataAccessException {
+	public void insertOne(WorkTime workTime) throws DataAccessException {
 
 		// １件登録
-		int job = jdbc.update(
-				"INSERT INTO workTime(workDay," + " startTime," + " breakTime," + " endTime," + " workTimeMinute)"
-						+ " VALUES(?, ?, ?, ?, ?)",
+		jdbc.update("INSERT INTO workTime"
+				+ " (workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
 				workTime.getWorkDay(), workTime.getStartTime(), workTime.getBreakTime(), workTime.getEndTime(),
-				workTime.getWorkTimeMinute());
-
-		return job;
+				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId());
 	}
 
 	public List<WorkTime> selectMonthData(int userId) throws DataAccessException {

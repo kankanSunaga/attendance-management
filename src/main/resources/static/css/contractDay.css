@@ -1,0 +1,10 @@
+.box{
+  height:450px;
+}
+.scroll{
+  overflow:scroll;
+}
+
+.background {
+	background-color:#D3D3D3; 
+}

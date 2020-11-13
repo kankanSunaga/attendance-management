@@ -12,54 +12,56 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.Contract;
-import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.service.ContractService;
+import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
 public class WorkTimeController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
-	private WorkTimeService workTimeService;
-	
+	WorkTimeService workTimeService;
+
 	@Autowired
-	private ContractService contractService;
-	
+	ContractService contractService;
+
+	@Autowired
+	MonthService monthService;
+
+	@Autowired
+	SessionUtil sessionUtil;
+
 	@GetMapping("/workTime")
-	public String getWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
-		
-		// セッションの保持(userId)
+	public String getWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
-							
+
 		Contract contract = contractService.latestContract(userId);
-		
-		
+
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
 		form.setEndTime(contract.getEndTime());
-		
-		model.addAttribute("WorkTimeForm",form);
-		
-		
+
+		model.addAttribute("WorkTimeForm", form);
+
 		return "login/workTime";
 	}
-	
 
 	@PostMapping("/workTime")
-	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model) {
-		
-		WorkTime workTime = new WorkTime();
-		
-		workTime.setWorkTime(form);
-		
-		workTimeService.insert(workTime);
-		
+	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request) {
+
+		int userId = sessionUtil.getUserId(request);
+
+		workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
+
 		return "login/workTime";
 	}
 }

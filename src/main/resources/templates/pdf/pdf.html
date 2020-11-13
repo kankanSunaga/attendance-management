@@ -55,17 +55,17 @@ th {
 			<tbody>
 				<tr th:each="contractDay : ${contract}">
 					<!-- 日付 -->
-					<td th:if="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
+					<td th:if="${dayOfWeekService.hasHoliday(contractDay.value.workDay)}">
 						<span th:text="${contractDay.value.workDay.getDayOfMonth()}" style="color:#FF0000;"></span>
 					</td>
-					<td th:unless="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
+					<td th:unless="${dayOfWeekService.hasHoliday(contractDay.value.workDay)}">
 						<span th:text="${contractDay.value.workDay.getDayOfMonth()}"></span>
 					</td>
 					<!-- 曜日 -->
-					<td th:if="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
+					<td th:if="${dayOfWeekService.hasHoliday(contractDay.value.workDay)}">
 						<span th:text="${contractDay.value.workDay.format(weekFormatter)}" style="color:#FF0000;"></span>
 					</td>
-					<td th:unless="${dayOfWeek.hasHoliday(contractDay.value.workDay)}">
+					<td th:unless="${dayOfWeekService.hasHoliday(contractDay.value.workDay)}">
 						<span th:text="${contractDay.value.workDay.format(weekFormatter)}"></span>
 					</td>
 					<!-- 勤務開始時間 -->
