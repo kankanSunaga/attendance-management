@@ -122,7 +122,8 @@ public class ContractListController {
 		model.addAttribute("yearMonthUrl", yearMonth);
 
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-
+		model.addAttribute("workTimes", workTimes);
+		
 		// 空のカレンダー作成
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 		// 空のカレンダーにデータを追加
