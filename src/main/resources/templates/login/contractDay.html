@@ -52,7 +52,7 @@
 			<a th:if="${displayStatus} == 1">
 				<select name="selectidol">
 				<option th:each ="workTimes:${workTimes}">[[${workTimes.workDay}]]</option>
-			</select>		
+				</select>
 			</a>
 			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
 			<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
