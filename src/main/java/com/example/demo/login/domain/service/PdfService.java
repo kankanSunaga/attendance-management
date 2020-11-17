@@ -49,13 +49,12 @@ public class PdfService {
 	DayOfWeekService dayOfWeekService;
 
 	public List<Pdf> selectMany() {
-
 		return dao.selectMany();
 	}
 
 	public String createPdf(int userId, int contractId, String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay,
 			String strYearMonth, HttpServletResponse response) throws IOException {
-		// PDF作成処理
+
 		// テンプレートエンジンを初期化する
 		final TemplateEngine engine = initializeTemplateEngine();
 
@@ -63,7 +62,7 @@ public class PdfService {
 		final IContext ctx = makeContext(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth);
 
 		// 今回はWriter経由で結果を出力するのでWriterも初期化
-		final Writer writer = new FileWriter("output/sample.html");
+		Writer writer = new FileWriter("output/sample.html");
 
 		// テンプレート名とコンテキストとWriterを引数としてprocessメソッドをコール
 		engine.process("pdf/pdf", ctx, writer);
@@ -75,44 +74,40 @@ public class PdfService {
 		byte[] encoded = Files.readAllBytes(Paths.get("output/sample.html"));
 		String htmlStr = new String(encoded);
 
-		String outputFile = "output/report.pdf";
-		try (OutputStream os = new FileOutputStream(outputFile)) {
+		try (OutputStream os = new FileOutputStream("output/report.pdf")) {
 			PdfWriter pdfWriter = new PdfWriter(os);
 			ConverterProperties converterProperties = new ConverterProperties();
-			PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 
-			// For setting the PAGE SIZE
+			PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 			pdfDocument.setDefaultPageSize(new PageSize(PageSize.A4));
 
 			Document document = HtmlConverter.convertToDocument(htmlStr, pdfDocument, converterProperties);
 			document.close();
 		}
+		return null;
+	}
 
-		// PDFダウンロード処理
+	public String pdfDownload(HttpServletResponse response) {
+
 		Path data = Paths.get("output/report.pdf");
 
-		// ダウンロード対象のファイルデータがnullの場合はエラー画面に遷移
 		if (data == null) {
-
 			return "download_error";
 		}
 
-		// PDFプレビューの設定を実施
 		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "inline;");
-
-		// その他の設定を実施
+		response.setHeader("Content-Disposition", "inline");
 		response.setHeader("Cache-Control", "private");
 		response.setHeader("Pragma", "");
 
 		try (OutputStream out = response.getOutputStream()) {
+			// Files.readAllBytes() 引数:path, 戻り値:byte
 			byte[] bytes = Files.readAllBytes(data);
 			out.write(bytes);
 			out.flush();
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-
 		return null;
 	}
 

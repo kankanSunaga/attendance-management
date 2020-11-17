@@ -55,14 +55,13 @@ public class PdfController {
 		int userId = (int) session.getAttribute("userId");
 
 		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
-
 		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
-
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 
 		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
 
 		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response);
+		pdfService.pdfDownload(response);
 
 		model.addAttribute("yearMonthUrl", yearMonth);
 		model.addAttribute("contractDay", contractDayList);
