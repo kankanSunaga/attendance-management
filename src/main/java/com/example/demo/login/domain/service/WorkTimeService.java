@@ -159,4 +159,8 @@ public class WorkTimeService {
 		}
 		return calender;
 	}
+	
+	public void deleteOne() {
+		dao.deleteOne();
+	}
 }

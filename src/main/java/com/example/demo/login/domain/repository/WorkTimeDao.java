@@ -20,4 +20,6 @@ public interface WorkTimeDao {
 
 	// workTimeテーブルから月のデータを全件取得（範囲検索）
 	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) throws DataAccessException;
+	
+	public void deleteOne() throws DataAccessException;
 }
