@@ -17,7 +17,7 @@
 			<!-- カレンダー -->
 			<div class="col-sm-2">
 				<label>勤務日</label>
-				<input class="form-control" type="date" th:field="*{workDay}" name="workDay" required>
+				<input class="form-control" type="date" th:field="*{workDay}" th:attr="min=${minDate}, max=${maxDate}" required>
 				<br>
 			</div>
 			<!-- 始業時間 -->

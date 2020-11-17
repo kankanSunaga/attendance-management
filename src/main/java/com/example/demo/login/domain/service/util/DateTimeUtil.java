@@ -49,6 +49,15 @@ public class DateTimeUtil {
 		return stringYearMonth;
 	}
 	
+	public LocalDate BeginningOfMonth(LocalDate date) {
+		
+		String stringYearMonth = toStringDate(date, "yyyyMM");
+		String strYearMonthDay = stringYearMonth + "01";
+		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+		return BeginningOfMonth;
+	}
+	
 	public LocalDate BeginningOfMonth(String yearMonth) {
 
 		String strYearMonthDay = yearMonth + "01";
