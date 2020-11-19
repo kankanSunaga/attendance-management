@@ -168,4 +168,9 @@ public class WorkTimeService {
 		}
 		return calender;
 	}
+	
+	public boolean hasDataCheck(WorkTime workTime) {
+		
+		return dao.hasDataCheck(workTime);
+	}
 }
