@@ -11,6 +11,8 @@ public interface WorkTimeDao {
 
 	// userテーブルにデータを1件insert
 	public void insertOne(WorkTime workTime) throws DataAccessException;
+	
+	public void updateOne(WorkTime workTime) throws DataAccessException;
 
 	// workTimeテーブルから今月のデータを取得
 	public List<WorkTime> selectMonthData(int userId) throws DataAccessException;

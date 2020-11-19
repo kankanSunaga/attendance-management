@@ -38,6 +38,11 @@ public class WorkTimeService {
 
 		dao.insertOne(workTime);
 	}
+	
+	public void updateOne(WorkTime workTime) {
+		
+		dao.updateOne(workTime);
+	}
 
 	// その月のデータ取得用メソッド
 	public List<WorkTime> selectMonthData(int userId) {
