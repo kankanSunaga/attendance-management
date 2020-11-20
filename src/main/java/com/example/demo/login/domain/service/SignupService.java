@@ -6,7 +6,7 @@ import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
 
 @Service
-public class SignupFormService {
+public class SignupService {
 
 	public User setUser(SignupForm form) {
 		
