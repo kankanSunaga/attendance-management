@@ -68,7 +68,7 @@ public class WorkTimeController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		if (!(workTimeService.hasDataCheck(workTimeService.setWorkTime(form, userId)))) {
+		if (!(workTimeService.hasConfirmationData(workTimeService.setWorkTime(form, userId)))) {
 			workTimeService.updateOne(workTimeService.setWorkTime(form, userId));
 		} else if (dateTimeUtil.checkYearMonth(userId)) {
 			workTimeService.insertOne(workTimeService.setWorkTime(form, userId));

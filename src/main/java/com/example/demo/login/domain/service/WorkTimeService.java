@@ -169,8 +169,8 @@ public class WorkTimeService {
 		return calender;
 	}
 	
-	public boolean hasDataCheck(WorkTime workTime) {
+	public boolean hasConfirmationData(WorkTime workTime) {
 		
-		return dao.hasDataCheck(workTime);
+		return dao.hasConfirmationData(workTime);
 	}
 }
