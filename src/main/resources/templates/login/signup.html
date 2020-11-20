@@ -32,6 +32,8 @@
 		<div th:each="error:${#fields.detailedErrors()}">
 			<span th:text="${error.message}">Error message</span>
 		</div>
+		<br/>
+		<div th:if="${success}">このメールアドレスはすでに登録されています</div>
         <br/>
         <!-- 申請ボタン -->
 		<button class="btn btn-primary" type="submit">申請する</button>
