@@ -9,12 +9,12 @@ import com.example.demo.login.domain.repository.SignupDao;
 
 @Service
 public class SignupService {
-	
+
 	@Autowired
 	SignupDao dao;
-	
+
 	public boolean hasExist(User user) {
-		
+
 		return dao.hasExist(user);
 	}
 
