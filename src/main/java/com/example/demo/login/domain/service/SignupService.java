@@ -9,16 +9,16 @@ import com.example.demo.login.domain.model.User;
 public class SignupService {
 
 	public User setUser(SignupForm form) {
-		
+
 		User user = new User();
-        
-        user.setUserName(form.getUserName());
-        user.setPassword(form.getPassword());
-        user.setEmail(form.getEmail());
-        user.setRole("ROLE_GENERAL");
-        user.setPermission(false);
-        user.setFrozen(false);
-        
-        return user;
+
+		user.setUserName(form.getUserName());
+		user.setPassword(form.getPassword());
+		user.setEmail(form.getEmail());
+		user.setRole("ROLE_GENERAL");
+		user.setPermission(false);
+		user.setFrozen(false);
+
+		return user;
 	}
 }
