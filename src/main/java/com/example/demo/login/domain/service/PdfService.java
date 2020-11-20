@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import com.example.demo.login.domain.model.Pdf;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.repository.PdfDao;
+import com.example.demo.login.domain.service.util.PathUtil;
+import com.example.demo.login.domain.service.util.SessionUtil;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
@@ -47,34 +50,35 @@ public class PdfService {
 
 	@Autowired
 	DayOfWeekService dayOfWeekService;
+	
+	@Autowired
+	SessionUtil sessionUtil;
+	
+	@Autowired
+	PathUtil pathUtil;
 
 	public List<Pdf> selectMany() {
 		return dao.selectMany();
 	}
 
 	public String createPdf(int userId, int contractId, String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay,
-			String strYearMonth, HttpServletResponse response) throws IOException {
-
-		// テンプレートエンジンを初期化する
+			String strYearMonth, HttpServletResponse response, HttpServletRequest request) throws IOException {
+		
 		final TemplateEngine engine = initializeTemplateEngine();
 
-		// コンテキストを生成する
 		final IContext ctx = makeContext(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth);
 
-		// 今回はWriter経由で結果を出力するのでWriterも初期化
-		Writer writer = new FileWriter("output/sample.html");
+		String htmlPath = pathUtil.createPath("output", userId, "html");
+		Writer writer = new FileWriter(htmlPath);
 
-		// テンプレート名とコンテキストとWriterを引数としてprocessメソッドをコール
 		engine.process("pdf/pdf", ctx, writer);
-
-		// Writerをクローズ
 		writer.close();
 
-		// ここからがpdf出力用
-		byte[] encoded = Files.readAllBytes(Paths.get("output/sample.html"));
+		byte[] encoded = Files.readAllBytes(Paths.get(htmlPath));
 		String htmlStr = new String(encoded);
 
-		try (OutputStream os = new FileOutputStream("output/report.pdf")) {
+		String pdfPath = pathUtil.createPath("output", userId, "pdf");
+		try (OutputStream os = new FileOutputStream(pdfPath)) {
 			PdfWriter pdfWriter = new PdfWriter(os);
 			ConverterProperties converterProperties = new ConverterProperties();
 

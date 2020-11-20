@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import com.example.demo.login.domain.service.PdfService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
+import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
 public class PdfController {
@@ -46,13 +46,15 @@ public class PdfController {
 	@Autowired
 	DateTimeUtil dateTimeUtil;
 
+	@Autowired
+	SessionUtil sessionUtil;
+
 	@GetMapping("/contract/{contractId}/{yearMonth}/pdfDownload")
 	public void getPdfDownload(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) throws IOException {
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
+		int userId = sessionUtil.getUserId(request);
 
 		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
@@ -60,7 +62,7 @@ public class PdfController {
 
 		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
 
-		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response);
+		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response, request);
 		pdfService.pdfDownload(response);
 
 		model.addAttribute("yearMonthUrl", yearMonth);
