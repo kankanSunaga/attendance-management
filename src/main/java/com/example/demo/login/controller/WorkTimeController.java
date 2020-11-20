@@ -68,12 +68,14 @@ public class WorkTimeController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		if (dateTimeUtil.checkYearMonth(userId)) {
+		if (!(workTimeService.hasExist(workTimeService.setWorkTime(form, userId)))) {
+			workTimeService.updateOne(workTimeService.setWorkTime(form, userId));
+		} else if (dateTimeUtil.checkYearMonth(userId)) {
 			workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
-		} else {
+		} else if (!(dateTimeUtil.checkYearMonth(userId))) {
 			workTimeTransaction.insertMonthAndWork(form, userId);
 		}
-		
+
 		return "login/workTime";
 	}
 }
