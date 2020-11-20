@@ -44,7 +44,6 @@ public class SignupController {
 
 			return "login/signup";
 		}
-
 		return "login/unapproved";
 	}
 }
