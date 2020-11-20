@@ -35,7 +35,15 @@ public class SignupController {
 			return getSignup(form, model);
 		}
 
-		userService.insert(signupService.setUser(form));
+		boolean useEmail = false;
+		if (signupService.hasExist(signupService.setUser(form))) {
+			userService.insert(signupService.setUser(form));
+		} else {
+			useEmail = true;
+			model.addAttribute("useEmail", useEmail);
+
+			return "login/signup";
+		}
 
 		return "login/unapproved";
 	}
