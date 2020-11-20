@@ -121,7 +121,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return contractDayList;
 	}
 	
-	public boolean hasConfirmationData(WorkTime workTime) {
+	public boolean hasExist(WorkTime workTime) {
 		List<Map<String, Object>> getList = jdbc.queryForList(
 				"SELECT * FROM workTime WHERE contractid=? AND workDay=?", workTime.getContractId(), workTime.getWorkDay());
 		
