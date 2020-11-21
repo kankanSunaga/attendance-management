@@ -26,22 +26,22 @@ VALUES(3, 170, '07:00', '01:00', '18:00', '2020-09-01','YUE', '2021-08-31', 3);
 
 /*月のステータステーブル*/
 INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(1, 2020, 8, 'false', 'false',1);
+VALUES(1, 2020, 8, 'false', 'false',1);
 
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(2, 2020, 9, 'true', 'false',1);
+INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+VALUES(2, 2020, 9, 'true', 'false',1);
  
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(3, 2020, 10, 'false', 'true',1);
+INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+VALUES(3, 2020, 10, 'false', 'true',1);
  
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(4, 2020, 11, 'false', 'false',1);
+INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+VALUES(4, 2020, 11, 'true', 'true',1);
  
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(6, 2021, 8, 'false', 'false',1);
+INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+VALUES(6, 2021, 8, 'false', 'false',1);
  
- INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
- VALUES(5, 2020, 9, 'false', 'true',3);
+INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
+VALUES(5, 2020, 9, 'false', 'true',3);
  
 
 /*仕事詳細テーブル1-1（2020年9月1日）*/
@@ -55,6 +55,10 @@ VALUES(2, '2020-09-03', '2020-09-03 09:00:00', '12:00:00', '2020-09-03 17:00:00'
 /*仕事詳細テーブル1-3（2020年10月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
 VALUES(3, '2020-10-01', '2020-10-01 09:00:00', '12:00:00', '2020-10-01 17:00:00', 420, 1, 3);
+
+/*仕事詳細テーブル1-3（2020年10月2日）*/
+INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
+VALUES(10, '2020-10-02', '2020-10-02 09:00:00', '12:00:00', '2020-10-02 17:00:00', 420, 1, 3);
 
 /*仕事詳細テーブル1-4（2020年11月1日）*/
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)

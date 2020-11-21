@@ -23,16 +23,25 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 	JdbcTemplate jdbc;
 
 	// WorkTimeテーブルにデータを1件insert.
-	public int insertOne(WorkTime workTime) throws DataAccessException {
-
+	public void insertOne(WorkTime workTime) throws DataAccessException {
+ 
 		// １件登録
-		int job = jdbc.update(
-				"INSERT INTO workTime(workDay," + " startTime," + " breakTime," + " endTime," + " workTimeMinute)"
-						+ " VALUES(?, ?, ?, ?, ?)",
+		jdbc.update("INSERT INTO workTime"
+				+ " (workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
 				workTime.getWorkDay(), workTime.getStartTime(), workTime.getBreakTime(), workTime.getEndTime(),
-				workTime.getWorkTimeMinute());
+				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId());
+	}
+	
+	public void updateOne(WorkTime workTime) throws DataAccessException {
+		
+		jdbc.update("UPDATE workTime"
+				+ " SET workDay=?, startTime=?, breakTime=?, endTime=?, workTimeMinute=?, contractId=?, monthId=?"
+				+ " WHERE contractId=? AND workDay=?",
+				workTime.getWorkDay(), workTime.getStartTime(), workTime.getBreakTime(), workTime.getEndTime(),
+				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId(),
+				workTime.getContractId(), workTime.getWorkDay());
 
-		return job;
 	}
 
 	public List<WorkTime> selectMonthData(int userId) throws DataAccessException {
@@ -106,10 +115,16 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 			// endTimeのフォーマットを変更
 			String stringEndTime = workTime.getEndTime().format(timeFormat);
 			workTime.setStringEndTime(stringEndTime);
-			// ******************** PDF用のフォーマットに変換 ********************
 
 			contractDayList.add(workTime);
 		}
 		return contractDayList;
+	}
+	
+	public boolean hasExist(WorkTime workTime) {
+		List<Map<String, Object>> getList = jdbc.queryForList(
+				"SELECT * FROM workTime WHERE contractid=? AND workDay=?", workTime.getContractId(), workTime.getWorkDay());
+		
+		return getList.isEmpty();
 	}
 }

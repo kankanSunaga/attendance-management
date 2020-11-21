@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
+	<link th:href="@{/css/contractDay.css}" rel="stylesheet"></link>
 	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
@@ -12,11 +13,12 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
-	<br><br>
-	<div class="container">
+	<div class="background">
+		<br><br>
+	</div>
+	<div class = "box scroll">
 		<table class="table table-bordered">
-			<thead class="thead-dark">
-				
+			<thead class="thead-dark">				
 				<tr>
 					<th>勤務日</th>
 					<th>始業時間</th>
@@ -43,12 +45,21 @@
 				</tr>
 			</tbody>
 		</table>
-		<a class="btn btn-success" th:if="${displayStatus} == 1">セレクトボックスになりたい</a>
-		<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
-		<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
-		<br>
-		<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
-		<br>
+	</div>
+	<div class="background">
+		<div class="container">	
+			<br><br>
+			<a th:if="${displayStatus} == 1">
+				<select name="selectidol">
+				<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workDay}"></option>
+				</select>
+			</a>
+			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
+			<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
+			<br>
+			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
+			<br>
+		</div>	
 	</div>
 </body>
 </html>

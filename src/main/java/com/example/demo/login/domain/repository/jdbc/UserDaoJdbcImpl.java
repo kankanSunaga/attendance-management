@@ -138,4 +138,18 @@ public class UserDaoJdbcImpl implements UserDao {
 
 		return user;
 	}
+	
+	@Override
+	public int updateEmail(User user) throws DataAccessException {
+		int statusNumber = jdbc.update("UPDATE user SET email = ? WHERE userId = ?", user.getEmail(), user.getUserId());
+		return statusNumber;
+	}
+	
+	@Override
+	public int updatePassword(User user, String newPassword) throws DataAccessException {
+		String password = passwordEncoder.encode(newPassword);
+		int statusNumber = jdbc.update("UPDATE user SET password = ? WHERE userId = ?", password, user.getUserId());
+		return statusNumber;
+		
+	}
 }

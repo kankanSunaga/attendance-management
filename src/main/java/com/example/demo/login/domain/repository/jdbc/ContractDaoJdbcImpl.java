@@ -20,15 +20,12 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 	// Contractテーブルの件数を取得
 	@Override
-	public int insertOne(Contract contract) throws DataAccessException {
-
-		int rowNumber = jdbc.update(
-				"INSERT INTO contract(contractTime," + " startTime," + " breakTime," + " endTime," + " startDate,"
-						+ " officeName)" + " VALUES(?, ?, ?, ?, ?, ?)",
+	public void insertOne(Contract contract) throws DataAccessException {
+		jdbc.update("INSERT INTO contract("
+				+ " contractTime, startTime, breakTime, endTime, startDate, officeName, userId)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
 				contract.getContractTime(), contract.getStartTime(), contract.getBreakTime(), contract.getEndTime(),
-				contract.getStartDate(), contract.getOfficeName());
-
-		return rowNumber;
+				contract.getStartDate(), contract.getOfficeName(), contract.getUserId());
 	}
 
 	// Contractテーブルから1件データを取得（動的）
@@ -108,7 +105,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ? "
+						+ " WHERE user.userId = ?"
 						+ " ORDER BY contractId DESC LIMIT 1", userId);
 
 		Contract latestContract = new Contract();

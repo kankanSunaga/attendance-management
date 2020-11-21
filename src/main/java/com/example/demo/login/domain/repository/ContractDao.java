@@ -8,7 +8,7 @@ import com.example.demo.login.domain.model.Contract;
 public interface ContractDao {
 	
 	// Contractテーブルに1件insert
-	public int insertOne(Contract contract) throws DataAccessException;
+	public void insertOne(Contract contract) throws DataAccessException;
 	
 	// Contractテーブルからデータ取得（動的）
 	public Contract activeSelectOne(int contractId) throws DataAccessException;
@@ -19,5 +19,5 @@ public interface ContractDao {
 	// Contractテーブルから特定のユーザーのデータ取得
 	public List<Contract> selectByUserId(int userId) throws DataAccessException;
 	
-	Contract latestContract(int userId) throws DataAccessException;
+	public Contract latestContract(int userId) throws DataAccessException;
 }
