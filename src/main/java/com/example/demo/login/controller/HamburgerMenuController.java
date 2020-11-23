@@ -19,7 +19,10 @@ import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
 import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.model.UserIconForm;
+import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
 public class HamburgerMenuController {
@@ -27,8 +30,31 @@ public class HamburgerMenuController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	UserIconService userIconService;
+
+	@Autowired
+	SessionUtil sessionUtil;
+
+	@Autowired
+	HttpServletRequest request;
+
 	@GetMapping("/changeUserIcon")
 	public String getChangeUserIcon(Model model) {
+
+		return "login/changeUserIcon";
+	}
+
+	@PostMapping("/changeUserIcon")
+	public String postChengeUserIcon(UserIconForm form, Model model) throws IOException {
+
+		int userId = sessionUtil.getUserId(request);
+
+		if (form.getFile().isEmpty()) {
+			return "login/changeUserIcon";
+		}
+
+		model.addAttribute("updateStatus", userIconService.uploadImage(form.getFile(), userId));
 
 		return "login/changeUserIcon";
 	}
