@@ -11,30 +11,24 @@
 <title>headerLayout</title>
 </head>
 <body>
-	<!-- ヘッダー -->
-	<nav th:fragment="header"
-		class="navbar navbar-inverse navbar-fixed-top">
+	<nav th:fragment="header" class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/home">サービス名</a>
 			<div class="dropdown pull-right">
-				<!-- ハンバーガーメニュー -->
-				<button class="btn btn-default dropdown-toggle" type="button"
-					id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="true">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 					<div id="humberger">
 						<div></div>
 						<div></div>
 						<div></div>
 					</div>
 				</button>
-				<!-- ドロップダウンメニュー -->
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					<li><a href="/changeUserIcon">プロフィール画像の変更</a></li>
 					<li><a href="/changeEmail">メールアドレスの変更</a></li>
 					<li><a href="/changePassword">パスワードの変更</a></li>
-					<li><a href="/contracts">過去分の確認</a></li>
-					<li><a href="/changeContractTime">設定時間の変更</a></li>
-					<li><a href="/changeContract">契約の変更</a></li>
+					<li><a href="/contracts">契約の履歴</a></li>
+					<li><a href="/changeContractTime">勤務時間の変更</a></li>
+					<li><a href="/changeContract">契約の更新</a></li>
 					<li><a href="/logout">ログアウト</a></li>
 				</ul>
 			</div>
