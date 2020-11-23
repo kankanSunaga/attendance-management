@@ -21,91 +21,94 @@ import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
 
-
 @Controller
 public class HamburgerMenuController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
+	@GetMapping("/changeUserIcon")
+	public String getChangeUserIcon(Model model) {
+
+		return "login/changeUserIcon";
+	}
+
 	@GetMapping("/changePassword")
 	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) {
-						
+
 		HttpSession session = request.getSession();
-		int userId = (int)session.getAttribute("userId");
-		
+		int userId = (int) session.getAttribute("userId");
+
 		User user = userService.selectOne(userId);
 		model.addAttribute("user", user);
-		
+
 		return "login/changePassword";
-		
+
 	}
-	
-	
+
 	@PostMapping("/changePassword")
-	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form,  BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
-		
+	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form, BindingResult bindingResult,
+			Model model, HttpServletRequest request) throws IOException {
+
 		if (bindingResult.hasErrors()) {
-        	return getChangePassword(form, request, model);
-        }
-		
+			return getChangePassword(form, request, model);
+		}
+
 		HttpSession session = request.getSession();
-		int userId = (int)session.getAttribute("userId");
-		
+		int userId = (int) session.getAttribute("userId");
+
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
-		
+
 		return "login/changePassword";
-		
+
 	}
-	
-	
+
 	@GetMapping("/changeEmail")
 	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) {
-		
+
 		HttpSession session = request.getSession();
-		int userId = (int)session.getAttribute("userId");
-		
+		int userId = (int) session.getAttribute("userId");
+
 		User user = userService.selectOne(userId);
 		model.addAttribute("user", user);
-		
+
 		return "login/changeEmail";
-		
+
 	}
-	
-	
+
 	@PostMapping("/changeEmail")
-	public String postChengeEmail(@ModelAttribute @Validated ChangeEmailForm form,  BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
-		
+	public String postChengeEmail(@ModelAttribute @Validated ChangeEmailForm form, BindingResult bindingResult,
+			Model model, HttpServletRequest request) throws IOException {
+
 		if (bindingResult.hasErrors()) {
-        	return getChangeEmail(form, request, model);
-        }
-		
+			return getChangeEmail(form, request, model);
+		}
+
 		HttpSession session = request.getSession();
-		int userId = (int)session.getAttribute("userId");
-		
+		int userId = (int) session.getAttribute("userId");
+
 		User user = userService.selectOne(userId);
 		user.setEmail(form.getNewEmail());
 		userService.updateEmail(user);
-		
+
 		return "redirect:/changeEmail";
-		
+
 	}
-	
-	
+
 	@GetMapping("/changeContractTime")
-	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		session.getAttribute("userId");
-		
+
 		return "login/changeContractTime";
 	}
-	
-	
+
 	@GetMapping("/changeContract")
 	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		session.getAttribute("userId");
-		
+
 		return "login/changeContract";
 	}
 }
