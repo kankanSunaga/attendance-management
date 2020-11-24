@@ -1,5 +1,6 @@
 package com.example.demo.login.domain.repository.jdbc;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -122,4 +123,30 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 		return latestContract;
 	}
+	
+	
+	public Contract underContract(int userId, LocalDate today) throws DataAccessException {
+		
+		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
+						+ " INNER JOIN contract ON user.userId = contract.userId"
+						+ " WHERE contract.startDate <= '" + today.toString() + "' AND"
+						+ " (contract.endDate >= '" + today.toString() + "' OR contract.endDate IS NOT NULL)"
+						+ " AND user.userId = ?"
+						, userId);
+
+		Contract latestContract = new Contract();
+
+		latestContract.setContractId((int) map.get("contractId"));
+		latestContract.setContractTime((int) map.get("contractTime"));
+		latestContract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
+		latestContract.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+		latestContract.setEndTime(((java.sql.Time) map.get("endTime")).toLocalTime());
+		latestContract.setStartDate(((java.sql.Date) map.get("startDate")).toLocalDate());
+		latestContract.setOfficeName((String) map.get("officeName"));
+		latestContract.setEndDate(((java.sql.Date) map.get("endDate")).toLocalDate());
+		latestContract.setUserId((int) map.get("userId"));
+
+		return latestContract;
+	}
+	
 }
