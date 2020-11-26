@@ -149,4 +149,18 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return latestContract;
 	}
 	
+	
+	public int updateContract(Contract contract) throws DataAccessException {
+
+ 		java.sql.Time startTime = java.sql.Time.valueOf(contract.getStartTime());
+		java.sql.Time breakTime = java.sql.Time.valueOf(contract.getBreakTime());
+		java.sql.Time endTime = java.sql.Time.valueOf(contract.getEndTime());
+
+ 		int rowNumber = jdbc.update("UPDATE contract SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?",
+				contract.getContractTime(), startTime, breakTime, endTime, contract.getUserId());
+
+ 		return rowNumber;
+
+ 	}
+	
 }

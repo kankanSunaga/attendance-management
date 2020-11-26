@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
-import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
+import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.util.SessionUtil;
@@ -35,6 +36,12 @@ public class HamburgerMenuController {
 
 	@Autowired
 	SessionUtil sessionUtil;
+	
+	@Autowired
+	ContractService contractService;
+	
+	@Autowired
+	SessionUtil sessionutil;
 
 	@Autowired
 	HttpServletRequest request;
@@ -121,15 +128,38 @@ public class HamburgerMenuController {
 
 	}
 
+	
 	@GetMapping("/changeContractTime")
-	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		session.getAttribute("userId");
-
+	public String getChangeContractTime(@ModelAttribute ChangeContractTimeForm form, Model model, HttpServletRequest request) {
+		
+		int userId = sessionUtil.getUserId(request);
+		
+		contractService.setOldContractTime(form, userId);
+		 
+		model.addAttribute("ChangeContractTimeForm", form);
+		
 		return "login/changeContractTime";
+		
+	}
+	
+	
+	@PostMapping("/changeContractTime")
+	public String postChangeContractTime(@ModelAttribute @Validated ChangeContractTimeForm form,  BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
+		
+		if (bindingResult.hasErrors()) {
+        	return getChangeContractTime(form, model, request);
+        }
+		
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		model.addAttribute("status", contractService.updateContract(contractService.setUpdateContractTime(form, userId)));
+		
+		return "login/changeContractTime";
+		
 	}
 
+	
 	@GetMapping("/changeContract")
 	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();

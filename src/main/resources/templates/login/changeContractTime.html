@@ -10,48 +10,57 @@
 	<title>ChangeContractTime</title>
 </head>
 <body>
-	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
-	<!-- コンテンツ -->
 	<br><br>
-	<form method="post" th:action="@{/changeContractTime}" th:object="${contractForm}">
-		<div class="container text-center">
-			<!-- 契約勤務時間 -->
-			<div class="col-sm-2">
-				<label>契約勤務時間</label>
-				<input type="number" name="contractTime" value="0" min="0" max="720" step="1" class="form-control" th:field="*{contractTime}" required/>時間
+	<div class="text-center">
+		<form method="post" th:action="@{/changeContractTime}" th:object="${changeContractTimeForm}" >
+			<div class="container">
+				<h1>契約時間の変更	</h1>
+				<br>
+				<div class="col-sm-2">
+					<label>契約勤務時間</label>
+					<input type="number" value="0" min="0" max="720" step="1" class="form-control" th:field="*{newContractTime}" name="newContractTime">時間
+					<br>
+					<div th:each="error:${#fields.detailedErrors('newContractTime')}">
+						<span th:text="${error.message}" th:errors="*{newContractTime}">newContractTime error</span>
+					</div>
+					<br>
+				</div>
+				<div class="col-sm-2">
+					<label class="space">想定始業時間</label>
+					<input type="time" class="form-control" th:field="*{newStartTime}" name="newStartTime">
+					<br>
+					<div th:each="error:${#fields.detailedErrors('newStartTime')}">
+						<span th:text="${error.message}" th:errors="*{newStartTime}">newStartTime error</span>
+					</div>
+					<br>
+				</div>
+				<div class="col-sm-2">
+					<label class="space">想定休憩時間</label>
+					<input type="time" class="form-control" th:field="*{newBreakTime}" name="newBreakTime">
+					<br>
+					<div th:each="error:${#fields.detailedErrors('newBreakTime')}">
+						<span th:text="${error.message}" th:errors="*{newBreakTime}">newBreakTime error</span>
+					</div>
+				</div>
+				<br/>
+				<div class="col-sm-2">
+					<label class="space">想定退勤時間</label>
+					<input type="time" class="form-control" th:field="*{newEndTime}" name="newEndTime">
+					<br>
+					<div th:each="error:${#fields.detailedErrors('newEndTime')}">
+						<span th:text="${error.message}" th:errors="*{newEndTime}">newEndTime error</span>
+					</div>
+					<br/>
+					<div th:if="${status}">契約勤務時間を変更しました</div>
+					<div th:if="${status == false}">契約勤務時間を変更出来ませんでした</div>
+					<br>
+				</div>
+				<div class="col-sm-4">
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
 			</div>
-			<br/>
-			<!-- 想定始業時間 -->
-			<div class="col-sm-2">
-				<label class="space">想定始業時間</label>
-				<input type="time" name="startTime" class="form-control" th:field="*{startTime}" required/>
-			</div>
-			<br/>
-			<!-- 想定休憩時間(分で入力) -->
-			<div class="col-sm-2">
-				<label class="space">想定休憩時間</label>
-				<input type="time" name="breakTime" class="form-control" th:field="*{breakTime}" required/>
-			</div>
-			<br/>
-			<!-- 想定退勤時間 -->
-			<div class="col-sm-2">
-				<label class="space">想定退勤時間</label>
-				<input type="time" name="endTime" class="form-control" th:field="*{endTime}" required/>
-			</div>
-			<br/>
-			<!-- エラーメッセージの表示 -->
-			<ul>
-				<li th:each="error:${#fields.detailedErrors()}">
-					<span th:text="${error.message}">Error message</span>
-				</li>
-			</ul>
-			<!-- 保存ボタン -->
-			<div class="col-sm-4">
-				<button class="btn btn-primary" type="submit">保存</button>
-			</div>
-		</div>
-	</form>
-	<br/>
+		</form>
+	</div>
 </body>
 </html>
