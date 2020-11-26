@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<title>ChangeUserIcon</title>
+</head>
+<body>
+	<div th:replace="login/headerLayout.html :: header"></div>
+	<br>
+	<br>
+	<div class="text-center">
+		<form method="post" enctype="multipart/form-data" th:action="@{/changeUserIcon}">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-2">
+						<input type="file" name="file" required>
+						<br>
+						<div th:if="${updateStatus} == true">プロフィール画像を変更しました</div>
+						<br>
+						<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">変更確認画面</h4>
+						</div>
+						<div class="modal-body">
+							<label>本当にプロフィール画像を変更しますか？</label>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-danger">変更する</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
