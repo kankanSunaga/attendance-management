@@ -38,6 +38,11 @@ public class WorkTimeService {
 
 		dao.insertOne(workTime);
 	}
+	
+	public void updateOne(WorkTime workTime) {
+		
+		dao.updateOne(workTime);
+	}
 
 	// その月のデータ取得用メソッド
 	public List<WorkTime> selectMonthData(int userId) {
@@ -57,15 +62,19 @@ public class WorkTimeService {
 
 	public WorkTime setWorkTime(WorkTimeForm form, int userId) {
 
+		int contractId = contractService.latestContract(userId).getContractId();
+		int monthId = monthService.latestMonth(userId).getMonthId();
+
 		WorkTime workTime = new WorkTime();
-		int overTimeMinute = 1440;
 
+		workTime.setContractId(contractId);
+		workTime.setMonthId(monthId);
 		workTime.setWorkTimeMinute(getWorkTimeMinute(form));
-
 		workTime.setWorkDay(form.getWorkDay());
 		workTime.setStartTime(LocalDateTime.of(form.getWorkDay(), form.getStartTime()));
 		workTime.setBreakTime(form.getBreakTime());
 
+		int overTimeMinute = 1440;
 		if (form.isOverTimeFlag()) {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay().plusDays(1), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + overTimeMinute);
@@ -160,7 +169,14 @@ public class WorkTimeService {
 		return calender;
 	}
 	
+
 	public void deleteOne(int workTimeId) {
 		dao.deleteOne(workTimeId);
 	}
+
+	public boolean hasExist(WorkTime workTime) {
+		
+		return dao.hasExist(workTime);
+	}
 }
+

@@ -90,4 +90,12 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 		return selectMonth;
 	}
+
+	public void insertOne(Month month) throws DataAccessException {
+
+		jdbc.update("INSERT INTO month"
+				+ " (year, month, deadlineStatus, requestStatus, contractId)"
+				+ " VALUES(?, ?, ?, ?, ?)",
+				month.getYear(), month.getMonth(), false, false, month.getContractId());
+	}
 }

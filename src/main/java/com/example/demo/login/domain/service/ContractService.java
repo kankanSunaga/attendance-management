@@ -83,4 +83,11 @@ public class ContractService {
 
 		return status;
 	}
+	
+	public Contract underContract(int userId) {
+		LocalDate today = LocalDate.now();
+		
+		return dao.underContract(userId, today);
+	}
+	
 }

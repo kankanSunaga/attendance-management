@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS contract (
 
 
 CREATE TABLE IF NOT EXISTS month (
-	userId INT,
  	monthId INT IDENTITY(1, 1) PRIMARY KEY,
  	year INT,
  	month INT,

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.WorkTimeService;
 
 @Service
@@ -15,6 +16,9 @@ public class DateTimeUtil {
 
 	@Autowired
 	WorkTimeService workTimeService;
+	
+	@Autowired
+	MonthService monthService;
 
 	public Map<String, Integer> getYearAndMonth(String yearMonth) {
 		
@@ -51,5 +55,23 @@ public class DateTimeUtil {
 		LocalDate BeginningOfMonth = LocalDate.parse(strYearMonthDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
 
 		return BeginningOfMonth;
+	}
+	
+	public boolean checkYearMonth(int userId) {
+		
+		LocalDate nowDate = LocalDate.now();
+		String nowYearMonth = toStringDate(nowDate, "yyyyMM");
+		
+		int year = monthService.latestMonth(userId).getYear();
+		int month = monthService.latestMonth(userId).getMonth();
+		String stringYearMonth = toStringYearMonth(year, month);
+		
+		boolean answer;
+		if (nowYearMonth.equals(stringYearMonth)) {
+			answer = true;
+		} else {
+			answer = false;
+		}
+		return answer;
 	}
 }

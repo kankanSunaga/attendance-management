@@ -24,13 +24,24 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 
 	// WorkTimeテーブルにデータを1件insert.
 	public void insertOne(WorkTime workTime) throws DataAccessException {
-
+ 
 		// １件登録
 		jdbc.update("INSERT INTO workTime"
 				+ " (workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)"
 				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
 				workTime.getWorkDay(), workTime.getStartTime(), workTime.getBreakTime(), workTime.getEndTime(),
 				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId());
+	}
+	
+	public void updateOne(WorkTime workTime) throws DataAccessException {
+		
+		jdbc.update("UPDATE workTime"
+				+ " SET workDay=?, startTime=?, breakTime=?, endTime=?, workTimeMinute=?, contractId=?, monthId=?"
+				+ " WHERE contractId=? AND workDay=?",
+				workTime.getWorkDay(), workTime.getStartTime(), workTime.getBreakTime(), workTime.getEndTime(),
+				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId(),
+				workTime.getContractId(), workTime.getWorkDay());
+
 	}
 
 	public List<WorkTime> selectMonthData(int userId) throws DataAccessException {
@@ -104,14 +115,21 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 			// endTimeのフォーマットを変更
 			String stringEndTime = workTime.getEndTime().format(timeFormat);
 			workTime.setStringEndTime(stringEndTime);
-			// ******************** PDF用のフォーマットに変換 ********************
 
 			contractDayList.add(workTime);
 		}
 		return contractDayList;
 	}
 	
+
 	public void deleteOne(int workTimeId) {
 		jdbc.update("DELETE FROM WORKTIME WHERE workTimeId=?",workTimeId);
+	}
+	
+	public boolean hasExist(WorkTime workTime) {
+		List<Map<String, Object>> getList = jdbc.queryForList(
+				"SELECT * FROM workTime WHERE contractid=? AND workDay=?", workTime.getContractId(), workTime.getWorkDay());
+		
+		return getList.isEmpty();
 	}
 }
