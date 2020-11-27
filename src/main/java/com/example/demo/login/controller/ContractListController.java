@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
@@ -137,5 +138,15 @@ public class ContractListController {
 		model.addAttribute("displayStatus", displayStatus);
 
 		return "login/contractDay";
+	}
+	
+	@PostMapping("/contract/{contractId}/{yearMonth}")
+	public String postContractDay(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth) {
+		
+		workTimeService.deleteOne(form.getWorkTimeId());
+		
+		return "redirect:/contract/{contractId}/{yearMonth}";	
 	}
 }

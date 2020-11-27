@@ -121,6 +121,11 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return contractDayList;
 	}
 	
+
+	public void deleteOne(int workTimeId) {
+		jdbc.update("DELETE FROM WORKTIME WHERE workTimeId=?",workTimeId);
+	}
+	
 	public boolean hasExist(WorkTime workTime) {
 		List<Map<String, Object>> getList = jdbc.queryForList(
 				"SELECT * FROM workTime WHERE contractid=? AND workDay=?", workTime.getContractId(), workTime.getWorkDay());
