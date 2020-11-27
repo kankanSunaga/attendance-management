@@ -24,4 +24,6 @@ public interface ContractDao {
 	
 	public Contract underContract(int userId, LocalDate today) throws DataAccessException;
 	
+	public int updateContract(Contract contract) throws DataAccessException;
+	
 }
