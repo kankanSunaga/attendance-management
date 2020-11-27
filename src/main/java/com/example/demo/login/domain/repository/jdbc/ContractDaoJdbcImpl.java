@@ -156,7 +156,8 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		java.sql.Time breakTime = java.sql.Time.valueOf(contract.getBreakTime());
 		java.sql.Time endTime = java.sql.Time.valueOf(contract.getEndTime());
 
- 		int rowNumber = jdbc.update("UPDATE contract SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?",
+ 		int rowNumber = jdbc.update("UPDATE contract SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?"
+ 				+ " ORDER BY contractId DESC LIMIT 1",
 				contract.getContractTime(), startTime, breakTime, endTime, contract.getUserId());
 
  		return rowNumber;
