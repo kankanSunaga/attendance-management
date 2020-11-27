@@ -160,7 +160,7 @@ public class WorkTimeService {
 		return calender;
 	}
 	
-	public void deleteOne() {
-		dao.deleteOne();
+	public void deleteOne(int workTimeId) {
+		dao.deleteOne(workTimeId);
 	}
 }

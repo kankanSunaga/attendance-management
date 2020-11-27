@@ -111,7 +111,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return contractDayList;
 	}
 	
-	public void deleteOne() {
-		jdbc.update("DELETE FROM WORKTIME WHERE contractId=1 AND workDay=20201101");
+	public void deleteOne(int workTimeId) {
+		jdbc.update("DELETE FROM WORKTIME WHERE workTimeId=?",workTimeId);
 	}
 }

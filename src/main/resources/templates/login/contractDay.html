@@ -48,18 +48,21 @@
 	</div>
 	<div class="background">
 		<div class="container">	
-			<br><br>
-			<a th:if="${displayStatus} == 1">
-				<select name="selectidol">
-				<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workDay}"></option>
-				</select>
-			</a>
+			<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">			
+				<br><br>
+				<a th:if="${displayStatus} == 1">
+					<select name="workTimeId">
+					<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
+					</select>
+					<input type="submit" value="保存する">
+				</a>
+			</form>	
 			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
 			<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
 			<br>
 			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 			<br>
-		</div>	
+		</div>		
 	</div>
 </body>
 </html>
