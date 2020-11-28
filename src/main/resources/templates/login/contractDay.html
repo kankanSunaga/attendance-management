@@ -50,11 +50,10 @@
 		<div class="container">	
 			<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">			
 				<br><br>
-				<a th:if="${displayStatus} == 1">
+				<div th:if="${displayStatus} == 1">
 					<select name="workTimeId">
 					<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
-					</select>
-				</a>
+					</select>				
 				<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
 				<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
@@ -71,6 +70,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</form>	
 			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
