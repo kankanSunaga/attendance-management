@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.repository.ContractDao;
@@ -83,4 +85,48 @@ public class ContractService {
 
 		return status;
 	}
+	
+	public Contract underContract(int userId) {
+		LocalDate today = LocalDate.now();
+		
+		return dao.underContract(userId, today);
+	}
+	
+	
+	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
+
+ 		Contract contract = underContract(userId);
+
+ 		form.setNewContractTime(contract.getContractTime());
+		form.setNewStartTime(contract.getStartTime());
+		form.setNewBreakTime(contract.getBreakTime());
+		form.setNewEndTime(contract.getEndTime());
+
+ 		return contract;
+	}
+
+
+ 	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
+
+ 		Contract contract = new Contract();
+
+ 		contract.setUserId(userId);
+		contract.setContractTime(form.getNewContractTime());
+		contract.setStartTime(form.getNewStartTime());
+		contract.setBreakTime(form.getNewBreakTime());
+		contract.setEndTime(form.getNewEndTime());
+
+ 		return contract;
+	}
+
+ 	public boolean updateContract(Contract contract) {
+
+ 		int rowNumber = dao.updateContract(contract);
+		boolean status = false;
+		if (rowNumber > 0) {
+			status = true;
+		}
+		return status;
+	}
+ 	
 }

@@ -48,18 +48,37 @@
 	</div>
 	<div class="background">
 		<div class="container">	
-			<br><br>
-			<a th:if="${displayStatus} == 1">
-				<select name="selectidol">
-				<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workDay}"></option>
-				</select>
-			</a>
+			<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">			
+				<br><br>
+				<div th:if="${displayStatus} == 1">
+					<select name="workTimeId">
+					<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
+					</select>				
+				<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
+				<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+		 					<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+							</div>
+							<div class="modal-body">
+								<label>本当に削除しますか？</label>
+							</div>
+		 					<div class="modal-footer">
+		 						<button type="submit" class="btn btn-primary">はい</button>
+								<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</form>	
 			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
 			<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
 			<br>
 			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 			<br>
-		</div>	
+		</div>		
 	</div>
 </body>
 </html>
