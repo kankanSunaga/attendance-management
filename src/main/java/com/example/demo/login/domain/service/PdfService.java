@@ -91,9 +91,9 @@ public class PdfService {
 		return null;
 	}
 
-	public String pdfDownload(HttpServletResponse response) {
+	public String pdfDownload(int userId, HttpServletResponse response) {
 
-		Path data = Paths.get("output/report.pdf");
+		Path data = Paths.get("output/" + userId + ".pdf");
 
 		if (data == null) {
 			return "download_error";
