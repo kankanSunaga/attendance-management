@@ -34,5 +34,4 @@ build/
 ### VS Code ###
 .vscode/
 
-output/report.pdf
-output/sample.html
+output/

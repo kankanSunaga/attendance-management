@@ -63,7 +63,7 @@ public class PdfController {
 		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
 
 		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response, request);
-		pdfService.pdfDownload(response);
+		pdfService.pdfDownload(userId, response);
 
 		model.addAttribute("yearMonthUrl", yearMonth);
 		model.addAttribute("contractDay", contractDayList);
