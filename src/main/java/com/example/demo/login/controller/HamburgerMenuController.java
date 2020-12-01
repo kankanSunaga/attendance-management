@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
+import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
 import com.example.demo.login.domain.service.ContractService;
@@ -162,8 +163,12 @@ public class HamburgerMenuController {
 	
 	@GetMapping("/changeContract")
 	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
 		HttpSession session = request.getSession();
-		session.getAttribute("userId");
+		int userId = (int)session.getAttribute("userId");
+		
+		Contract contract = contractService.underContract(userId);
+		model.addAttribute("contract",contract);
 
 		return "login/changeContract";
 	}
