@@ -12,5 +12,29 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
+	<div class="container text-center">
+		<h1>現在の契約</h1>
+		<h2 th:text="${contract.officeName}"></h2><br>
+		<form>
+			<input type="date" name="endDate" class="form-control" required/><br>
+			<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">契約終了日登録</button>
+			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+		 					<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">契約終了日登録画面</h4>
+							</div>
+							<div class="modal-body">
+								<label>本当に登録しますか？</label>
+							</div>
+		 					<div class="modal-footer">
+		 						<button type="submit" class="btn btn-primary">はい</button>
+								<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+							</div>
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
 </body>
 </html>
