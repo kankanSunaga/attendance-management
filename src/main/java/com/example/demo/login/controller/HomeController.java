@@ -21,6 +21,7 @@ import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.DayOfWeekService;
 import com.example.demo.login.domain.service.MonthService;
+import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
@@ -35,16 +36,19 @@ public class HomeController {
 	ContractService contractService;
 
 	@Autowired
-	private WorkTimeService workTimeService;
+	WorkTimeService workTimeService;
 
 	@Autowired
-	private DayOfWeekService dayOfWeekService;
+	DayOfWeekService dayOfWeekService;
 
 	@Autowired
-	private MonthService monthService;
+	MonthService monthService;
 
 	@Autowired
-	private DateTimeUtil dateTimeUtil;
+	DateTimeUtil dateTimeUtil;
+	
+	@Autowired
+	UserIconService userIconService;
 
 	@GetMapping("/home")
 	public String getHome(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -110,6 +114,7 @@ public class HomeController {
 		// modelにつっこむ
 		model.addAttribute("lastWeekDay", lastWeekDay);
 		model.addAttribute("deadline", deadline);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/home";
 	}
