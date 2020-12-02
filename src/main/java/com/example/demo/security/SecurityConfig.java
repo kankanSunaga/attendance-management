@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**").permitAll() // cssへのアクセス許可
 				.antMatchers("/login/**").permitAll() // ログインページへの直リンクの許可
 				.antMatchers("/signup/**").permitAll() // ユーザー登録ページへの直リンク許可
+				.antMatchers("/forgotPassword/**").permitAll()
 				.anyRequest().authenticated(); // その他の直リンク禁止
 		
 		// ログイン処理
