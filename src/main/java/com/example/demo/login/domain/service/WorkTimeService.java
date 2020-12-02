@@ -169,8 +169,14 @@ public class WorkTimeService {
 		return calender;
 	}
 	
+
+	public void deleteOne(int workTimeId) {
+		dao.deleteOne(workTimeId);
+	}
+
 	public boolean hasExist(WorkTime workTime) {
 		
 		return dao.hasExist(workTime);
 	}
 }
+

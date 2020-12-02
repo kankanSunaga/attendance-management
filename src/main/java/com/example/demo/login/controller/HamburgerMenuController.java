@@ -27,11 +27,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
-import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
+import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.util.PathUtil;
@@ -50,6 +51,12 @@ public class HamburgerMenuController {
 
 	@Autowired
 	SessionUtil sessionUtil;
+
+	@Autowired
+	ContractService contractService;
+
+	@Autowired
+	SessionUtil sessionutil;
 
 	@Autowired
 	HttpServletRequest request;
@@ -86,7 +93,8 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changePassword")
-	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) throws IOException {
+	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model)
+			throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
@@ -101,7 +109,7 @@ public class HamburgerMenuController {
 	@PostMapping("/changePassword")
 	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form, BindingResult bindingResult,
 			Model model, HttpServletRequest request) throws IOException {
-		
+
 		int userId = sessionUtil.getUserId(request);
 
 		if (bindingResult.hasErrors()) {
@@ -110,13 +118,14 @@ public class HamburgerMenuController {
 
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-		
+
 		return "login/changePassword";
 
 	}
 
 	@GetMapping("/changeEmail")
-	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) throws IOException {
+	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model)
+			throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
@@ -132,16 +141,16 @@ public class HamburgerMenuController {
 	public String postChengeEmail(@ModelAttribute @Validated ChangeEmailForm form, BindingResult bindingResult,
 			Model model, HttpServletRequest request) throws IOException {
 
+		int userId = sessionUtil.getUserId(request);
+
 		if (bindingResult.hasErrors()) {
 			return getChangeEmail(form, request, model);
 		}
 
-		int userId = sessionUtil.getUserId(request);
-
 		User user = userService.selectOne(userId);
 		user.setEmail(form.getNewEmail());
 		userService.updateEmail(user);
-		
+
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "redirect:/changeEmail";
@@ -149,21 +158,44 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changeContractTime")
-	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		
+	public String getChangeContractTime(@ModelAttribute ChangeContractTimeForm form, Model model,
+			HttpServletRequest request) throws IOException {
+
 		int userId = sessionUtil.getUserId(request);
-		
+
+		contractService.setOldContractTime(form, userId);
+
+		model.addAttribute("ChangeContractTimeForm", form);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContractTime";
+
+	}
+
+	@PostMapping("/changeContractTime")
+	public String postChangeContractTime(@ModelAttribute @Validated ChangeContractTimeForm form,
+			BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
+
+		if (bindingResult.hasErrors()) {
+			return getChangeContractTime(form, model, request);
+		}
+
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId");
+
+		model.addAttribute("status", contractService.updateContract(contractService.setUpdateContractTime(form, userId)));
+		model.addAttribute("base64", userIconService.uploadImage(userId));
+
+		return "login/changeContractTime";
+
 	}
 
 	@GetMapping("/changeContract")
-	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
 		int userId = sessionUtil.getUserId(request);
-		
+
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContract";
