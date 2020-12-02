@@ -66,7 +66,7 @@ public class UserIconService {
 	public String uploadImage(int userId) throws IOException {
 
 		String resourcePath = new ClassPathResource("").getPath();
-		Path path = Paths.get(resourcePath, "image/1.jpg");
+		Path path = Paths.get(resourcePath, "image/" + userId + ".jpg");
 
 		byte[] byteData = Files.readAllBytes(path);
 
