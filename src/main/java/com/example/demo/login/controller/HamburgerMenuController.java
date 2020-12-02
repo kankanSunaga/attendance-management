@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
+import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
 import com.example.demo.login.domain.service.ContractService;
@@ -183,7 +184,8 @@ public class HamburgerMenuController {
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
 
-		model.addAttribute("status", contractService.updateContract(contractService.setUpdateContractTime(form, userId)));
+		model.addAttribute("status",
+				contractService.updateContract(contractService.setUpdateContractTime(form, userId)));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContractTime";
@@ -196,6 +198,8 @@ public class HamburgerMenuController {
 
 		int userId = sessionUtil.getUserId(request);
 
+		Contract contract = contractService.underContract(userId);
+		model.addAttribute("contract", contract);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContract";
