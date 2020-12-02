@@ -164,4 +164,8 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
  	}
 	
+	public void updateEndDate(Contract contract) throws DataAccessException {
+		jdbc.update("UPDATE contract SET endDate=? WHERE contractId = ?",contract.getEndDate(),contract.getContractId());
+	}
+	
 }

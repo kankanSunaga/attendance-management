@@ -19,6 +19,7 @@ import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.ChangePasswordForm;
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.ContractForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
 import com.example.demo.login.domain.service.ContractService;
@@ -172,4 +173,19 @@ public class HamburgerMenuController {
 
 		return "login/changeContract";
 	}
+	
+	@PostMapping("/changeContract")
+	public String postChangeContract(Model model, HttpServletRequest request, HttpServletResponse response,ContractForm form) {
+		
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		Contract contract = contractService.underContract(userId);
+		contract.setEndDate(form.getEndDate());
+		contractService.updateEndDate(contract);
+		
+		return "login/contract";
+	}
+	
+	
 }
