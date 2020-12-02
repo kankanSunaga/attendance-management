@@ -129,4 +129,8 @@ public class ContractService {
 		return status;
 	}
  	
+ 	public void updateEndDate(Contract contract) {
+ 		dao.updateEndDate(contract);
+ 	}
+ 	
 }
