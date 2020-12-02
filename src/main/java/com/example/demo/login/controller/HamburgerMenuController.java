@@ -1,12 +1,24 @@
 package com.example.demo.login.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.batch.item.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +34,10 @@ import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.UserIconForm;
 import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.service.util.PathUtil;
 import com.example.demo.login.domain.service.util.SessionUtil;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class HamburgerMenuController {
@@ -39,8 +54,18 @@ public class HamburgerMenuController {
 	@Autowired
 	HttpServletRequest request;
 
+	@Autowired
+	protected ResourceLoader resourceLoader;
+
+	@Autowired
+	PathUtil pathUtil;
+
 	@GetMapping("/changeUserIcon")
-	public String getChangeUserIcon(Model model) {
+	public String getChangeUserIcon(Model model) throws IOException {
+
+		int userId = sessionUtil.getUserId(request);
+
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeUserIcon";
 	}
@@ -54,19 +79,20 @@ public class HamburgerMenuController {
 			return "login/changeUserIcon";
 		}
 
-		model.addAttribute("updateStatus", userIconService.uploadImage(form.getFile(), userId));
+		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("updateStatus", userIconService.setImage(form.getFile(), userId));
 
 		return "login/changeUserIcon";
 	}
 
 	@GetMapping("/changePassword")
-	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) {
+	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model) throws IOException {
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
+		int userId = sessionUtil.getUserId(request);
 
 		User user = userService.selectOne(userId);
 		model.addAttribute("user", user);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changePassword";
 
@@ -75,28 +101,28 @@ public class HamburgerMenuController {
 	@PostMapping("/changePassword")
 	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form, BindingResult bindingResult,
 			Model model, HttpServletRequest request) throws IOException {
+		
+		int userId = sessionUtil.getUserId(request);
 
 		if (bindingResult.hasErrors()) {
 			return getChangePassword(form, request, model);
 		}
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
-
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
-
+		model.addAttribute("base64", userIconService.uploadImage(userId));
+		
 		return "login/changePassword";
 
 	}
 
 	@GetMapping("/changeEmail")
-	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) {
+	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model) throws IOException {
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
+		int userId = sessionUtil.getUserId(request);
 
 		User user = userService.selectOne(userId);
 		model.addAttribute("user", user);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeEmail";
 
@@ -110,12 +136,13 @@ public class HamburgerMenuController {
 			return getChangeEmail(form, request, model);
 		}
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
+		int userId = sessionUtil.getUserId(request);
 
 		User user = userService.selectOne(userId);
 		user.setEmail(form.getNewEmail());
 		userService.updateEmail(user);
+		
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "redirect:/changeEmail";
 
@@ -123,17 +150,21 @@ public class HamburgerMenuController {
 
 	@GetMapping("/changeContractTime")
 	public String getChangeContractTime(@ModelAttribute ContractForm form, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		session.getAttribute("userId");
+			HttpServletResponse response) throws IOException {
+		
+		int userId = sessionUtil.getUserId(request);
+		
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContractTime";
 	}
 
 	@GetMapping("/changeContract")
-	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		session.getAttribute("userId");
+	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		int userId = sessionUtil.getUserId(request);
+		
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContract";
 	}

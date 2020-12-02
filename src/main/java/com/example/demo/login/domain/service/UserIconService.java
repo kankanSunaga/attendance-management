@@ -1,20 +1,37 @@
 package com.example.demo.login.domain.service;
 
+import java.nio.file.Files;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.login.domain.service.util.PathUtil;
+
 @Service
 public class UserIconService {
-	public boolean uploadImage(MultipartFile file, int userId) throws IOException {
+
+	@Autowired
+	PathUtil pathUtil;
+
+	@Autowired
+	ResourceLoader resourceLoader;
+
+	public boolean setImage(MultipartFile file, int userId) throws IOException {
+
 		String resourcePath = new ClassPathResource("").getPath();
 		Path path = Paths.get(resourcePath, "image");
 
@@ -42,7 +59,25 @@ public class UserIconService {
 		} catch (IOException ex) {
 			System.err.println(ex);
 		}
-		
+
 		return true;
+	}
+
+	public String uploadImage(int userId) throws IOException {
+
+		String resourcePath = new ClassPathResource("").getPath();
+		Path path = Paths.get(resourcePath, "image/1.jpg");
+
+		byte[] byteData = Files.readAllBytes(path);
+
+		Charset charset = StandardCharsets.UTF_8;
+		byte[] a = Base64.getEncoder().encode(byteData);
+		String base64 = new String(a, charset);
+
+		StringBuffer data = new StringBuffer();
+		data.append("data:image/jpeg;base64,");
+		data.append(base64);
+
+		return data.toString();
 	}
 }
