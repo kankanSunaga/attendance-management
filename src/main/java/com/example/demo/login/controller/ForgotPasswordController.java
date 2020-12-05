@@ -32,7 +32,7 @@ public class ForgotPasswordController {
 			return getFotgotPassword(form, model);
 		}
 		
-		forgotPasswordService.sendMail();
+		forgotPasswordService.sendMail(form);
 		
 		model.addAttribute("status", true);
 		
