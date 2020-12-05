@@ -1,5 +1,6 @@
 package com.example.demo.login.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +24,7 @@ import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
+import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 import com.example.demo.login.domain.service.util.SessionUtil;
@@ -46,21 +47,30 @@ public class ContractListController {
 	@Autowired
 	SessionUtil sessionUtil;
 
+	@Autowired
+	UserIconService userIconService;
+
+	@Autowired
+	HttpServletRequest request;
+
 	@GetMapping("/contracts")
-	public String getContractList(Model model, HttpServletRequest request) {
+	public String getContractList(Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
 		List<Contract> contractList = contractService.selectMany(userId);
 
 		model.addAttribute("contractList", contractList);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/contractList";
 	}
 
 	@GetMapping("/contract/{contractId}")
 	public String getContractMonth(@ModelAttribute WorkTime form, Model model,
-			@PathVariable("contractId") int contractId) {
+			@PathVariable("contractId") int contractId) throws IOException {
+
+		int userId = sessionUtil.getUserId(request);
 
 		List<WorkTime> contractMonthList = workTimeService.selectMany(contractId);
 
@@ -89,14 +99,14 @@ public class ContractListController {
 		Contract contract = contractService.activeSelectOne(contractId);
 		String officeName = contract.getOfficeName();
 		model.addAttribute("officeName", officeName);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/contractMonth";
 	}
 
 	@GetMapping("/contract/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("contractId") int contractId,
-			@PathVariable("yearMonth") String yearMonth) {
+	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
@@ -124,7 +134,7 @@ public class ContractListController {
 
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 		model.addAttribute("workTimes", workTimes);
-		
+
 		// 空のカレンダー作成
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 		// 空のカレンダーにデータを追加
@@ -136,17 +146,21 @@ public class ContractListController {
 		model.addAttribute("contract", setCalenderObject);
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
 		model.addAttribute("displayStatus", displayStatus);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/contractDay";
 	}
-	
+
 	@PostMapping("/contract/{contractId}/{yearMonth}")
-	public String postContractDay(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("contractId") int contractId,
-			@PathVariable("yearMonth") String yearMonth) {
-		
+	public String postContractDay(@ModelAttribute WorkTime form, Model model,
+			@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth)
+			throws IOException {
+
+		int userId = sessionUtil.getUserId(request);
+
 		workTimeService.deleteOne(form.getWorkTimeId());
-		
-		return "redirect:/contract/{contractId}/{yearMonth}";	
+		model.addAttribute("base64", userIconService.uploadImage(userId));
+
+		return "redirect:/contract/{contractId}/{yearMonth}";
 	}
 }

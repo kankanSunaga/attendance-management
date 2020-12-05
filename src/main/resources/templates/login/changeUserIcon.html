@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
@@ -17,9 +17,11 @@
 			<div class="container">
 				<div class="row mb-5">
 					<div class="col-2">
-						<input type="file" name="file" required>
+						<h1>プロフィール画像変更画面</h1>
 						<br>
-						<div th:if="${updateStatus} == true">プロフィール画像を変更しました</div>
+						<input type="file" name="file">
+						<br>
+						<div th:if="${updateStatus}">プロフィール画像を変更しました</div>
 						<br>
 						<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
 					</div>

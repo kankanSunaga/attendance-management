@@ -26,4 +26,6 @@ public interface ContractDao {
 	
 	public int updateContract(Contract contract) throws DataAccessException;
 	
+	public void updateEndDate(Contract contract) throws DataAccessException;
+	
 }

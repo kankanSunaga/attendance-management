@@ -14,7 +14,7 @@ package com.example.demo.batch;
  	@Autowired
  	MonthService monthService;
 
- 	@Scheduled(cron = " * * * 2 * * ", zone = "Asia/Tokyo")
+ 	@Scheduled(cron = " * * * 1 * * ", zone = "Asia/Tokyo")
  	public void updateDeadlineStatus() {
 
  		 monthService.updateToDeadline();

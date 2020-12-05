@@ -32,6 +32,9 @@ public class ContractForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate; //勤務開始日
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;
+	
 	@NotBlank
 	private String officeName; //勤務会社名
 	
