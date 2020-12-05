@@ -12,7 +12,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,8 +29,7 @@ public class UserIconService {
 
 	public boolean setImage(MultipartFile file, int userId) throws IOException {
 
-		String resourcePath = new ClassPathResource("").getPath();
-		Path path = Paths.get(resourcePath, "image");
+		Path path = Paths.get("image");
 
 		if (Files.notExists(path)) {
 			try {
@@ -63,10 +61,9 @@ public class UserIconService {
 
 	public String uploadImage(int userId) throws IOException {
 
-		String resourcePath = new ClassPathResource("").getPath();
-		Path path = Paths.get(resourcePath, "image/" + userId + ".jpg");
+		Path path = Paths.get("image", userId + ".jpg");
 
-		byte[] byteData = Files.readAllBytes(path);
+		byte[] byteData = Files.readAllBytes(pathExists(path));
 
 		Charset charset = StandardCharsets.UTF_8;
 		byte[] a = Base64.getEncoder().encode(byteData);
@@ -77,5 +74,14 @@ public class UserIconService {
 		data.append(base64);
 
 		return data.toString();
+	}
+
+	public Path pathExists(Path path) {
+
+		if (Files.notExists(path)) {
+			return Paths.get("image", "sample.jpg");
+		} else {
+			return path;
+		}
 	}
 }
