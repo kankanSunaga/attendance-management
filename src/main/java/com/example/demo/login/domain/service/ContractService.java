@@ -70,7 +70,7 @@ public class ContractService {
 		LocalDate lastMonth = nowDate.minusMonths(1);
 		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");
 
-		// 1.セレクトボックス表示, 2.申請中ボタン表示, 3.申請ボタン表示, 0.その他
+		// 1.セレクトボックス表示, 2.申請中ボタン表示, 3.申請ボタン表示, 0.その他(非表示)
 		int status;
 		if (!(deadlineStatus)) {
 			status = 1;
