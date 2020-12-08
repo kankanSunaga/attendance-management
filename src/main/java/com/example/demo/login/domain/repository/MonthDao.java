@@ -18,4 +18,6 @@ public interface MonthDao {
 	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException;
 	
 	public void insertOne(Month month) throws DataAccessException;
+	
+	public void update(Month month) throws DataAccessException;
 }

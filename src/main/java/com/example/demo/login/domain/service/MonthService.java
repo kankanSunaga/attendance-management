@@ -101,4 +101,15 @@ public class MonthService {
 
 		return monthData;
 	}
+	
+	public void update(Month month) {
+		dao.update(month);
+	}
+	
+	public Month changeRequest(Month month) {
+		
+		month.setRequestStatus(true);
+		
+		return month;
+	}
 }
