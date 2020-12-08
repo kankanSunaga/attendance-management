@@ -141,7 +141,7 @@ public class ContractListController {
 		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId,
 				yearMonth);
 
-		int displayStatus = contractService.selectDisplay(yearMonth, userId, contractId);
+		int displayStatus = contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now());
 
 		model.addAttribute("contract", setCalenderObject);
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
