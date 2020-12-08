@@ -63,23 +63,22 @@ public class ContractService {
 		return dao.latestContract(userId);
 	}
 
-	public int selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
+	public String selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
 		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
 		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
 
 		LocalDate lastMonth = nowDate.minusMonths(1);
 		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");
 
-		// 1.セレクトボックス表示, 2.申請中ボタン表示, 3.申請ボタン表示, 0.その他(非表示)
-		int status;
+		String status;
 		if (!(deadlineStatus)) {
-			status = 1;
+			status = "notClose"; // 締め切られていない状態（セレクトボックスの表示）
 		} else if (requestStatus) {
-			status = 2;
+			status = "nowRequest"; // 変更申請中の状態（変更申請済みの表示）
 		} else if (yearMonth.equals(stringLastMonth)) {
-			status = 3;
+			status = "lastMonth"; // １ヶ月前 && 変更申請を出していない（変更申請ボタンの表示）
 		} else {
-			status = 0;
+			status = "hide"; // その他（非表示）
 		}
 
 		return status;

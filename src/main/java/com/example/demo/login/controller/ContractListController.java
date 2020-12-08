@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.Contract;
+import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
@@ -141,7 +142,7 @@ public class ContractListController {
 		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId,
 				yearMonth);
 
-		int displayStatus = contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now());
+		String displayStatus = contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now());
 
 		model.addAttribute("contract", setCalenderObject);
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
@@ -161,6 +162,17 @@ public class ContractListController {
 		workTimeService.deleteOne(form.getWorkTimeId());
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
+		return "redirect:/contract/{contractId}/{yearMonth}";
+	}
+	
+	@GetMapping("/contract/{contractId}/{yearMonth}/changeRequestStatus")
+	public String changeRequestStatus(@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth) {
+		
+		int userId = sessionUtil.getUserId(request);
+		
+		Month month = monthService.selectMonthTable(userId, contractId, yearMonth);
+		monthService.update(monthService.changeRequest(month));
+		
 		return "redirect:/contract/{contractId}/{yearMonth}";
 	}
 }
