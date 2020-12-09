@@ -98,4 +98,13 @@ public class MonthDaoJdbcImpl implements MonthDao {
 				+ " VALUES(?, ?, ?, ?, ?)",
 				month.getYear(), month.getMonth(), false, false, month.getContractId());
 	}
+	
+	public void update(Month month) {
+		
+		jdbc.update("UPDATE month"
+				+ " SET monthId=?, year=?, month=?, deadlineStatus=?, requestStatus=?, contractId=?"
+				+ " WHERE monthId=?",
+				month.getMonthId(), month.getYear(), month.getMonth(), month.isDeadlineStatus(),
+				month.isRequestStatus(), month.getContractId(), month.getMonthId());
+	}
 }
