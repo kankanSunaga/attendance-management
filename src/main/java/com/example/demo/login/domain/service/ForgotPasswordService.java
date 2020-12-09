@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.ForgotPasswordForm;
+import com.example.demo.login.domain.repository.UserDao;
 
 
 @Service
@@ -21,31 +22,27 @@ public class ForgotPasswordService {
 	MailSender mailSender;
 	
 	@Autowired
-	UserService userService;
+	UserDao userDao;
 	
-	public boolean getMailAddress(ForgotPasswordForm form) {
+	@Async
+	public void sendMail(String email) throws IOException {
 		
-		String savedEmail = userService.selectByEmail(form.getEmailByForgotPassword()).getEmail();
-		String typeInEmail = form.getEmailByForgotPassword();
+		boolean existEmail = userDao.findByEmail(email).isPresent();
 		
-		return savedEmail.equals(typeInEmail);
-	}
-	
-	
-	public void sendMail(ForgotPasswordForm form) throws IOException {
+		if(existEmail) {
+			SimpleMailMessage msg = new SimpleMailMessage();
 		
-		SimpleMailMessage msg = new SimpleMailMessage();
+			msg.setTo(email);
+			msg.setBcc("attendancemanagement.system.2020@gmail.com");
 		
-		msg.setTo(form.getEmailByForgotPassword());
-		msg.setBcc("attendancemanagement.system.2020@gmail.com");
-		
-		Path mailDir = Paths.get(new ClassPathResource("mail").getURI());
-		Path mailFile = mailDir.resolve("mail.txt");
-		String text = String.join("\n", Files.readAllLines(mailFile));
+			Path mailDir = Paths.get(new ClassPathResource("mail").getURI());
+			Path mailFile = mailDir.resolve("mail.txt");
+			String text = String.join("\n", Files.readAllLines(mailFile));
 
-		msg.setSubject("from Spring System Mail");
-		msg.setText(text);
-		mailSender.send(msg);
+			msg.setSubject("from Spring System Mail");
+			msg.setText(text);
+			mailSender.send(msg);
+		}
 		
 	}
 	

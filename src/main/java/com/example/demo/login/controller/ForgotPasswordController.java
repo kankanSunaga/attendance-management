@@ -33,25 +33,19 @@ public class ForgotPasswordController {
 	
 	
 	@PostMapping("/forgotPassword")
-	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult, Model model, String email) throws IOException {
+	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult, Model model) throws IOException {
 		
 		if (bindingResult.hasErrors()) {
 			return getFotgotPassword(form, model);
 		}
-		
 
-		if(forgotPasswordService.getMailAddress(form)) {
+		String email = form.getEmailByForgotPassword();
 			
-			forgotPasswordService.sendMail(form);
-			
-			model.addAttribute("status", 1);
-			
-			return "login/forgotPassword";
-		}
-		
+		forgotPasswordService.sendMail(email);
 		model.addAttribute("status", 1);
 		
 		return "login/forgotPassword";
+		
 	}
 	
 }
