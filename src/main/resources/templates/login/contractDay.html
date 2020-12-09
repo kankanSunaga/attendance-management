@@ -47,30 +47,43 @@
 		</table>
 	</div>
 	<div class="background">
+	<br><br>
 		<div class="container">	
 			<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">			
-				<br><br>
-				<div th:if="${displayStatus} == notClose">
-					<select name="workTimeId">
-					<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
-					</select>				
-				<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
-				<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
-							</div>
-							<div class="modal-body">
-								<label>本当に削除しますか？</label>
-							</div>
-		 					<div class="modal-footer">
-		 						<button type="submit" class="btn btn-primary">はい</button>
-								<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+				<ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link" id="cange-tab" data-toggle="tab" href="#cange" role="tab" aria-controls="cange" aria-selected="true">勤務情報の変更</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">勤務日の削除</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="cange" role="tabpanel" aria-labelledby="cange-tab">$$$$$$$</div>
+					<div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+						<div th:if="${displayStatus} == notClose">
+							<select name="workTimeId">
+							<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
+							</select>				
+							<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
+							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+					 					<div class="modal-header">
+											<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+										</div>
+										<div class="modal-body">
+											<label>本当に削除しますか？</label>
+										</div>
+					 					<div class="modal-footer">
+					 						<button type="submit" class="btn btn-primary">はい</button>
+											<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 				</div>
 			</form>	
 			<div th:if="${displayStatus} == nowRequest">変更申請済み</div>
