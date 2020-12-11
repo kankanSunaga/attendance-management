@@ -12,42 +12,44 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<br><br>
-	<form method="post" th:action="@{/workTime}" th:object="${workTimeForm}">
-		<div class="container text-center">
-			<!-- カレンダー -->
-			<div class="col-sm-2">
-				<label>勤務日</label>
-				<input class="form-control" type="date" th:field="*{workDay}" name="workDay" required>
+	<div th:fragment="content">
+		<form method="post" th:action="@{/workTime}" th:object="${workTimeForm}">
+			<div class="container text-center">
+				<!-- カレンダー -->
+				<div class="col-sm-2">
+					<label>勤務日</label>
+					<input class="form-control" type="date" th:field="*{workDay}" name="workDay" required>
+					<br>
+				</div>
+				<!-- 始業時間 -->
+				<div class="col-sm-2">
+					<label>始業時間</label>
+					<input class="form-control" type="time" name="startTime" th:field="*{startTime}" required>
+					<br>
+				</div>
+				<!-- 休憩時間 -->
+				<div class="col-sm-2">
+					<label>休憩時間</label>
+					<input class="form-control" type="time" max="03:00" name="breakTime" th:field="*{breakTime}" required>
+				</div>
 				<br>
-			</div>
-			<!-- 始業時間 -->
-			<div class="col-sm-2">
-				<label>始業時間</label>
-				<input class="form-control" type="time" name="startTime" th:field="*{startTime}" required>
+				<!-- 終業時間 -->
+				<div class="col-sm-2">
+					<label>終業時間</label>
+					<input class="form-control" type="time" name="endTime" th:field="*{endTime}" required>
+				</div>
+				<!-- チェックボックス -->
+				<div class="col-sm-4">
+					<input type="checkbox" th:field="*{overTimeFlag}" name="overTime"> 0時を過ぎた
+					<br>
+				</div>
 				<br>
-			</div>
-			<!-- 休憩時間 -->
-			<div class="col-sm-2">
-				<label>休憩時間</label>
-				<input class="form-control" type="time" max="03:00" name="breakTime" th:field="*{breakTime}" required>
-			</div>
-			<br>
-			<!-- 終業時間 -->
-			<div class="col-sm-2">
-				<label>終業時間</label>
-				<input class="form-control" type="time" name="endTime" th:field="*{endTime}" required>
-			</div>
-			<!-- チェックボックス -->
-			<div class="col-sm-4">
-				<input type="checkbox" th:field="*{overTimeFlag}" name="overTime"> 0時を過ぎた
 				<br>
-			</div>
-			<br>
-			<br>
-			<div class="col-sm-2">
-				<button class="btn btn-primary" type="submit">保存</button>
-			</div>
-		</div>		
-	</form>
+				<div class="col-sm-2">
+					<button class="btn btn-primary" type="submit">保存</button>
+				</div>
+			</div>		
+		</form>
+	</div>
 </body>
 </html>

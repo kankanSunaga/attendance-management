@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.WorkTime;
+import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.transaction.WorkTimeTransaction;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
@@ -53,6 +56,12 @@ public class ContractListController {
 
 	@Autowired
 	HttpServletRequest request;
+	
+	@Autowired
+	DateTimeUtil dateTimeUtil;
+
+	@Autowired
+	WorkTimeTransaction workTimeTransaction;
 
 	@GetMapping("/contracts")
 	public String getContractList(Model model) throws IOException {
@@ -106,7 +115,7 @@ public class ContractListController {
 	}
 
 	@GetMapping("/contract/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId") int contractId,
+	public String getContractDay(@ModelAttribute WorkTime WorkTime, Model model,WorkTimeForm form, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
@@ -148,7 +157,7 @@ public class ContractListController {
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
 		model.addAttribute("displayStatus", displayStatus);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-
+	
 		return "login/contractDay";
 	}
 
