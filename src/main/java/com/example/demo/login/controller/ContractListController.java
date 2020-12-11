@@ -56,12 +56,6 @@ public class ContractListController {
 
 	@Autowired
 	HttpServletRequest request;
-	
-	@Autowired
-	DateTimeUtil dateTimeUtil;
-
-	@Autowired
-	WorkTimeTransaction workTimeTransaction;
 
 	@GetMapping("/contracts")
 	public String getContractList(Model model) throws IOException {
