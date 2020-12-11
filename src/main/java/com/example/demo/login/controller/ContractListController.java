@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.WorkTime;
-import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserIconService;
@@ -107,7 +106,7 @@ public class ContractListController {
 	}
 
 	@GetMapping("/contract/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute WorkTime WorkTime, Model model,WorkTimeForm form, @PathVariable("contractId") int contractId,
+	public String getContractDay(@ModelAttribute WorkTime form, Model model, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
