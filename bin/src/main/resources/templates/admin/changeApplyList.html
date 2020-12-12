@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<!-- CSSの読み込み -->
+	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		
+	<title>申請者一覧</title>
+</head>
+<body>
+	<div th:replace="login/headerLayout.html :: header"></div>
+		<div class="container" >
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>名前</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each ="requestUser: ${requestUserList}">
+						<td th:text="${requestUser.userName}"></td>
+						<td>
+						<button  type="submit" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
+						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">拒否</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+	 					<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
+						</div>
+						<div class="modal-body">
+							<label>申請を許可しますか？</label>
+						</div>
+	 					<div class="modal-footer">
+	 						<button type="submit" class="btn btn-primary">はい</button>
+							<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+	 					<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
+						</div>
+						<div class="modal-body">
+							<label>申請を拒否しますか？</label>
+						</div>
+	 					<div class="modal-footer">
+	 						<button type="submit" class="btn btn-primary">はい</button>
+							<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+</body>
+</html>

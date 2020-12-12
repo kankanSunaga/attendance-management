@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+	<link th:href="@{/css/unapproved.css}" rel="stylesheet"></link>
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    <title>Unapproved</title>
+</head>
+<body class="text-center">
+	<h3>申請しました。<br/><br/>管理者の許可が出るまで少々お待ちください。</h3>
+ 	<a class="btn btn-primary" th:href="@{'/login'}">閉じる</a>
+</body>
+</html>
