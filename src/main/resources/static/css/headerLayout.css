@@ -39,7 +39,7 @@
 }
 
 body {
-	padding-top: 50px
+	padding-top: 50px;
 }
 
 .container {
@@ -57,4 +57,15 @@ body {
     height: 40px;
     width: 40px;
     z-index: 0;
+}
+.navbar{
+	background-color: #000044;	
+}
+
+.btn{
+	margin-top : 4px;
+}
+
+.serviceName{
+	color: #EEEEEE;
 }
