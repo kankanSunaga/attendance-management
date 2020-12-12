@@ -46,8 +46,8 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="background">
-	<br><br>			
+	<div class="background"><br><br>
+	</div>			
 		<div th:if="${displayStatus} == notClose">								
 			<ul class="nav nav-pills nav-justified">
 				<li class="nav-item">
@@ -59,16 +59,16 @@
 			</ul>								
 			<div class="tab-content" id="myTabContent">										
 				<div class="tab-pane fade" id="cange" role="tabpanel" aria-labelledby="cange-tab"><br>						
-					<div th:replace="login/workTime.html :: content"></div>
+					<div th:replace="login/workTime.html :: content"></div><br>
 				</div>							
 				<div class="tab-pane fade text-center" id="delete" role="tabpanel" aria-labelledby="delete-tab">
 					<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">	
-						<br><br>
+						<br>
 						<label>勤務日</label><br>
 						<select name="workTimeId">
 							<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
-						</select>				
-						<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
+						</select><br><br>				
+						<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button><br><br>
 						<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -112,6 +112,7 @@
 					</div>
 				</div>
 			</div>
+		<div class="background">
 			<br>
 			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 			<br>
