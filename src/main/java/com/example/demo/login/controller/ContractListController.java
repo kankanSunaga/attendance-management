@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,33 +70,9 @@ public class ContractListController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		List<WorkTime> contractMonthList = workTimeService.selectMany(contractId);
-
-		// 「yyyy年MM月」と「yyyyMM」のStringを作成する処理
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-
-		for (int i = 0; i < contractMonthList.size(); i++) {
-			Map<String, String> map = new HashMap<String, String>();
-			WorkTime workTime = contractMonthList.get(i);
-			LocalDate localDate = workTime.getWorkDay();
-
-			// 2つのフォーマットの作成とLocalDateからStringに型の変換
-			DateTimeFormatter viewFormat = DateTimeFormatter.ofPattern("yyyy年MM月");
-			DateTimeFormatter urlFormat = DateTimeFormatter.ofPattern("yyyyMM");
-			String listYearMonth = localDate.format(viewFormat);
-			String urlYearMonth = localDate.format(urlFormat);
-
-			map.put("view", listYearMonth);
-			map.put("url", urlYearMonth);
-			list.add(map);
-		}
-
-		model.addAttribute("contractMonth", list);
-
-		// 会社名を取得
-		Contract contract = contractService.activeSelectOne(contractId);
-		String officeName = contract.getOfficeName();
-		model.addAttribute("officeName", officeName);
+		List<Month> monthList = monthService.getMonthList(contractId);
+		model.addAttribute("monthList", monthService.getMonthDate(monthList));
+		model.addAttribute("officeName", contractService.activeSelectOne(contractId).getOfficeName());
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/contractMonth";
@@ -164,15 +137,16 @@ public class ContractListController {
 
 		return "redirect:/contract/{contractId}/{yearMonth}";
 	}
-	
+
 	@GetMapping("/contract/{contractId}/{yearMonth}/changeRequestStatus")
-	public String changeRequestStatus(@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth) {
-		
+	public String changeRequestStatus(@PathVariable("contractId") int contractId,
+			@PathVariable("yearMonth") String yearMonth) {
+
 		int userId = sessionUtil.getUserId(request);
-		
+
 		Month month = monthService.selectMonthTable(userId, contractId, yearMonth);
 		monthService.update(monthService.changeRequest(month));
-		
+
 		return "redirect:/contract/{contractId}/{yearMonth}";
 	}
 }
