@@ -1,6 +1,7 @@
 package com.example.demo.login.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 
@@ -34,5 +35,6 @@ public interface UserDao {
 	
 	public int updatePassword(User user, String newPassword) throws DataAccessException;
 	
+	public Optional<User> findByEmail(String email) throws DataAccessException;
 }
 

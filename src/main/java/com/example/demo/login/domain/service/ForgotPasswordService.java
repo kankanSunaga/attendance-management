@@ -1,41 +1,49 @@
 package com.example.demo.login.domain.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.ForgotPasswordForm;
+import com.example.demo.login.domain.repository.UserDao;
+
 
 @Service
 public class ForgotPasswordService {
 	
-	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
-	
 	@Autowired
 	MailSender mailSender;
 	
-	public String getMailAddress(ForgotPasswordForm form) {
-		
-		return form.getEmailByForgotPassword();
-	}
+	@Autowired
+	UserDao userDao;
 	
-	
-	public String sendMail(ForgotPasswordForm form) {
+	@Async
+	public void sendMail(String email) throws IOException {
 		
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(getMailAddress(form));
-		msg.setBcc("attendancemanagement.system.2020@gmail.com");
-	    
-		String insertMessage = "Test from Spring Mail" + LINE_SEPARATOR;
-		insertMessage += "Test from Spring Mail" + LINE_SEPARATOR;
+		boolean existEmail = userDao.findByEmail(email).isPresent();
+		
+		if(existEmail) {
+			SimpleMailMessage msg = new SimpleMailMessage();
+		
+			msg.setTo(email);
+			msg.setBcc("attendancemanagement.system.2020@gmail.com");
+		
+			Path mailDir = Paths.get(new ClassPathResource("mail").getURI());
+			Path mailFile = mailDir.resolve("mail.txt");
+			String text = String.join("\n", Files.readAllLines(mailFile));
 
-		msg.setSubject("Test from Spring Mail");
-		msg.setText("Test");
-		mailSender.send(msg);
-	     
-		return "index";
-	    		
+			msg.setSubject("from Spring System Mail");
+			msg.setText(text);
+			mailSender.send(msg);
+		}
+		
 	}
 	
 }
