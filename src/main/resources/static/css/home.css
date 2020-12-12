@@ -1,0 +1,13 @@
+html body{
+	background-color:#D4D9D2;
+}
+
+.jumbotron{
+	background-color:#F2F2F0;
+	
+}
+
+.text-center {
+    transform: scale(1.2, 1.2);
+    margin-top :100px;
+}
