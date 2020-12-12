@@ -24,9 +24,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import com.example.demo.login.domain.model.Pdf;
 import com.example.demo.login.domain.model.WorkTime;
-import com.example.demo.login.domain.repository.PdfDao;
 import com.example.demo.login.domain.service.util.PathUtil;
 import com.example.demo.login.domain.service.util.SessionUtil;
 import com.itextpdf.html2pdf.ConverterProperties;
@@ -40,9 +38,6 @@ import com.itextpdf.layout.Document;
 public class PdfService {
 
 	@Autowired
-	PdfDao dao;
-
-	@Autowired
 	UserService userService;
 
 	@Autowired
@@ -50,20 +45,16 @@ public class PdfService {
 
 	@Autowired
 	DayOfWeekService dayOfWeekService;
-	
+
 	@Autowired
 	SessionUtil sessionUtil;
-	
+
 	@Autowired
 	PathUtil pathUtil;
 
-	public List<Pdf> selectMany() {
-		return dao.selectMany();
-	}
-
 	public String createPdf(int userId, int contractId, String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay,
 			String strYearMonth, HttpServletResponse response, HttpServletRequest request) throws IOException {
-		
+
 		final TemplateEngine engine = initializeTemplateEngine();
 
 		final IContext ctx = makeContext(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth);

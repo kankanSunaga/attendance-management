@@ -47,38 +47,74 @@
 		</table>
 	</div>
 	<div class="background">
-		<div class="container">	
-			<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">			
-				<br><br>
-				<div th:if="${displayStatus} == 1">
-					<select name="workTimeId">
-					<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
-					</select>				
-				<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
+	<br><br>			
+		<div th:if="${displayStatus} == notClose">								
+			<ul class="nav nav-pills nav-justified">
+				<li class="nav-item">
+					<a class="nav-link active" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete">勤務日の削除</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="cange-tab" data-toggle="tab" href="#cange" role="tab" aria-controls="cange">勤務情報の変更</a>
+				</li>
+			</ul>								
+			<div class="tab-content" id="myTabContent">										
+				<div class="tab-pane fade" id="cange" role="tabpanel" aria-labelledby="cange-tab"><br>						
+					<div th:replace="login/workTime.html :: content"></div>
+				</div>							
+				<div class="tab-pane fade text-center" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+					<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">	
+						<br><br>
+						<label>勤務日</label><br>
+						<select name="workTimeId">
+							<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
+						</select>				
+						<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
+						<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+				 					<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+									</div>
+									<div class="modal-body">
+										<label>本当に削除しますか？</label>
+									</div>
+				 					<div class="modal-footer">
+				 						<button type="submit" class="btn btn-primary">はい</button>
+										<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
+									</div>
+								</div>
+							</div>	
+						</div>						
+					</form>
+				</div>														
+			</div>																								
+		</div>			
+		<div th:if="${displayStatus} == nowRequest">変更申請済み</div>
+			<!-- 3.変更申請ボタン表示 -->
+			<div th:if="${displayStatus} == lastMonth">
+				<button  type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal">変更申請</button>
 				<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+								<h4 class="modal-title" id="myModalLabel">変更申請確認画面</h4>
 							</div>
 							<div class="modal-body">
-								<label>本当に削除しますか？</label>
+								<label>本当に変更申請しますか？</label>
 							</div>
 		 					<div class="modal-footer">
-		 						<button type="submit" class="btn btn-primary">はい</button>
+		 						<a th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/changeRequestStatus'}">
+		 							<button type="submit" class="btn btn-primary">はい</button>
+		 						</a>
 								<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
 							</div>
 						</div>
 					</div>
 				</div>
-				</div>
-			</form>	
-			<a class="btn btn-success disabled" th:if="${displayStatus} == 2">変更申請中...</a>
-			<a class="btn btn-success" th:if="${displayStatus} == 3">変更申請</a>
+			</div>
 			<br>
 			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
 			<br>
-		</div>		
-	</div>
+		</div>	
 </body>
 </html>

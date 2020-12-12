@@ -6,5 +6,11 @@
 }
 
 .background {
-	background-color:#D3D3D3; 
+	background-color:#D3D3D3;
+	
+}
+
+body{
+	text-align: center;
+	background-color:#D3D3D3;
 }

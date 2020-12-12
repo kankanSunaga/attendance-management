@@ -3,9 +3,11 @@ package com.example.demo.login.domain.repository.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -30,8 +32,7 @@ public class UserDaoJdbcImpl implements UserDao {
 		String password = passwordEncoder.encode(user.getPassword());
 
 		// １件登録
-		int rowNumber = jdbc.update(
-				"INSERT INTO user(" + " userName," + " email," + " password," + " role," + " permission," + " frozen)"
+		int rowNumber = jdbc.update("INSERT INTO user(" + " userName," + " email," + " password," + " role," + " permission," + " frozen)"
 						+ " VALUES(?, ?, ?, ?, ?, ?)",
 				// 申請日時の登録処理追記してください
 				user.getUserName(), user.getEmail(), password, user.getRole(), user.isPermission(), user.isFrozen());
@@ -45,8 +46,7 @@ public class UserDaoJdbcImpl implements UserDao {
 	public int countPermission() throws DataAccessException {
 
 		// 未承認の数を取得
-		int countPermission = jdbc.queryForObject(
-				"SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'", Integer.class);
+		int countPermission = jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'", Integer.class);
 
 		return countPermission;
 	}
@@ -55,8 +55,7 @@ public class UserDaoJdbcImpl implements UserDao {
 	public List<User> selectPermission() throws DataAccessException {
 
 		// DBから未承認のユーザーデータを取得
-		List<Map<String, Object>> getList = jdbc
-				.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
 
 		// 結果返却用の変数
 		List<User> userList = new ArrayList<>();
@@ -152,4 +151,28 @@ public class UserDaoJdbcImpl implements UserDao {
 		return statusNumber;
 		
 	}
+	
+	@Override
+	public Optional<User> findByEmail(String email) throws DataAccessException {
+
+		Map<String, Object> map;
+		try {
+			map = jdbc.queryForMap("SELECT * FROM user WHERE email= ?", email);
+		} catch (EmptyResultDataAccessException ignored){
+			return Optional.empty();
+		}
+		
+		User user = new User();
+		user.setUserId((int) map.get("UserId"));
+		user.setUserName((String) map.get("UserName"));
+		user.setEmail((String) map.get("Email"));
+		user.setPassword((String) map.get("Password"));
+		user.setRole((String) map.get("Role"));
+		user.setPermission((boolean) map.get("Permission"));
+		user.setFrozen((boolean) map.get("Frozen"));
+		user.setRequestedAt((String) map.get("RequestedAt"));
+
+		return Optional.of(user);
+	}
+	
 }
