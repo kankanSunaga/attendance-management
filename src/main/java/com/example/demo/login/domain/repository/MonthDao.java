@@ -20,4 +20,6 @@ public interface MonthDao {
 	public void insertOne(Month month) throws DataAccessException;
 	
 	public void update(Month month) throws DataAccessException;
+	
+	public List<Month> getMonthList(int contractId) throws DataAccessException;
 }

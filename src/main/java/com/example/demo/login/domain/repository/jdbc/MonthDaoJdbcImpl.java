@@ -107,4 +107,28 @@ public class MonthDaoJdbcImpl implements MonthDao {
 				month.getMonthId(), month.getYear(), month.getMonth(), month.isDeadlineStatus(),
 				month.isRequestStatus(), month.getContractId(), month.getMonthId());
 	}
+	
+	public List<Month> getMonthList(int contractId) {
+		
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT month.* FROM contract"
+					+ " INNER JOIN month ON contract.contractId = month.contractId"
+					+ " WHERE contract.contractId = ?"
+					+ " ORDER BY monthId DESC", contractId);
+		
+		List<Month> monthList = new ArrayList<>();
+
+		for (Map<String, Object> map : getList) {
+			Month month = new Month();
+
+			month.setMonthId((int) map.get("monthId"));
+			month.setYear((int) map.get("year"));
+			month.setMonth((int) map.get("month"));
+			month.setDeadlineStatus((boolean) map.get("deadlineStatus"));
+			month.setRequestStatus((boolean) map.get("requestStatus"));
+			month.setContractId((int) map.get("contractId"));
+
+			monthList.add(month);
+		}
+		return monthList;
+	}
 }
