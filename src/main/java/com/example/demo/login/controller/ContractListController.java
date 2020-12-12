@@ -148,7 +148,7 @@ public class ContractListController {
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
 		model.addAttribute("displayStatus", displayStatus);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-
+	
 		return "login/contractDay";
 	}
 
