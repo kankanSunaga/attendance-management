@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"></meta>
 <link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+<link th:href="@{/css/home.css}" rel="stylesheet"></link>
 <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
 	rel="stylesheet"></link>
 <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
@@ -28,8 +29,8 @@
 				<label>今月の勤務時間：</label>
 				<label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label>
 			</div>
-			<a class="btn btn-success" th:href="@{'/workTime'}">勤務時間登録・変更</a>
-			<a class="btn btn-success" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
+			<a class="btn btn btn-primary" th:href="@{'/workTime'}">勤務時間登録・変更</a>
+			<a class="btn btn btn-primary" th:href="@{'/contracts'}" target="_blank">勤務時間詳細</a>
 		</div>
 	</div>
 	<br>
