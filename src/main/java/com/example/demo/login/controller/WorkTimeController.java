@@ -1,5 +1,7 @@
 package com.example.demo.login.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.service.ContractService;
 import com.example.demo.login.domain.service.MonthService;
+import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
 import com.example.demo.login.domain.service.transaction.WorkTimeTransaction;
@@ -44,10 +47,13 @@ public class WorkTimeController {
 
 	@Autowired
 	WorkTimeTransaction workTimeTransaction;
+	
+	@Autowired
+	UserIconService userIconService;
 
 	@GetMapping("/workTime")
 	public String getWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
@@ -59,12 +65,13 @@ public class WorkTimeController {
 		form.setEndTime(contract.getEndTime());
 
 		model.addAttribute("WorkTimeForm", form);
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/workTime";
 	}
 
 	@PostMapping("/workTime")
-	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request) {
+	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model, HttpServletRequest request) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
@@ -75,6 +82,7 @@ public class WorkTimeController {
 		} else if (!(dateTimeUtil.checkYearMonth(userId))) {
 			workTimeTransaction.insertMonthAndWork(form, userId);
 		}
+		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/workTime";
 	}
