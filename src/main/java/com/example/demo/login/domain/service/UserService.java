@@ -13,88 +13,53 @@ import com.example.demo.login.domain.repository.UserDao;
 public class UserService {
 	@Autowired
 	UserDao dao;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	// insert用メソッド
-	public boolean insert(User user) {
-
-		int rowNumber = dao.insertOne(user);
-		boolean result = false;
-		if (rowNumber > 0) {
-			result = true;
-		}
-		return result;
+	public void insert(User user) {
+		dao.insertOne(user);
 	}
 
-	// カウント用メソッド
 	public int countPermission() {
 		return dao.countPermission();
 	}
 
-	// 未承認ユーザー取得メソッド
 	public List<User> selectPermission() {
 		return dao.selectPermission();
 	}
 
-	// １件取得用メッソド
 	public User selectOne(int userId) {
 		return dao.selectOne(userId);
 	}
 
-	// 承認ステータス更新用メソッド
-	public boolean updatePermission(User user) {
-
-		int rowNumber = dao.updatePermission(user);
-
-		boolean result = false;
-		if (rowNumber > 0) {
-			result = true;
-		}
-		return result;
+	public void updatePermission(int userId) {
+		dao.updatePermission(userId);
 	}
 
-	// 凍結ステータス更新用メソッド
-	public boolean updateFrozen(User user) {
-
-		int rowNumber = dao.updateFrozen(user);
-
-		boolean result = false;
-		if (rowNumber > 0) {
-			result = true;
-		}
-		return result;
+	public void updateFrozen(int userId) {
+		dao.updateFrozen(userId);
 	}
 
-	// emailで検索したユーザーのuserIdを返却
 	public User selectByEmail(String email) {
 		return dao.selectByEmail(email);
 	}
-	
+
 	public int updateEmail(User user) {
 		return dao.updateEmail(user);
-     }
-	
-	
-	public boolean updatePassword(int userId, String oldPassword, String newPassword) {
-		
-		String encodedPassword = dao.selectOne(userId).getPassword();
-		
-		boolean status = false;
-		
-		if(passwordEncoder.matches(oldPassword, encodedPassword)) {
+	}
 
+	public boolean updatePassword(int userId, String oldPassword, String newPassword) {
+
+		String encodedPassword = dao.selectOne(userId).getPassword();
+
+		boolean status = false;
+		if (passwordEncoder.matches(oldPassword, encodedPassword)) {
 			User user = selectOne(userId);
 			dao.updatePassword(user, newPassword);
-			
 			status = true;
-			
-		} 
-		
+		}
 		return status;
-    	
-    }
-	
+	}
 }
-
