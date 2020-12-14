@@ -104,17 +104,12 @@ public class UserDaoJdbcImpl implements UserDao {
 		return user;
 	}
 
-	// Userテーブルの承認ステータス 未承認→承認に変更
-	@Override
-	public int updatePermission(User user) throws DataAccessException {
-		int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?", user.getUserId());
-		return rowNumber;
+	public void updatePermission(int userId) throws DataAccessException {
+		jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?", userId);
 	}
 
-	// Userテーブルの凍結ステータス 利用中→利用不可に変更
-	public int updateFrozen(User user) throws DataAccessException {
-		int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?", user.getUserId());
-		return rowNumber;
+	public void updateFrozen(int userId) throws DataAccessException {
+		jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?", userId);
 	}
 
 	// userテーブルからemailをキーにuserIdを取得する
