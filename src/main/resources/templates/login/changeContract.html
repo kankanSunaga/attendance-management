@@ -3,15 +3,17 @@
 <head>
 	<meta charset="UTF-8"></meta>
 	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/changeContract.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	<title>ChangeContract</title>
+	<title>契約の更新</title>
 </head>
 <body>
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
+	<br><br><br>
 	<div class="container text-center">
 		<h1>現在の契約</h1>
 		<h2 th:text="${contract.officeName}"></h2><br>
@@ -35,6 +37,7 @@
 					</div>
 				</div>
 		</form>
+		<br>
 	</div>
 </body>
 </html>
