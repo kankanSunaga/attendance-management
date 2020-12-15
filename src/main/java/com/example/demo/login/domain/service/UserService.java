@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.domain.model.ChangeEmailForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.UserDao;
 
@@ -17,7 +18,6 @@ public class UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	// insert用メソッド
 	public void insert(User user) {
 		dao.insertOne(user);
 	}
@@ -61,5 +61,11 @@ public class UserService {
 			status = true;
 		}
 		return status;
+	}
+
+	public User setNewEmail(User user, ChangeEmailForm form) {
+		user.setEmail(form.getNewEmail());
+
+		return user;
 	}
 }
