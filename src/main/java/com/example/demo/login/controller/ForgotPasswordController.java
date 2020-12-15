@@ -15,38 +15,34 @@ import com.example.demo.login.domain.model.ForgotPasswordForm;
 import com.example.demo.login.domain.service.ForgotPasswordService;
 import com.example.demo.login.domain.service.UserService;
 
-
 @Controller
 public class ForgotPasswordController {
-	
+
 	@Autowired
 	ForgotPasswordService forgotPasswordService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("/forgotPassword")
-	public String getFotgotPassword(ForgotPasswordForm form, Model model) {
-		
+	public String getFotgotPassword(ForgotPasswordForm form) {
+
 		return "login/forgotPassword";
 	}
-	
-	
+
 	@PostMapping("/forgotPassword")
-	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult, Model model) throws IOException {
-		
+	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult,
+			Model model) throws IOException {
+
 		if (bindingResult.hasErrors()) {
-			return getFotgotPassword(form, model);
+			return getFotgotPassword(form);
 		}
 
 		String email = form.getEmailByForgotPassword();
-			
+
 		forgotPasswordService.sendMail(email);
 		model.addAttribute("status", 1);
-		
+
 		return "login/forgotPassword";
-		
 	}
-	
 }
-	
