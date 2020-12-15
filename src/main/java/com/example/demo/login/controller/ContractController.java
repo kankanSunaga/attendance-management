@@ -3,11 +3,9 @@ package com.example.demo.login.controller;
 import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,34 +29,29 @@ public class ContractController {
 	@Autowired
 	SessionUtil sessionUtil;
 
+	@Autowired
+	HttpServletRequest request;
+
 	@GetMapping("/contract")
-	public String getContract(@ModelAttribute ContractForm form, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String getContract(@ModelAttribute ContractForm form) {
 
 		return "login/contract";
 	}
 
 	@PostMapping("/contract")
-	public String postContract(@ModelAttribute @Validated ContractForm form, BindingResult bindingResult,
-			HttpServletRequest request, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return getContract(form, model, null, null);
-		}
+	public String postContract(@ModelAttribute @Validated ContractForm form, BindingResult bindingResult) {
 
 		int userId = sessionUtil.getUserId(request);
 
-		form.setUserId(userId);
+		if (bindingResult.hasErrors()) {
+			return getContract(form);
+		}
 
-		Contract contract = contractService.setInsertOne(form);
-
+		Contract contract = contractService.setInsertOne(form, userId);
 		contractService.insertOne(contract);
 
-		// 勤務開始日に以前か以降かのチェック
 		LocalDate formDate = form.getStartDate();
-		LocalDate currentDate = LocalDate.now();
-
-		if (formDate.compareTo(currentDate) > 0) {
+		if (formDate.compareTo(LocalDate.now()) > 0) {
 			return "login/startDateWaiting";
 		} else {
 			return "login/login";
