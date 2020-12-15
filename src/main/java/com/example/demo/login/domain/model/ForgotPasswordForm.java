@@ -7,9 +7,8 @@ import lombok.Data;
 
 @Data
 public class ForgotPasswordForm {
-	
+
 	@Email
 	@NotBlank
 	private String emailByForgotPassword;
-	
 }

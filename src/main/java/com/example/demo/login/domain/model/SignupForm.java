@@ -1,6 +1,5 @@
 package com.example.demo.login.domain.model;
 
-
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,29 +11,31 @@ import lombok.Data;
 
 @Data
 public class SignupForm {
-	
-	private int userId;//ユーザーID
-	
+
+	private int userId;
+
 	@NotBlank
-	private String userName; // 名前
-	
+	private String userName;
+
 	@NotBlank
 	@Email
-	private String email; // メールアドレス
-	
+	private String email;
+
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
-	private String password; // パスワード
-	
+	private String password;
+
 	@NotBlank
-	private String confirmPassword; // パスワード確認
+	private String confirmPassword;
+
 	@AssertTrue
 	public boolean isConfirmPassword() {
 		return password.equals(confirmPassword);
 	}
-	private String role;//一般ユーザーか管理ユーザーか。
-	private boolean permission;//承認ステータス
-	private boolean frozen;//凍結ステータス
-	private String requestedAt; //申請日時
+
+	private String role;
+	private boolean permission;
+	private boolean frozen;
+	private String requestedAt;
 }
