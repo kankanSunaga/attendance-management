@@ -21,7 +21,7 @@ public class ContractService {
 
 	@Autowired
 	MonthService monthService;
-	
+
 	@Autowired
 	ContractService contractService;
 
@@ -124,13 +124,19 @@ public class ContractService {
 	public void updateEndDate(Contract contract) {
 		dao.updateEndDate(contract);
 	}
-	
+
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
 		Contract contract = contractService.latestContract(userId);
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
 		form.setEndTime(contract.getEndTime());
-		
+
 		return form;
+	}
+
+	public Contract setEndDate(Contract contract, ContractForm form) {
+		contract.setEndDate(form.getEndDate());
+
+		return contract;
 	}
 }
