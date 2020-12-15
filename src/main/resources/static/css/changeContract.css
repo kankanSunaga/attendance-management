@@ -1,0 +1,9 @@
+html body{
+  height: 100%;
+  margin: 0;
+  background-color:#D4D9D2;
+}
+
+.container {
+  background-color:#F2F2F0;
+}
