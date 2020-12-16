@@ -28,26 +28,20 @@ public class SessionController {
 	ContractService contractService;
 
 	@RequestMapping("/session")
-	public void getSession(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void getSession(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		// SpringSecurityのセッションの呼出(emailの呼出)
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		// emailで検索したユーザーのuserIdの取得
 		User user = userService.selectByEmail(auth.getName());
 
-		// セッションの保持(userId)
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", user.getUserId());
 
-		// ログイン時に返す画面の決定
 		if (contractService.hasBeenContract(user.getUserId())) {
 			response.sendRedirect("/home");
 		} else {
 			response.sendRedirect("/contract");
-			
 		}
-
 	}
-
 }
