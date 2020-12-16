@@ -37,8 +37,8 @@ public class MonthService {
 	DateTimeUtil dateTimeUtil;
 
 	public List<User> getRequestUsers() {
+		
 		return dao.getRequestUsers();
-
 	}
 
 	public int ruquestUserCount() {
@@ -48,7 +48,6 @@ public class MonthService {
 		int ruquestUserCount = ruquestUserList.size();
 
 		return ruquestUserCount;
-
 	}
 
 	public void updateToDeadline() {
@@ -70,18 +69,22 @@ public class MonthService {
 		} else {
 			stetus = false;
 		}
+		
 		return stetus;
 	}
 
 	public Month latestMonth(int userId) {
+		
 		return dao.latestMonth(userId);
 	}
 
 	public Month selectMonthTable(int userId, int contractId, String yearMonth) {
+		
 		return dao.selectMonthTable(userId, contractId, yearMonth);
 	}
 
 	public void insertOne(Month month) {
+		
 		dao.insertOne(month);
 	}
 
@@ -95,7 +98,6 @@ public class MonthService {
 		int contractId = contractService.latestContract(userId).getContractId();
 
 		Month monthData = new Month();
-
 		monthData.setYear(year);
 		monthData.setMonth(month);
 		monthData.setDeadlineStatus(false);
@@ -106,6 +108,7 @@ public class MonthService {
 	}
 
 	public void update(Month month) {
+		
 		dao.update(month);
 	}
 
@@ -117,10 +120,12 @@ public class MonthService {
 	}
 
 	public List<Month> getMonthList(int contractId) {
+		
 		return dao.getMonthList(contractId);
 	}
 
 	public List<Map<String, String>> getMonthDate(List<Month> monthList) {
+		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		int size = monthList.size();
 		for (int i = 0; i < size; i++) {

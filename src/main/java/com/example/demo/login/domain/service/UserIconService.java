@@ -30,7 +30,6 @@ public class UserIconService {
 	public boolean setImage(MultipartFile file, int userId) throws IOException {
 
 		Path path = Paths.get("image");
-
 		if (Files.notExists(path)) {
 			try {
 				Files.createDirectory(path);

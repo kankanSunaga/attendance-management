@@ -16,12 +16,12 @@ public class DateTimeUtil {
 
 	@Autowired
 	WorkTimeService workTimeService;
-	
+
 	@Autowired
 	MonthService monthService;
 
 	public Map<String, Integer> getYearAndMonth(String yearMonth) {
-		
+
 		LocalDate createDate = BeginningOfMonth(yearMonth);
 		int year = createDate.getYear();
 		int month = createDate.getMonthValue();
@@ -32,23 +32,23 @@ public class DateTimeUtil {
 
 		return map;
 	}
-	
+
 	public String toStringDate(LocalDate localDate, String format) {
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
-        
-        return localDate.format(dateTimeFormatter);
-    }
-	
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+
+		return localDate.format(dateTimeFormatter);
+	}
+
 	public String toStringYearMonth(int year, int month) {
 
 		String stringYear = Integer.toString(year);
-		String stringMonth = String.format("%02d", month);		
+		String stringMonth = String.format("%02d", month);
 		String stringYearMonth = stringYear + stringMonth;
-		
+
 		return stringYearMonth;
 	}
-	
+
 	public LocalDate BeginningOfMonth(String yearMonth) {
 
 		String strYearMonthDay = yearMonth + "01";
@@ -56,22 +56,23 @@ public class DateTimeUtil {
 
 		return BeginningOfMonth;
 	}
-	
+
 	public boolean checkYearMonth(int userId) {
-		
+
 		LocalDate nowDate = LocalDate.now();
 		String nowYearMonth = toStringDate(nowDate, "yyyyMM");
-		
+
 		int year = monthService.latestMonth(userId).getYear();
 		int month = monthService.latestMonth(userId).getMonth();
 		String stringYearMonth = toStringYearMonth(year, month);
-		
+
 		boolean answer;
 		if (nowYearMonth.equals(stringYearMonth)) {
 			answer = true;
 		} else {
 			answer = false;
 		}
+
 		return answer;
 	}
 }
