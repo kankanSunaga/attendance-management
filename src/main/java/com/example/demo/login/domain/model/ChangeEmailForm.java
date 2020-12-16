@@ -8,20 +8,19 @@ import lombok.Data;
 
 @Data
 public class ChangeEmailForm {
-	
+
 	private int userId;
 
 	@NotBlank
 	@Email
-	private String newEmail; 
-	
+	private String newEmail;
+
 	@NotBlank
 	@Email
 	private String newConfirmEmail;
-	
+
 	@AssertTrue
 	private boolean isDataValidOfEmail() {
 		return newEmail.equals(newConfirmEmail);
 	}
-	
 }

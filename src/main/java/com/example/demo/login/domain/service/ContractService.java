@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.ContractForm;
+import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.repository.ContractDao;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
 
@@ -22,6 +23,9 @@ public class ContractService {
 	MonthService monthService;
 
 	@Autowired
+	ContractService contractService;
+
+	@Autowired
 	DateTimeUtil dateTimeUtilityService;
 
 	public void insertOne(Contract contract) {
@@ -29,7 +33,6 @@ public class ContractService {
 	}
 
 	public Contract setInsertOne(ContractForm form, int userId) {
-
 		Contract contract = new Contract();
 		contract.setContractTime(form.getContractTime());
 		contract.setStartTime(form.getStartTime());
@@ -42,17 +45,14 @@ public class ContractService {
 		return contract;
 	}
 
-	// Contractテーブルのデータ取得
 	public Contract activeSelectOne(int contractId) {
 		return dao.activeSelectOne(contractId);
 	}
 
-	// Contractテーブルのデータ全件取得（userIdでソート）
 	public List<Contract> selectMany(int userId) {
 		return dao.selectMany(userId);
 	}
 
-	// 契約件数の取得
 	public boolean hasBeenContract(int userId) {
 		List<Contract> list = dao.selectByUserId(userId);
 
@@ -91,9 +91,7 @@ public class ContractService {
 	}
 
 	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
-
 		Contract contract = underContract(userId);
-
 		form.setNewContractTime(contract.getContractTime());
 		form.setNewStartTime(contract.getStartTime());
 		form.setNewBreakTime(contract.getBreakTime());
@@ -103,9 +101,7 @@ public class ContractService {
 	}
 
 	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
-
 		Contract contract = new Contract();
-
 		contract.setUserId(userId);
 		contract.setContractTime(form.getNewContractTime());
 		contract.setStartTime(form.getNewStartTime());
@@ -127,5 +123,20 @@ public class ContractService {
 
 	public void updateEndDate(Contract contract) {
 		dao.updateEndDate(contract);
+	}
+
+	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
+		Contract contract = contractService.latestContract(userId);
+		form.setStartTime(contract.getStartTime());
+		form.setBreakTime(contract.getBreakTime());
+		form.setEndTime(contract.getEndTime());
+
+		return form;
+	}
+
+	public Contract setEndDate(Contract contract, ContractForm form) {
+		contract.setEndDate(form.getEndDate());
+
+		return contract;
 	}
 }

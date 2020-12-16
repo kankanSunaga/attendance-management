@@ -2,7 +2,6 @@ package com.example.demo.login.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.model.WorkTimeForm;
@@ -26,6 +24,7 @@ import com.example.demo.login.domain.service.MonthService;
 import com.example.demo.login.domain.service.UserIconService;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.login.domain.service.WorkTimeService;
+import com.example.demo.login.domain.service.util.DateTimeUtil;
 import com.example.demo.login.domain.service.util.SessionUtil;
 
 @Controller
@@ -50,6 +49,9 @@ public class ContractListController {
 	UserIconService userIconService;
 
 	@Autowired
+	DateTimeUtil dateTimeUtil;
+
+	@Autowired
 	HttpServletRequest request;
 
 	@GetMapping("/contracts")
@@ -57,16 +59,14 @@ public class ContractListController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		List<Contract> contractList = contractService.selectMany(userId);
-
-		model.addAttribute("contractList", contractList);
+		model.addAttribute("contractList", contractService.selectMany(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/contractList";
 	}
 
 	@GetMapping("/contract/{contractId}")
-	public String getContractMonth(@ModelAttribute WorkTime form, Model model,
+	public String getContractMonth(@ModelAttribute WorkTime workTime, Model model,
 			@PathVariable("contractId") int contractId) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
@@ -80,57 +80,30 @@ public class ContractListController {
 	}
 
 	@GetMapping("/contract/{contractId}/{yearMonth}")
-	public String getContractDay(@ModelAttribute WorkTime workTime, WorkTimeForm form, Model model, @PathVariable("contractId") int contractId,
-			@PathVariable("yearMonth") String yearMonth) throws IOException {
+	public String getContractDay(@ModelAttribute WorkTimeForm form, Model model,
+			@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth)
+			throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
-		// yyyy-MM-01(月初のString)の作成
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(yearMonth);
-		stringBuilder.insert(4, "-");
-		stringBuilder.append("-01");
-		String strMinWorkDay = stringBuilder.toString();
-
-		// 引数のminWorkDayとmaxWorkDayの値を代入
-		LocalDate minWorkDay = LocalDate.parse(strMinWorkDay, DateTimeFormatter.ISO_DATE);
+		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxWorkDay = minWorkDay.with(TemporalAdjusters.lastDayOfMonth());
 
-		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-		model.addAttribute("contractDay", contractDayList);
-
-		// yyyy年MM月の作成
-		String strMonth = strMinWorkDay.replace("-01", "月");
-		String strYearMonth = strMonth.replace("-", "年");
-
-		model.addAttribute("contractId", contractId);
-		model.addAttribute("yearMonth", strYearMonth);
-		model.addAttribute("yearMonthUrl", yearMonth);
+		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
+		model.addAttribute("contract", workTimeService.setCalenderObject(calender, contractId, yearMonth));
 
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-		model.addAttribute("workTimes", workTimes);
-
-		// 空のカレンダー作成
-		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
-		// 空のカレンダーにデータを追加
-		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId,
-				yearMonth);
-
-		String displayStatus = contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now());
-
-		model.addAttribute("contract", setCalenderObject);
 		model.addAttribute("totalTime", workTimeService.samWorkTimeMinute(workTimes));
-		model.addAttribute("displayStatus", displayStatus);
+
+		model.addAttribute("contractDay", workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay));
+		model.addAttribute("contractId", contractId);
+		model.addAttribute("yearMonth", dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月"));
+		model.addAttribute("yearMonthUrl", yearMonth);
+		model.addAttribute("workTimes", workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay));
+		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-		
-		Contract contract = contractService.latestContract(userId);
+		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));
 
-		form.setStartTime(contract.getStartTime());
-		form.setBreakTime(contract.getBreakTime());
-		form.setEndTime(contract.getEndTime());
-
-		model.addAttribute("WorkTimeForm", form);
-	
 		return "login/contractDay";
 	}
 

@@ -11,27 +11,26 @@ import lombok.Data;
 
 @Data
 public class ForgotPasswordForm {
-	
+
 	@Email
 	@NotBlank
 	private String emailByForgotPassword;
-	
+
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String reissuePassword;
-	
+
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String confirmReissuePassword;
-	
+
 	@AssertTrue
 	public boolean isDataValidOfReissuePassword() {
 		if (!reissuePassword.equals(confirmReissuePassword)) {
 			return false;
 		}
 		return true;
-		
 	}
 }
