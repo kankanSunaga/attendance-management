@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.login.domain.model.WorkTime;
@@ -50,9 +49,9 @@ public class PdfController {
 	SessionUtil sessionUtil;
 
 	@GetMapping("/contract/{contractId}/{yearMonth}/pdfDownload")
-	public void getPdfDownload(@ModelAttribute WorkTime workTime, Model model, HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("contractId") int contractId,
-			@PathVariable("yearMonth") String yearMonth) throws IOException {
+	public void getPdfDownload(Model model, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("contractId") int contractId, @PathVariable("yearMonth") String yearMonth)
+			throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
