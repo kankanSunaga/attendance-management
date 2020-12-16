@@ -61,6 +61,7 @@ public class ContractListController {
 
 		model.addAttribute("contractList", contractService.selectMany(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/contractList";
 	}

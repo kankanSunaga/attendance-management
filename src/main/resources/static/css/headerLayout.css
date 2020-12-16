@@ -65,8 +65,9 @@ body {
 }
 
 .btn{
-	margin-top: 18.5px;
+	margin-top: 25px;
 	margin-left: 10px;
+	padding: 9px 14px !important;
 }
 
 .serviceName{
@@ -80,3 +81,8 @@ body {
     margin-bottom: 20px;
 }
 
+img.logo {
+    height: 70px;
+    z-index: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
