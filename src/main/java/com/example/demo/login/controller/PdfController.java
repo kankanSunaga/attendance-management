@@ -50,7 +50,7 @@ public class PdfController {
 	SessionUtil sessionUtil;
 
 	@GetMapping("/contract/{contractId}/{yearMonth}/pdfDownload")
-	public void getPdfDownload(@ModelAttribute WorkTime form, Model model, HttpServletRequest request,
+	public void getPdfDownload(@ModelAttribute WorkTime workTime, Model model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) throws IOException {
 
@@ -61,7 +61,6 @@ public class PdfController {
 		List<WorkTime> contractDayList = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 
 		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
-
 		pdfService.createPdf(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth, response, request);
 		pdfService.pdfDownload(userId, response);
 
