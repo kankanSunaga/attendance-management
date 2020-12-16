@@ -58,6 +58,7 @@ public class WorkTimeController {
 
 		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/workTime";
 	}
@@ -78,6 +79,7 @@ public class WorkTimeController {
 		}
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/workTime";
 	}
