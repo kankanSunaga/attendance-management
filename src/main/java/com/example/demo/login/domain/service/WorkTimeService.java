@@ -34,18 +34,22 @@ public class WorkTimeService {
 	MonthService monthService;
 
 	public void insertOne(WorkTime workTime) {
+
 		dao.insertOne(workTime);
 	}
 
 	public void updateOne(WorkTime workTime) {
+
 		dao.updateOne(workTime);
 	}
 
 	public List<WorkTime> selectMonthData(int userId) {
+
 		return dao.selectMonthData(userId);
 	}
 
 	public int getWorkTimeMinute(WorkTimeForm form) {
+
 		int startTimeMinute = form.getStartTime().get(ChronoField.MINUTE_OF_DAY);
 		int breakTimeMinute = form.getBreakTime().get(ChronoField.MINUTE_OF_DAY);
 		int endTimeMinute = form.getEndTime().get(ChronoField.MINUTE_OF_DAY);
@@ -55,6 +59,7 @@ public class WorkTimeService {
 	}
 
 	public WorkTime setWorkTime(WorkTimeForm form, int userId) {
+
 		int contractId = contractService.latestContract(userId).getContractId();
 		int monthId = monthService.latestMonth(userId).getMonthId();
 
@@ -78,6 +83,7 @@ public class WorkTimeService {
 	}
 
 	public List<String> selectCalendar() {
+
 		List<String> list = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
@@ -93,14 +99,17 @@ public class WorkTimeService {
 	}
 
 	public List<WorkTime> selectMany(int contractId) {
+
 		return dao.selectMany(contractId);
 	}
 
 	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) {
+
 		return dao.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 	}
 
 	public int samWorkTimeMinute(List<WorkTime> workTimes) {
+
 		int workTimesSize = workTimes.size();
 		int samMinute = 0;
 		for (int i = 0; i < workTimesSize; i++) {
@@ -110,13 +119,14 @@ public class WorkTimeService {
 	}
 
 	public LinkedHashMap<String, Object> calender(String yearMonth) {
+
 		LocalDate lastDayOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
 		int maxDay = lastDayOfMonth.getDayOfMonth();
-		
+
 		LocalDate BeginningOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth);
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
-		
+
 		for (int i = 0; i < maxDay; i++) {
 			LocalDate date = BeginningOfMonth.plusDays(i);
 			String stringDate = datetimeformatter.format(date);
@@ -127,7 +137,9 @@ public class WorkTimeService {
 		return calender;
 	}
 
-	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
+	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId,
+			String yearMonth) {
+
 		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
 
@@ -139,10 +151,12 @@ public class WorkTimeService {
 	}
 
 	public void deleteOne(int workTimeId) {
+
 		dao.deleteOne(workTimeId);
 	}
 
 	public boolean hasExist(WorkTime workTime) {
+
 		return dao.hasExist(workTime);
 	}
 }

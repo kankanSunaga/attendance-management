@@ -33,6 +33,7 @@ public class ContractService {
 	}
 
 	public Contract setInsertOne(ContractForm form, int userId) {
+
 		Contract contract = new Contract();
 		contract.setContractTime(form.getContractTime());
 		contract.setStartTime(form.getStartTime());
@@ -46,24 +47,29 @@ public class ContractService {
 	}
 
 	public Contract activeSelectOne(int contractId) {
+
 		return dao.activeSelectOne(contractId);
 	}
 
 	public List<Contract> selectMany(int userId) {
+
 		return dao.selectMany(userId);
 	}
 
 	public boolean hasBeenContract(int userId) {
+
 		List<Contract> list = dao.selectByUserId(userId);
 
 		return list.size() >= 1;
 	}
 
 	public Contract latestContract(int userId) {
+
 		return dao.latestContract(userId);
 	}
 
 	public String selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
+
 		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
 		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
 
@@ -85,12 +91,14 @@ public class ContractService {
 	}
 
 	public Contract underContract(int userId) {
+
 		LocalDate today = LocalDate.now();
 
 		return dao.underContract(userId, today);
 	}
 
 	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
+
 		Contract contract = underContract(userId);
 		form.setNewContractTime(contract.getContractTime());
 		form.setNewStartTime(contract.getStartTime());
@@ -101,6 +109,7 @@ public class ContractService {
 	}
 
 	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
+
 		Contract contract = new Contract();
 		contract.setUserId(userId);
 		contract.setContractTime(form.getNewContractTime());
@@ -122,10 +131,12 @@ public class ContractService {
 	}
 
 	public void updateEndDate(Contract contract) {
+
 		dao.updateEndDate(contract);
 	}
 
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
+
 		Contract contract = contractService.latestContract(userId);
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
@@ -135,6 +146,7 @@ public class ContractService {
 	}
 
 	public Contract setEndDate(Contract contract, ContractForm form) {
+
 		contract.setEndDate(form.getEndDate());
 
 		return contract;
