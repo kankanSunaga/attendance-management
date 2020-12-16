@@ -19,14 +19,12 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 	@Autowired
 	JdbcTemplate jdbc;
-	
+
 	@Autowired
 	DateTimeUtil dateTimeUtil;
-	
 
 	@Override
 	public int updateToDeadline(int year, int month) throws DataAccessException {
-
 		int date = jdbc.update("UPDATE month SET deadlineStatus = 'TRUE' WHERE year = ? AND month = ? ", year, month);
 
 		return date;
@@ -35,14 +33,14 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	@Override
 	public List<User> getRequestUsers() throws DataAccessException {
 
-		List<Map<String, Object>> getList = jdbc.queryForList(
-				"SELECT * FROM user INNER JOIN contract ON user.userId = contract.userId INNER JOIN month ON contract.contractId=month.contractId WHERE requestStatus = 'true'");
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user"
+				+ " INNER JOIN contract ON user.userId = contract.userId"
+				+ " INNER JOIN month ON contract.contractId=month.contractId"
+				+ " WHERE requestStatus = 'true'");
 
 		List<User> RuquestUserList = new ArrayList<>();
-
 		for (Map<String, Object> map : getList) {
 			User user = new User();
-
 			user.setUserName((String) map.get("UserName"));
 
 			RuquestUserList.add(user);
@@ -53,12 +51,10 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	public Month latestMonth(int userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
-						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ?"
+						+ " INNER JOIN month ON contract.contractId = month.contractId" + " WHERE user.userId = ?"
 						+ " ORDER BY monthId DESC LIMIT 1", userId);
 
 		Month latestMonth = new Month();
-
 		latestMonth.setMonthId((int) map.get("monthId"));
 		latestMonth.setYear((int) map.get("year"));
 		latestMonth.setMonth((int) map.get("month"));
@@ -68,19 +64,18 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 		return latestMonth;
 	}
-	
-	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
 
+	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
 		int year = dateTimeUtil.getYearAndMonth(yearMonth).get("year");
 		int month = dateTimeUtil.getYearAndMonth(yearMonth).get("month");
 
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ? AND contract.contractId = ? AND month.year = ? AND month.month = ?", userId, contractId, year, month);
+						+ " WHERE user.userId = ? AND contract.contractId = ? AND month.year = ? AND month.month = ?",
+						userId, contractId, year, month);
 
 		Month selectMonth = new Month();
-
 		selectMonth.setMonthId((int) map.get("monthId"));
 		selectMonth.setYear((int) map.get("year"));
 		selectMonth.setMonth((int) map.get("month"));
@@ -92,34 +87,27 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	}
 
 	public void insertOne(Month month) throws DataAccessException {
-
-		jdbc.update("INSERT INTO month"
-				+ " (year, month, deadlineStatus, requestStatus, contractId)"
+		jdbc.update("INSERT INTO month (year, month, deadlineStatus, requestStatus, contractId)"
 				+ " VALUES(?, ?, ?, ?, ?)",
 				month.getYear(), month.getMonth(), false, false, month.getContractId());
 	}
-	
+
 	public void update(Month month) {
-		
-		jdbc.update("UPDATE month"
-				+ " SET monthId=?, year=?, month=?, deadlineStatus=?, requestStatus=?, contractId=?"
+		jdbc.update("UPDATE month SET monthId=?, year=?, month=?, deadlineStatus=?, requestStatus=?, contractId=?"
 				+ " WHERE monthId=?",
 				month.getMonthId(), month.getYear(), month.getMonth(), month.isDeadlineStatus(),
 				month.isRequestStatus(), month.getContractId(), month.getMonthId());
 	}
-	
-	public List<Month> getMonthList(int contractId) {
-		
-		List<Map<String, Object>> getList = jdbc.queryForList("SELECT month.* FROM contract"
-					+ " INNER JOIN month ON contract.contractId = month.contractId"
-					+ " WHERE contract.contractId = ?"
-					+ " ORDER BY monthId DESC", contractId);
-		
-		List<Month> monthList = new ArrayList<>();
 
+	public List<Month> getMonthList(int contractId) {
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT month.* FROM contract"
+				+ " INNER JOIN month ON contract.contractId = month.contractId"
+				+ " WHERE contract.contractId = ?" + " ORDER BY monthId DESC",
+				contractId);
+
+		List<Month> monthList = new ArrayList<>();
 		for (Map<String, Object> map : getList) {
 			Month month = new Month();
-
 			month.setMonthId((int) map.get("monthId"));
 			month.setYear((int) map.get("year"));
 			month.setMonth((int) map.get("month"));

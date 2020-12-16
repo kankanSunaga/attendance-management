@@ -90,10 +90,10 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 	public Contract latestContract(int userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
-						+ " INNER JOIN contract ON user.userId = contract.userId"
-						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ?"
-						+ " ORDER BY contractId DESC LIMIT 1", userId);
+				+ " INNER JOIN contract ON user.userId = contract.userId"
+				+ " INNER JOIN month ON contract.contractId = month.contractId"
+				+ " WHERE user.userId = ?"
+				+ " ORDER BY contractId DESC LIMIT 1", userId);
 
 		Contract latestContract = new Contract();
 		latestContract.setContractId((int) map.get("contractId"));
@@ -111,11 +111,9 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 	public Contract underContract(int userId, LocalDate today) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
-						+ " INNER JOIN contract ON user.userId = contract.userId"
-						+ " WHERE contract.startDate <= '" + today.toString() + "' AND"
-						+ " (contract.endDate >= '" + today.toString() + "' OR contract.endDate IS NOT NULL)"
-						+ " AND user.userId = ?"
-						, userId);
+				+ " INNER JOIN contract ON user.userId = contract.userId"
+				+ " WHERE contract.startDate <= '" + today.toString() + "' AND" + " (contract.endDate >= '"
+				+ today.toString() + "' OR contract.endDate IS NOT NULL)" + " AND user.userId = ?", userId);
 
 		Contract latestContract = new Contract();
 		latestContract.setContractId((int) map.get("contractId"));
@@ -132,19 +130,19 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	}
 
 	public int updateContract(Contract contract) throws DataAccessException {
- 		java.sql.Time startTime = java.sql.Time.valueOf(contract.getStartTime());
+		java.sql.Time startTime = java.sql.Time.valueOf(contract.getStartTime());
 		java.sql.Time breakTime = java.sql.Time.valueOf(contract.getBreakTime());
 		java.sql.Time endTime = java.sql.Time.valueOf(contract.getEndTime());
 
- 		int rowNumber = jdbc.update("UPDATE contract"
- 				+ " SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?"
- 				+ " ORDER BY contractId DESC LIMIT 1",
+		int rowNumber = jdbc.update("UPDATE contract"
+				+ " SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?"
+				+ " ORDER BY contractId DESC LIMIT 1",
 				contract.getContractTime(), startTime, breakTime, endTime, contract.getUserId());
 
- 		return rowNumber;
- 	}
+		return rowNumber;
+	}
 
 	public void updateEndDate(Contract contract) throws DataAccessException {
-		jdbc.update("UPDATE contract SET endDate=? WHERE contractId = ?",contract.getEndDate(),contract.getContractId());
+		jdbc.update("UPDATE contract SET endDate=? WHERE contractId = ?", contract.getEndDate(),contract.getContractId());
 	}
 }
