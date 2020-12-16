@@ -19,25 +19,19 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	@Autowired
 	JdbcTemplate jdbc;
 
-	// Contractテーブルの件数を取得
 	@Override
 	public void insertOne(Contract contract) throws DataAccessException {
-		jdbc.update("INSERT INTO contract("
-				+ " contractTime, startTime, breakTime, endTime, startDate, officeName, userId)"
+		jdbc.update("INSERT INTO contract"
+				+ " (contractTime, startTime, breakTime, endTime, startDate, officeName, userId)"
 				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
 				contract.getContractTime(), contract.getStartTime(), contract.getBreakTime(), contract.getEndTime(),
 				contract.getStartDate(), contract.getOfficeName(), contract.getUserId());
 	}
 
-	// Contractテーブルから1件データを取得（動的）
 	public Contract activeSelectOne(int contractId) throws DataAccessException {
-		// 1件取得
 		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId= ?", contractId);
 
-		// 結果返却用の変数
 		Contract contract = new Contract();
-
-		// 取得したデータを結果返却用の変数にセットしていく
 		contract.setContractId((int) map.get("contractId"));
 		contract.setContractTime((int) map.get("contractTime"));
 		contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
@@ -48,20 +42,15 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		contract.setEndDate(((java.sql.Date) map.get("endDate")).toLocalDate());
 
 		return contract;
-
 	}
 
-	// Contractテーブルから全件データを取得（userIdでソート）
 	public List<Contract> selectMany(int userId) throws DataAccessException {
-		List<Map<String, Object>> getList = jdbc
-				.queryForList("SELECT * FROM contract WHERE userId = ? ORDER BY startDate DESC", userId);
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM contract"
+				+ " WHERE userId = ? ORDER BY startDate DESC", userId);
+
 		List<Contract> contractList = new ArrayList<>();
-
 		for (Map<String, Object> map : getList) {
-			// 結果返却用の変数
 			Contract contract = new Contract();
-
-			// 取得したデータを結果返却用の変数にセットしていく
 			contract.setContractId((int) map.get("contractId"));
 			contract.setContractTime((int) map.get("contractTime"));
 			contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
@@ -77,18 +66,15 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return contractList;
 	}
 
-	// userIdをキーに勤務情報を取得する
 	public List<Contract> selectByUserId(int userId) throws DataAccessException {
 		List<Map<String, Object>> list = jdbc.queryForList("SELECT * FROM contract WHERE userId =?", userId);
 
 		return list.stream().map(contractMap -> this.mapToContract(contractMap)).collect(Collectors.toList());
 	}
 
-	// contractテーブルから取得した値をセットする
 	public Contract mapToContract(Map<String, Object> map) {
 
 		Contract contract = new Contract();
-
 		contract.setContractId((int) map.get("contractId"));
 		contract.setContractTime((int) map.get("contractTime"));
 		contract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
@@ -110,7 +96,6 @@ public class ContractDaoJdbcImpl implements ContractDao {
 						+ " ORDER BY contractId DESC LIMIT 1", userId);
 
 		Contract latestContract = new Contract();
-
 		latestContract.setContractId((int) map.get("contractId"));
 		latestContract.setContractTime((int) map.get("contractTime"));
 		latestContract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
@@ -123,10 +108,8 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 		return latestContract;
 	}
-	
-	
+
 	public Contract underContract(int userId, LocalDate today) throws DataAccessException {
-		
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
 						+ " WHERE contract.startDate <= '" + today.toString() + "' AND"
@@ -135,7 +118,6 @@ public class ContractDaoJdbcImpl implements ContractDao {
 						, userId);
 
 		Contract latestContract = new Contract();
-
 		latestContract.setContractId((int) map.get("contractId"));
 		latestContract.setContractTime((int) map.get("contractTime"));
 		latestContract.setStartTime(((java.sql.Time) map.get("startTime")).toLocalTime());
@@ -148,24 +130,21 @@ public class ContractDaoJdbcImpl implements ContractDao {
 
 		return latestContract;
 	}
-	
-	
-	public int updateContract(Contract contract) throws DataAccessException {
 
+	public int updateContract(Contract contract) throws DataAccessException {
  		java.sql.Time startTime = java.sql.Time.valueOf(contract.getStartTime());
 		java.sql.Time breakTime = java.sql.Time.valueOf(contract.getBreakTime());
 		java.sql.Time endTime = java.sql.Time.valueOf(contract.getEndTime());
 
- 		int rowNumber = jdbc.update("UPDATE contract SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?"
+ 		int rowNumber = jdbc.update("UPDATE contract"
+ 				+ " SET contractTime = ?, startTime = ?, breakTime = ?, endTime = ? WHERE userId = ?"
  				+ " ORDER BY contractId DESC LIMIT 1",
 				contract.getContractTime(), startTime, breakTime, endTime, contract.getUserId());
 
  		return rowNumber;
-
  	}
-	
+
 	public void updateEndDate(Contract contract) throws DataAccessException {
 		jdbc.update("UPDATE contract SET endDate=? WHERE contractId = ?",contract.getEndDate(),contract.getContractId());
 	}
-	
 }
