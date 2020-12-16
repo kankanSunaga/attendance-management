@@ -10,27 +10,24 @@ import lombok.Data;
 
 @Data
 public class ChangePasswordForm {
-	
+
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String password;
-	
+
 	@NotBlank
 	@Length(min = 8, max = 50)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String newPassword = "";
-	
+
 	private String newConfirmPassword = "";
-	
+
 	@AssertTrue
 	public boolean isDataValidOfPassword() {
 		if (!newPassword.equals(newConfirmPassword)) {
 			return false;
 		}
 		return true;
-		
 	}
-	
 }
-

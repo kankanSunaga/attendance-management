@@ -3,8 +3,6 @@ package com.example.demo.login.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -48,13 +46,13 @@ public class HamburgerMenuController {
 	SessionUtil sessionutil;
 
 	@Autowired
+	PathUtil pathUtil;
+
+	@Autowired
 	HttpServletRequest request;
 
 	@Autowired
-	protected ResourceLoader resourceLoader;
-
-	@Autowired
-	PathUtil pathUtil;
+	ResourceLoader resourceLoader;
 
 	@GetMapping("/changeUserIcon")
 	public String getChangeUserIcon(Model model) throws IOException {
@@ -82,13 +80,11 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changePassword")
-	public String getChangePassword(@ModelAttribute ChangePasswordForm form, HttpServletRequest request, Model model)
-			throws IOException {
+	public String getChangePassword(@ModelAttribute ChangePasswordForm form, Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
-		User user = userService.selectOne(userId);
-		model.addAttribute("user", user);
+		model.addAttribute("user", userService.selectOne(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changePassword";
@@ -97,12 +93,12 @@ public class HamburgerMenuController {
 
 	@PostMapping("/changePassword")
 	public String postChengePassword(@ModelAttribute @Validated ChangePasswordForm form, BindingResult bindingResult,
-			Model model, HttpServletRequest request) throws IOException {
+			Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
 		if (bindingResult.hasErrors()) {
-			return getChangePassword(form, request, model);
+			return getChangePassword(form, model);
 		}
 
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
@@ -113,13 +109,11 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changeEmail")
-	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, HttpServletRequest request, Model model)
-			throws IOException {
+	public String getChangeEmail(@ModelAttribute ChangeEmailForm form, Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
-		User user = userService.selectOne(userId);
-		model.addAttribute("user", user);
+		model.addAttribute("user", userService.selectOne(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeEmail";
@@ -128,17 +122,16 @@ public class HamburgerMenuController {
 
 	@PostMapping("/changeEmail")
 	public String postChengeEmail(@ModelAttribute @Validated ChangeEmailForm form, BindingResult bindingResult,
-			Model model, HttpServletRequest request) throws IOException {
+			Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
 		if (bindingResult.hasErrors()) {
-			return getChangeEmail(form, request, model);
+			return getChangeEmail(form, model);
 		}
 
 		User user = userService.selectOne(userId);
-		user.setEmail(form.getNewEmail());
-		userService.updateEmail(user);
+		userService.updateEmail(userService.setNewEmail(user, form));
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
@@ -147,8 +140,7 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changeContractTime")
-	public String getChangeContractTime(@ModelAttribute ChangeContractTimeForm form, Model model,
-			HttpServletRequest request) throws IOException {
+	public String getChangeContractTime(@ModelAttribute ChangeContractTimeForm form, Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
@@ -164,17 +156,16 @@ public class HamburgerMenuController {
 
 	@PostMapping("/changeContractTime")
 	public String postChangeContractTime(@ModelAttribute @Validated ChangeContractTimeForm form,
-			BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
+			BindingResult bindingResult, Model model) throws IOException {
+
+		int userId = sessionUtil.getUserId(request);
 
 		if (bindingResult.hasErrors()) {
-			return getChangeContractTime(form, model, request);
+			return getChangeContractTime(form, model);
 		}
 
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
-
-		model.addAttribute("status",
-				contractService.updateContract(contractService.setUpdateContractTime(form, userId)));
+		Contract updateContractTime = contractService.setUpdateContractTime(form, userId);
+		model.addAttribute("status", contractService.updateContract(updateContractTime));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContractTime";
@@ -182,30 +173,24 @@ public class HamburgerMenuController {
 	}
 
 	@GetMapping("/changeContract")
-	public String getChangeContract(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	public String getChangeContract(Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
-		Contract contract = contractService.underContract(userId);
-		model.addAttribute("contract", contract);
+		model.addAttribute("contract", contractService.underContract(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 
 		return "login/changeContract";
 	}
-	
+
 	@PostMapping("/changeContract")
-	public String postChangeContract(Model model, HttpServletRequest request, HttpServletResponse response,ContractForm form) {
-		
-		HttpSession session = request.getSession();
-		int userId = (int)session.getAttribute("userId");
-		
+	public String postChangeContract(ContractForm form, Model model) {
+
+		int userId = sessionUtil.getUserId(request);
+
 		Contract contract = contractService.underContract(userId);
-		contract.setEndDate(form.getEndDate());
-		contractService.updateEndDate(contract);
-		
+		contractService.updateEndDate(contractService.setEndDate(contract, form));
+
 		return "login/contract";
 	}
-	
-	
 }

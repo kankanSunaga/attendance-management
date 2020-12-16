@@ -12,31 +12,31 @@ import lombok.Data;
 
 @Data
 public class ContractForm {
-	
+
 	@NotNull
-	private int contractTime; //契約勤務時間
-	
-	@NotNull
-	@DateTimeFormat(pattern = "HH:mm")
-	private LocalTime startTime;//想定始業時
-	
+	private int contractTime;
+
 	@NotNull
 	@DateTimeFormat(pattern = "HH:mm")
-	private LocalTime breakTime; //想定休憩時間
-	
+	private LocalTime startTime;
+
 	@NotNull
 	@DateTimeFormat(pattern = "HH:mm")
-	private LocalTime endTime; //想定退勤時間
-	
+	private LocalTime breakTime;
+
+	@NotNull
+	@DateTimeFormat(pattern = "HH:mm")
+	private LocalTime endTime;
+
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate startDate; //勤務開始日
-	
+	private LocalDate startDate;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
-	
+
 	@NotBlank
-	private String officeName; //勤務会社名
-	
+	private String officeName;
+
 	private int userId;
 }

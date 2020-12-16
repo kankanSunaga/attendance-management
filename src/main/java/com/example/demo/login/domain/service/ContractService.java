@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.login.domain.model.ChangeContractTimeForm;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.model.ContractForm;
+import com.example.demo.login.domain.model.WorkTimeForm;
 import com.example.demo.login.domain.repository.ContractDao;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
 
@@ -22,37 +23,36 @@ public class ContractService {
 	MonthService monthService;
 
 	@Autowired
+	ContractService contractService;
+
+	@Autowired
 	DateTimeUtil dateTimeUtilityService;
 
 	public void insertOne(Contract contract) {
 		dao.insertOne(contract);
 	}
 
-	public Contract setInsertOne(ContractForm form) {
+	public Contract setInsertOne(ContractForm form, int userId) {
 		Contract contract = new Contract();
-
 		contract.setContractTime(form.getContractTime());
 		contract.setStartTime(form.getStartTime());
 		contract.setBreakTime(form.getBreakTime());
 		contract.setEndTime(form.getEndTime());
 		contract.setStartDate(form.getStartDate());
 		contract.setOfficeName(form.getOfficeName());
-		contract.setUserId(form.getUserId());
+		contract.setUserId(userId);
 
 		return contract;
 	}
 
-	// Contractテーブルのデータ取得
 	public Contract activeSelectOne(int contractId) {
 		return dao.activeSelectOne(contractId);
 	}
 
-	// Contractテーブルのデータ全件取得（userIdでソート）
 	public List<Contract> selectMany(int userId) {
 		return dao.selectMany(userId);
 	}
 
-	// 契約件数の取得
 	public boolean hasBeenContract(int userId) {
 		List<Contract> list = dao.selectByUserId(userId);
 
@@ -83,52 +83,60 @@ public class ContractService {
 
 		return status;
 	}
-	
+
 	public Contract underContract(int userId) {
 		LocalDate today = LocalDate.now();
-		
+
 		return dao.underContract(userId, today);
 	}
-	
-	
+
 	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
-
- 		Contract contract = underContract(userId);
-
- 		form.setNewContractTime(contract.getContractTime());
+		Contract contract = underContract(userId);
+		form.setNewContractTime(contract.getContractTime());
 		form.setNewStartTime(contract.getStartTime());
 		form.setNewBreakTime(contract.getBreakTime());
 		form.setNewEndTime(contract.getEndTime());
 
- 		return contract;
+		return contract;
 	}
 
-
- 	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
-
- 		Contract contract = new Contract();
-
- 		contract.setUserId(userId);
+	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
+		Contract contract = new Contract();
+		contract.setUserId(userId);
 		contract.setContractTime(form.getNewContractTime());
 		contract.setStartTime(form.getNewStartTime());
 		contract.setBreakTime(form.getNewBreakTime());
 		contract.setEndTime(form.getNewEndTime());
 
- 		return contract;
+		return contract;
 	}
 
- 	public boolean updateContract(Contract contract) {
+	public boolean updateContract(Contract contract) {
 
- 		int rowNumber = dao.updateContract(contract);
+		int rowNumber = dao.updateContract(contract);
 		boolean status = false;
 		if (rowNumber > 0) {
 			status = true;
 		}
 		return status;
 	}
- 	
- 	public void updateEndDate(Contract contract) {
- 		dao.updateEndDate(contract);
- 	}
- 	
+
+	public void updateEndDate(Contract contract) {
+		dao.updateEndDate(contract);
+	}
+
+	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
+		Contract contract = contractService.latestContract(userId);
+		form.setStartTime(contract.getStartTime());
+		form.setBreakTime(contract.getBreakTime());
+		form.setEndTime(contract.getEndTime());
+
+		return form;
+	}
+
+	public Contract setEndDate(Contract contract, ContractForm form) {
+		contract.setEndDate(form.getEndDate());
+
+		return contract;
+	}
 }

@@ -33,25 +33,19 @@ public class WorkTimeService {
 	@Autowired
 	MonthService monthService;
 
-	// insert用メソッド
 	public void insertOne(WorkTime workTime) {
-
 		dao.insertOne(workTime);
 	}
-	
+
 	public void updateOne(WorkTime workTime) {
-		
 		dao.updateOne(workTime);
 	}
 
-	// その月のデータ取得用メソッド
 	public List<WorkTime> selectMonthData(int userId) {
-
 		return dao.selectMonthData(userId);
 	}
 
 	public int getWorkTimeMinute(WorkTimeForm form) {
-
 		int startTimeMinute = form.getStartTime().get(ChronoField.MINUTE_OF_DAY);
 		int breakTimeMinute = form.getBreakTime().get(ChronoField.MINUTE_OF_DAY);
 		int endTimeMinute = form.getEndTime().get(ChronoField.MINUTE_OF_DAY);
@@ -61,12 +55,10 @@ public class WorkTimeService {
 	}
 
 	public WorkTime setWorkTime(WorkTimeForm form, int userId) {
-
 		int contractId = contractService.latestContract(userId).getContractId();
 		int monthId = monthService.latestMonth(userId).getMonthId();
 
 		WorkTime workTime = new WorkTime();
-
 		workTime.setContractId(contractId);
 		workTime.setMonthId(monthId);
 		workTime.setWorkTimeMinute(getWorkTimeMinute(form));
@@ -86,14 +78,11 @@ public class WorkTimeService {
 	}
 
 	public List<String> selectCalendar() {
-		// 年月日を設定
 		List<String> list = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
-		// +１しないと欲しい値が取れないのでしてます。(仕様です)
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int day = 1;
-		// 作成する日数
 		int loopCount = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		for (int i = 0; i < loopCount; i++) {
 			calendar.set(year, month - 1, day + i);
@@ -103,80 +92,57 @@ public class WorkTimeService {
 		return list;
 	}
 
-	// 月のデータ全件取得用メソッド
 	public List<WorkTime> selectMany(int contractId) {
 		return dao.selectMany(contractId);
 	}
 
-	// 月のデータ全件取得用メソッド（範囲検索）
 	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) {
 		return dao.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 	}
 
-	// 月の勤務時間（分）の合計を返す
 	public int samWorkTimeMinute(List<WorkTime> workTimes) {
-
 		int workTimesSize = workTimes.size();
 		int samMinute = 0;
-
 		for (int i = 0; i < workTimesSize; i++) {
 			samMinute += workTimes.get(i).getWorkTimeMinute();
 		}
 		return samMinute;
 	}
 
-	// 空の月のカレンダー作成(1~月末)
 	public LinkedHashMap<String, Object> calender(String yearMonth) {
-
-		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
-
-		// 月の最大日数
 		LocalDate lastDayOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth).with(TemporalAdjusters.lastDayOfMonth());
 		int maxDay = lastDayOfMonth.getDayOfMonth();
-
+		
 		LocalDate BeginningOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth);
-
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
+		
 		for (int i = 0; i < maxDay; i++) {
-
 			LocalDate date = BeginningOfMonth.plusDays(i);
-
 			String stringDate = datetimeformatter.format(date);
-
 			WorkTime workTime = new WorkTime();
-
 			workTime.setWorkDay(date);
-
 			calender.put(stringDate, workTime);
-
 		}
 		return calender;
 	}
 
-	// 空のカレンダーにデータをセット
-	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId,
-			String yearMonth) {
-
+	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
 		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
 
 		List<WorkTime> workTimes = rangedSelectMany(contractId, minDay, maxDay);
-
 		for (WorkTime workTime : workTimes) {
 			calender.put(workTime.getWorkDay().toString(), workTime);
 		}
 		return calender;
 	}
-	
 
 	public void deleteOne(int workTimeId) {
 		dao.deleteOne(workTimeId);
 	}
 
 	public boolean hasExist(WorkTime workTime) {
-		
 		return dao.hasExist(workTime);
 	}
 }
-
