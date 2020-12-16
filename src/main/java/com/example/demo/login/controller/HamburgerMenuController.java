@@ -156,6 +156,7 @@ public class HamburgerMenuController {
 
 		model.addAttribute("ChangeContractTimeForm", form);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeContractTime";
 

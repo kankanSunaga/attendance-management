@@ -13,7 +13,7 @@
 <body>
 	<nav th:fragment="header" class="navbar navbar-fixed-top">
 		<div class="container-fluid">
-			<a class="serviceName" href="/home">＠end</a>
+			<img class="logo" th:src="${logo}">
 			<div class="dropdown pull-right">
 				<img class="userIcon" th:src="${base64}">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
