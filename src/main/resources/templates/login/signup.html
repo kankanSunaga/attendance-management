@@ -33,7 +33,7 @@
 			<span th:text="${error.message}">Error message</span>
 		</div>
 		<br/>
-		<div th:if="${success}">このメールアドレスは既に使用されています</div>
+		<div th:if="${useEmail}">このメールアドレスは既に使用されています</div>
         <br/>
         <!-- 申請ボタン -->
 		<button class="btn btn-primary" type="submit">申請する</button>
