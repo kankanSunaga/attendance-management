@@ -76,6 +76,7 @@ public class ContractListController {
 		model.addAttribute("monthList", monthService.getMonthDate(monthList));
 		model.addAttribute("officeName", contractService.activeSelectOne(contractId).getOfficeName());
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/contractMonth";
 	}
@@ -103,6 +104,7 @@ public class ContractListController {
 		model.addAttribute("workTimes", workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay));
 		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));
 
 		return "login/contractDay";
@@ -117,6 +119,7 @@ public class ContractListController {
 
 		workTimeService.deleteOne(form.getWorkTimeId());
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "redirect:/contract/{contractId}/{yearMonth}";
 	}

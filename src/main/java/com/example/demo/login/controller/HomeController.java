@@ -115,6 +115,7 @@ public class HomeController {
 		model.addAttribute("lastWeekDay", lastWeekDay);
 		model.addAttribute("deadline", deadline);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/home";
 	}
