@@ -7,7 +7,7 @@
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	<title>ChangeEmail</title>
+	<title>メールアドレス変更画面</title>
 </head>
 <body>
 	
@@ -16,48 +16,38 @@
 	<br><br>
 	<div class="text-center">
 		<form method="post" th:action="@{/changeEmail}" th:object="${changeEmailForm}">
-			
-			<div class="container">
-				<h1>メールアドレス変更画面</h1>
+			<h1>メールアドレス変更画面</h1>
+			<br><br>
+			<div class="jumbotron">
+				<label>現在登録されているメールアドレス</label><br>
+				<label th:text="${user.email}"></label>
+			</div>
+			<div class="newEmail">
+				<label>新しいメールアドレスの入力</label><br>
+				<input type="text" th:field="*{newEmail}" class="form-control" name="newEmail">
+			</div>
+			<div class="newConfirmEmail">
+				<label>新しいメールアドレスの確認</label><br>
+				<input type="text" th:field="*{newConfirmEmail}" class="form-control" name="newConfirmEmail">
+				<div th:each="error:${#fields.detailedErrors()}">
+					<span th:text="${error.message}">Error message</span>
+				</div>
 				<br>
-				<div class="col-sm-5 jumbotron">
-					<label>現在登録されているメールアドレス</label>
-					<h4 th:text="${user.email}"></h4>
-				</div>
-				<div class="col-sm-3">
-					<label>新しいメールアドレスの入力</label>
-					<input type="text" th:field="*{newEmail}" name="newEmail">
-					<br></br>
-				</div>
-				<div class="col-sm-3">
-					<label>新しいメールアドレスの確認</label>
-					<input type="text" th:field="*{newConfirmEmail}" name="newConfirmEmail">
-					<br>
-					<div th:each="error:${#fields.detailedErrors()}">
-						<span th:text="${error.message}">Error message</span>
-					</div>
-					<br>
-				</div>
 			</div>
-			<div class="container">
-				<div class="row mb-5">
-					<div class="col-2">
-						<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
-					</div>
-				</div>
-			</div>
+			<br>
+			<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
 			<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">変更確認画面</h4>
+							<h2 class="modal-title" id="myModalLabel">変更確認画面</h2>
 						</div>
 						<div class="modal-body">
 							<label>本当にメールアドレスを変更しますか？</label>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-danger">変更する</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+							<button type="submit" class="btn btn-primary  modalBtn">変更する</button>
+							<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">閉じる</button>
 						</div>
 					</div>
 				</div>
