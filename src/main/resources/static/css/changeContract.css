@@ -1,5 +1,53 @@
 html body{
   height: 100%;
   margin: 0;
-  background-color:#D4D9D2;
+  background-color:#EFF1F3;
+}
+
+.form-control {   
+    height: 60px !important;
+    font-size: 24px !important;
+    width: 50% !important;
+    margin: auto !important;
+    text-align: center !important;
+}
+
+label {
+    font-size: 24px !important;
+    letter-spacing: 5px;
+}
+
+.entryBtn {
+    width: 300px !important;
+    height: 40px !important;
+    margin: auto !important;
+}
+
+.text-center{	
+    margin-top: 100px !important;	
+}
+
+p{
+	font-size: 24px !important;
+	margin-top: 10px !important;
+}
+
+.modal-header{
+	font-size: 24px !important;
+}
+
+.modal-footer{
+	text-align: center;
+	justify-content: space-evenly;
+    display: flex;
+}
+
+.modal-dialog{
+	margin: 200px auto !important;
+}
+
+.modalBtn{
+	margin: auto !important;
+	font-size: 18px !important;
+	width: 200px !important;
 }
