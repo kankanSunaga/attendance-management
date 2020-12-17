@@ -15,14 +15,7 @@
 		<div class="container-fluid">
 			<a href="/home"><img class="logo" th:src="${logo}"></a>
 			<div class="dropdown pull-right">
-				<img class="userIcon" th:src="${base64}">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					<div id="humberger">
-						<div></div>
-						<div></div>
-						<div></div>
-					</div>
-				</button>
+				<img class="userIcon" th:src="${base64}" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					<li><a href="/changeUserIcon">プロフィール画像の変更</a></li>
 					<li><a href="/changeEmail">メールアドレスの変更</a></li>
