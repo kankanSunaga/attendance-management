@@ -60,6 +60,7 @@ public class HamburgerMenuController {
 		int userId = sessionUtil.getUserId(request);
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeUserIcon";
 	}
@@ -74,7 +75,9 @@ public class HamburgerMenuController {
 		}
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 		model.addAttribute("updateStatus", userIconService.setImage(form.getFile(), userId));
+		
 
 		return "login/changeUserIcon";
 	}
@@ -86,6 +89,7 @@ public class HamburgerMenuController {
 
 		model.addAttribute("user", userService.selectOne(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changePassword";
 
@@ -103,6 +107,7 @@ public class HamburgerMenuController {
 
 		model.addAttribute("status", userService.updatePassword(userId, form.getPassword(), form.getNewPassword()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changePassword";
 
@@ -115,6 +120,7 @@ public class HamburgerMenuController {
 
 		model.addAttribute("user", userService.selectOne(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeEmail";
 
@@ -134,6 +140,7 @@ public class HamburgerMenuController {
 		userService.updateEmail(userService.setNewEmail(user, form));
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "redirect:/changeEmail";
 
@@ -148,6 +155,7 @@ public class HamburgerMenuController {
 
 		model.addAttribute("ChangeContractTimeForm", form);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeContractTime";
 
@@ -166,6 +174,7 @@ public class HamburgerMenuController {
 		Contract updateContractTime = contractService.setUpdateContractTime(form, userId);
 		model.addAttribute("status", contractService.updateContract(updateContractTime));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeContractTime";
 
@@ -178,17 +187,20 @@ public class HamburgerMenuController {
 
 		model.addAttribute("contract", contractService.underContract(userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/changeContract";
 	}
 
 	@PostMapping("/changeContract")
-	public String postChangeContract(ContractForm form, Model model) {
+	public String postChangeContract(ContractForm form, Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
 
 		Contract contract = contractService.underContract(userId);
 		contractService.updateEndDate(contractService.setEndDate(contract, form));
+		model.addAttribute("base64", userIconService.uploadImage(userId));
+		model.addAttribute("logo", userIconService.uploadLogoImage());
 
 		return "login/contract";
 	}
