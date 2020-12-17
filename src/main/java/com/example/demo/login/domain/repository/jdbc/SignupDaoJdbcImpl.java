@@ -12,14 +12,13 @@ import com.example.demo.login.domain.repository.SignupDao;
 
 @Repository
 public class SignupDaoJdbcImpl implements SignupDao {
-	
+
 	@Autowired
 	JdbcTemplate jdbc;
 
 	public boolean hasExist(User user) {
-		List<Map<String, Object>> getList = jdbc.queryForList(
-				"SELECT * FROM user WHERE email=?", user.getEmail());
-		
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE email=?", user.getEmail());
+
 		return getList.isEmpty();
 	}
 }

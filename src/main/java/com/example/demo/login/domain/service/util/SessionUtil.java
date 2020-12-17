@@ -11,7 +11,7 @@ public class SessionUtil {
 	public int getUserId(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int userId = (int) session.getAttribute("userId");
-		
+
 		return userId;
 	}
 }

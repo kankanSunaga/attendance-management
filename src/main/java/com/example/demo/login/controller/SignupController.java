@@ -22,7 +22,7 @@ public class SignupController {
 	SignupService signupService;
 
 	@GetMapping("/signup")
-	public String getSignup(@ModelAttribute SignupForm form, Model model) {
+	public String getSignup(@ModelAttribute SignupForm form) {
 
 		return "login/signup";
 	}
@@ -32,15 +32,13 @@ public class SignupController {
 
 		if (bindingResult.hasErrors()) {
 
-			return getSignup(form, model);
+			return getSignup(form);
 		}
 
-		boolean useEmail = false;
 		if (signupService.hasExist(signupService.setUser(form))) {
 			userService.insert(signupService.setUser(form));
 		} else {
-			useEmail = true;
-			model.addAttribute("useEmail", useEmail);
+			model.addAttribute("useEmail", true);
 
 			return "login/signup";
 		}
