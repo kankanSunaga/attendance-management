@@ -1,3 +1,17 @@
-body h3 {
-	margin: 100px 0 100px 0;
+h1 {
+	margin: 100px 0 100px 0 !important;
+	font-weight: 600 !important;
+}
+
+html body {
+    height: 100%;
+    margin: 0;
+    background-color: #EFF1F3;
+}
+
+.btn-primary {
+    width: 300px !important;
+    height: 40px !important;
+    margin: auto !important;
+    padding-top: 9px !important;
 }
