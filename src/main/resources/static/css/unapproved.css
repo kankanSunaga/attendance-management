@@ -4,14 +4,14 @@ h1 {
 }
 
 html body {
-    height: 100%;
-    margin: 0;
-    background-color: #EFF1F3;
+	height: 100%;
+	margin: 0;
+	background-color: #EFF1F3;
 }
 
 .btn-primary {
-    width: 300px !important;
-    height: 40px !important;
-    margin: auto !important;
-    padding-top: 9px !important;
+	width: 300px !important;
+	height: 40px !important;
+	margin: auto !important;
+	padding-top: 9px !important;
 }
