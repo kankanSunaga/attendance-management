@@ -39,11 +39,9 @@
 				<input type="text" name="officeName" placeholder="株式会社　Company slave" class="form-control" th:field="*{officeName}" required/>
 			</div>
 			<br/>
-			<ul>
-				<li th:each="error:${#fields.detailedErrors()}">
+				<div th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>
-				</li>
-			</ul>
+				</div>
 			<button class="btn btn-primary" type="submit">保存</button>
 		</div>
 	</form>
