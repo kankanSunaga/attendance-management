@@ -6,57 +6,43 @@
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	<title>Contract</title>
+	<title>契約詳細情報登録</title>
 </head>
 <body>
 	<form method="post" th:action="@{/contract}" th:object="${contractForm}">
-		<div class="container text-center">
-			<!-- 契約勤務時間 -->
-			<div class="col-sm-2">
-				<label>契約勤務時間</label>
-				<input type="number" name="contractTime" value="0" min="0" max="720" step="1" class="form-control" th:field="*{contractTime}" required/>時間
+		<div class="text-center">
+			<h1>契約詳細情報の登録</h1>
+			<br>
+			<div class="contractTime">
+				<label>契約勤務時間</label><br/>
+				<input type="number" name="contractTime" value="0" min="0" max="720" step="1" class="form-control pL22" th:field="*{contractTime}" required/>
+				<label>時間</label>
 			</div>
-			<br/>
-			<!-- 想定始業時間 -->
-			<div class="col-sm-2">
-				<label class="space">想定始業時間</label>
-				<input type="time" name="startTime" class="form-control" th:field="*{startTime}" required/>
+			<div class="startTime">
+				<label class="space">想定始業時間</label><br/>
+				<input type="time" name="startTime" class="form-control pL56" th:field="*{startTime}" required/>
+			</div>		
+			<div class="breakTime">
+				<label class="space">想定休憩時間</label><br/>
+				<input type="time" name="breakTime" class="form-control pL56" th:field="*{breakTime}" required/>
+			</div>	
+			<div class="endTime">
+				<label class="space">想定退勤時間</label><br/>
+				<input type="time" name="endTime" class="form-control pL56" th:field="*{endTime}" required/>
 			</div>
-			<br/>
-			<!-- 想定休憩時間(分で入力) -->
-			<div class="col-sm-2">
-				<label class="space">想定休憩時間</label>
-				<input type="time" name="breakTime" class="form-control" th:field="*{breakTime}" required/>
+			<div class="startDate">
+				<label class="space">勤務開始日</label><br/>
+				<input type="date" name="startDate" class="form-control pL56" th:field="*{startDate}" required/>
 			</div>
-			<br/>
-			<!-- 想定退勤時間 -->
-			<div class="col-sm-2">
-				<label class="space">想定退勤時間</label>
-				<input type="time" name="endTime" class="form-control" th:field="*{endTime}" required/>
-			</div>
-			<br/>
-			<!-- 勤務開始日(カレンダー選択)-->
-			<div class="col-sm-2">
-				<label class="space">勤務開始日</label><br />
-				<input type="date" name="startDate" class="form-control" th:field="*{startDate}" required/>
-			</div>
-			<br/>
-			<!-- 勤務先会社名 -->
-			<div class="col-sm-2">
+			<div class="officeName">
 				<label class="space">勤務先会社名</label>
-				<input type="text" name="officeName" placeholder="株式会社コスモシステムズ" class="form-control" th:field="*{officeName}" required/>
+				<input type="text" name="officeName" placeholder="株式会社　Company slave" class="form-control" th:field="*{officeName}" required/>
 			</div>
 			<br/>
-			<!-- エラーメッセージの表示 -->
-			<ul>
-				<li th:each="error:${#fields.detailedErrors()}">
+				<div th:each="error:${#fields.detailedErrors()}">
 					<span th:text="${error.message}">Error message</span>
-				</li>
-			</ul>
-			<!-- 保存ボタン -->
-			<div class="col-sm-4">
-				<button class="btn btn-primary" type="submit">保存</button>
-			</div>
+				</div>
+			<button class="btn btn-primary" type="submit">保存</button>
 		</div>
 	</form>
 	<br/>
