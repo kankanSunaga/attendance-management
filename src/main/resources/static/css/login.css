@@ -1,3 +1,47 @@
-body h1 {
-	margin-bottom: 20px; 
+h1 {
+    margin-bottom: 40px !important;
+    margin-top: 40px !important;
+    font-size: 70px !important;
+	
+}
+
+html body {
+    height: 100%;
+    margin: 0;
+    background-color: #EFF1F3;
+}
+
+.btn-primary {
+    width: 300px !important;
+    height: 40px !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.form-control {   
+    height: 60px !important;
+    font-size: 30px !important;
+    width: 50% !important;
+    margin: auto !important;
+    text-align: center !important;
+}
+
+label {
+    font-size: 24px !important;
+    letter-spacing: 2px;
+}
+
+a{
+	font-size: 20px;
+}
+
+p{
+    margin-bottom: 12px !important;
+	
+}
+
+.message{
+	font-size: 20px !important;
+    margin-bottom: 5px !important;
+    margin-top: 5px !important;
 }
