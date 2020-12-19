@@ -4,6 +4,7 @@
 	<meta charset="UTF-8"></meta>
 	<!-- CSSの読み込み -->
 	<link th:href="@{/css/adminHome.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/AdminHeader.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>	
@@ -11,16 +12,7 @@
 </head>
 <body>
 	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">サービス名</a>
-			</div>
-			<div class="pull-right">
-			<button type="button" class="btn btn-success">管理ユーザー</button>		
-			</div>	
-		</div>
-	</nav>
+	<div th:replace="admin/adminHeader.html :: adminHeader"></div>
 	<br><br>
 	<br><br>
 	<!-- コンテンツ -->

@@ -2,15 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<!-- CSSの読み込み -->
-	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/AdminHeader.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	<title>勤務情報変更申請者の一覧</title>
 </head>
 <body>
-	<div th:replace="login/headerLayout.html :: header"></div>
+	<div th:replace="admin/adminHeader.html :: adminHeader"></div>
+	<br><br>
+	<br><br>
 		<div class="container" >
 			<table class="table">
 				<thead class="thead-dark">
