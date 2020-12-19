@@ -28,8 +28,7 @@ public class SessionController {
 	ContractService contractService;
 
 	@RequestMapping("/session")
-	public void getSession(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void getSession(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -39,9 +38,13 @@ public class SessionController {
 		session.setAttribute("userId", user.getUserId());
 
 		if (contractService.hasBeenContract(user.getUserId())) {
-			response.sendRedirect("/home");
+			if (userService.selectOne(user.getUserId()).getRole().equals("ROLE_GENERAL")) {
+				response.sendRedirect("/home");
+			} else {
+				response.sendRedirect("/contract");
+			}
 		} else {
-			response.sendRedirect("/contract");
+			response.sendRedirect("/adminHome");
 		}
 	}
 }
