@@ -29,10 +29,12 @@ public class ContractService {
 	DateTimeUtil dateTimeUtilityService;
 
 	public void insertOne(Contract contract) {
+
 		dao.insertOne(contract);
 	}
 
 	public Contract setInsertOne(ContractForm form, int userId) {
+
 		Contract contract = new Contract();
 		contract.setContractTime(form.getContractTime());
 		contract.setStartTime(form.getStartTime());
@@ -46,26 +48,31 @@ public class ContractService {
 	}
 
 	public Contract activeSelectOne(int contractId) {
+
 		return dao.activeSelectOne(contractId);
 	}
 
 	public List<Contract> selectMany(int userId) {
+
 		return dao.selectMany(userId);
 	}
 
 	public boolean hasBeenContract(int userId) {
+
 		List<Contract> list = dao.selectByUserId(userId);
 
 		return list.size() >= 1;
 	}
 
 	public Contract latestContract(int userId) {
+
 		return dao.latestContract(userId);
 	}
 
 	public String selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
-		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
-		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
+
+		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
+		boolean requestStatus = monthService.selectMonthTable(contractId, yearMonth).isRequestStatus();
 
 		LocalDate lastMonth = nowDate.minusMonths(1);
 		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");
@@ -84,14 +91,13 @@ public class ContractService {
 		return status;
 	}
 
-	public Contract underContract(int userId) {
-		LocalDate today = LocalDate.now();
+	public Contract underContract(int userId, LocalDate nowDate) {
 
-		return dao.underContract(userId, today);
+		return dao.underContract(userId, nowDate);
 	}
 
-	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
-		Contract contract = underContract(userId);
+	public Contract setOldContractTime(int userId, Contract contract, ChangeContractTimeForm form) {
+
 		form.setNewContractTime(contract.getContractTime());
 		form.setNewStartTime(contract.getStartTime());
 		form.setNewBreakTime(contract.getBreakTime());
@@ -101,6 +107,7 @@ public class ContractService {
 	}
 
 	public Contract setUpdateContractTime(ChangeContractTimeForm form, int userId) {
+
 		Contract contract = new Contract();
 		contract.setUserId(userId);
 		contract.setContractTime(form.getNewContractTime());
@@ -122,10 +129,12 @@ public class ContractService {
 	}
 
 	public void updateEndDate(Contract contract) {
+
 		dao.updateEndDate(contract);
 	}
 
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
+
 		Contract contract = contractService.latestContract(userId);
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
@@ -135,6 +144,7 @@ public class ContractService {
 	}
 
 	public Contract setEndDate(Contract contract, ContractForm form) {
+
 		contract.setEndDate(form.getEndDate());
 
 		return contract;

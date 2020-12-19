@@ -1,6 +1,7 @@
 package com.example.demo.login.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -151,7 +152,8 @@ public class HamburgerMenuController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		contractService.setOldContractTime(form, userId);
+		Contract underContract = contractService.underContract(userId, LocalDate.now());
+		contractService.setOldContractTime(userId, underContract, form);
 
 		model.addAttribute("ChangeContractTimeForm", form);
 		model.addAttribute("base64", userIconService.uploadImage(userId));
@@ -185,7 +187,7 @@ public class HamburgerMenuController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		model.addAttribute("contract", contractService.underContract(userId));
+		model.addAttribute("contract", contractService.underContract(userId, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 		model.addAttribute("logo", userIconService.uploadLogoImage());
 
@@ -197,8 +199,8 @@ public class HamburgerMenuController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		Contract contract = contractService.underContract(userId);
-		contractService.updateEndDate(contractService.setEndDate(contract, form));
+		Contract underContract = contractService.underContract(userId, LocalDate.now());
+		contractService.updateEndDate(contractService.setEndDate(underContract, form));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 		model.addAttribute("logo", userIconService.uploadLogoImage());
 

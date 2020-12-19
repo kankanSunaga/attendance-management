@@ -4,24 +4,47 @@ html body{
 
 .jumbotron{
 	background-color:#F2F2F0;
-	
+	padding: 50px 100px !important;
+	margin-bottom: 0px !important;
 }
 
-.text-center {
-    transform: scale(1.2, 1.2);
-    margin-top :100px;
+.btn-primary {	
+	width: 200px;
+	margin-top: 20px !important;
 }
 
-.btn-primary{	
-    margin-top: 0px;
-    margin-left: 0px;
-	
-}
-
-label {
+.jumbotron label {
 	font-size: 20px;
 }
 
 .container{
-	transform: scale(1.2,1.2);
+	transform: scale(1.2, 1.2);
+}
+
+.nowDate {
+	margin-top: 100px;
+	margin-bottom: 25px !important;
+}
+
+.officeName {
+	margin-left: -45px !important;
+	margin-bottom: 10px;
+}
+
+.quota {
+	margin-left: -45px !important;
+	margin-bottom: 10px;
+}
+
+.execution {
+	margin-left: -25px !important;
+}
+
+.nowDate {
+	text-size: 500px !important;
+	margin-bottom: 5px;
+}
+
+.button {
+	margin-top: 25px;
 }

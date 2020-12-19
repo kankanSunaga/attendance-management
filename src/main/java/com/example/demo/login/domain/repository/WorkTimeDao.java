@@ -9,23 +9,17 @@ import com.example.demo.login.domain.model.WorkTime;
 
 public interface WorkTimeDao {
 
-	// userテーブルにデータを1件insert
 	public void insertOne(WorkTime workTime) throws DataAccessException;
-	
+
 	public void updateOne(WorkTime workTime) throws DataAccessException;
 
-	// workTimeテーブルから今月のデータを取得
 	public List<WorkTime> selectMonthData(int userId) throws DataAccessException;
 
-	// workTimeテーブルから月のデータを全件取得
 	public List<WorkTime> selectMany(int contractId) throws DataAccessException;
 
-	// workTimeテーブルから月のデータを全件取得（範囲検索）
 	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) throws DataAccessException;
 
-	
 	public void deleteOne(int workTimeId) throws DataAccessException;
-
 
 	public boolean hasExist(WorkTime workTime) throws DataAccessException;
 }

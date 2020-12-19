@@ -128,9 +128,7 @@ public class ContractListController {
 	public String changeRequestStatus(@PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) {
 
-		int userId = sessionUtil.getUserId(request);
-
-		Month month = monthService.selectMonthTable(userId, contractId, yearMonth);
+		Month month = monthService.selectMonthTable(contractId, yearMonth);
 		monthService.update(monthService.changeRequest(month));
 
 		return "redirect:/contract/{contractId}/{yearMonth}";
