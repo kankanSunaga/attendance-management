@@ -38,11 +38,11 @@ public class SessionController {
 		session.setAttribute("userId", user.getUserId());
 
 		if (contractService.hasBeenContract(user.getUserId())) {
-				response.sendRedirect("/home");
-			} else if (userService.selectOne(user.getUserId()).getRole().equals("ROLE_GENERAL")){
-				response.sendRedirect("/contract");
-			} else {
-				response.sendRedirect("/adminHome");
-			}
+			response.sendRedirect("/home");
+		} else if (userService.selectOne(user.getUserId()).getRole().equals("ROLE_GENERAL")){
+			response.sendRedirect("/contract");
+		} else {
+			response.sendRedirect("/adminHome");
+		}
 	}
 }
