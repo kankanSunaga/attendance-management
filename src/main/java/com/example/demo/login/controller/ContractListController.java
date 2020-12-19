@@ -102,7 +102,7 @@ public class ContractListController {
 		model.addAttribute("yearMonth", dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月"));
 		model.addAttribute("yearMonthUrl", yearMonth);
 		model.addAttribute("workTimes", workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay));
-		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now()));
+		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, contractId, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 		model.addAttribute("logo", userIconService.uploadLogoImage());
 		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));

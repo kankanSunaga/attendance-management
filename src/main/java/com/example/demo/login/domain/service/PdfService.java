@@ -96,7 +96,6 @@ public class PdfService {
 		response.setHeader("Pragma", "");
 
 		try (OutputStream out = response.getOutputStream()) {
-			// Files.readAllBytes() 引数:path, 戻り値:byte
 			byte[] bytes = Files.readAllBytes(data);
 			out.write(bytes);
 			out.flush();
@@ -107,17 +106,12 @@ public class PdfService {
 	}
 
 	public TemplateEngine initializeTemplateEngine() {
-		// エンジンをインスタンス化
+
 		final TemplateEngine templateEngine = new TemplateEngine();
-		// テンプレート解決子をインスタンス化（今回はクラスパスからテンプレートをロードする）
 		final ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-		// テンプレートモードはXHTML
 		resolver.setTemplateMode("XHTML");
-		// クラスパスのtemplatesディレクトリ配下にテンプレートファイルを置くことにする
 		resolver.setPrefix("templates/");
-		// テンプレートの拡張子はhtml
 		resolver.setSuffix(".html");
-		// テンプレート解決子をエンジンに設定
 		templateEngine.setTemplateResolver(resolver);
 
 		return templateEngine;
@@ -129,13 +123,9 @@ public class PdfService {
 		final IContext ctx = new Context();
 		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
 
-		// 空のカレンダー作成
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
-		// 空のカレンダーにデータを追加
-		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId,
-				yearMonth);
+		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
 
-		// PDFに書き込む用のデータ
 		((Context) ctx).setVariable("userName", userService.selectOne(userId).getUserName());
 		((Context) ctx).setVariable("weekFormatter", DateTimeFormatter.ofPattern("E", Locale.JAPANESE));
 		((Context) ctx).setVariable("dayOfWeekService", dayOfWeekService);

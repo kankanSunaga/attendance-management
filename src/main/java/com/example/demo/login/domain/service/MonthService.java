@@ -92,7 +92,6 @@ public class MonthService {
 		int contractId = contractService.latestContract(userId).getContractId();
 
 		Month monthData = new Month();
-
 		monthData.setYear(year);
 		monthData.setMonth(month);
 		monthData.setDeadlineStatus(false);

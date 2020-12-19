@@ -19,34 +19,42 @@ public class UserService {
 	PasswordEncoder passwordEncoder;
 
 	public void insert(User user) {
+
 		dao.insertOne(user);
 	}
 
 	public int countPermission() {
+
 		return dao.countPermission();
 	}
 
 	public List<User> selectPermission() {
+
 		return dao.selectPermission();
 	}
 
 	public User selectOne(int userId) {
+
 		return dao.selectOne(userId);
 	}
 
 	public void updatePermission(int userId) {
+
 		dao.updatePermission(userId);
 	}
 
 	public void updateFrozen(int userId) {
+
 		dao.updateFrozen(userId);
 	}
 
 	public User selectByEmail(String email) {
+
 		return dao.selectByEmail(email);
 	}
 
 	public int updateEmail(User user) {
+
 		return dao.updateEmail(user);
 	}
 
@@ -64,6 +72,7 @@ public class UserService {
 	}
 
 	public User setNewEmail(User user, ChangeEmailForm form) {
+
 		user.setEmail(form.getNewEmail());
 
 		return user;

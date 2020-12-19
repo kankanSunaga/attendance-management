@@ -69,7 +69,7 @@ public class ContractService {
 		return dao.latestContract(userId);
 	}
 
-	public String selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
+	public String selectDisplay(String yearMonth, int contractId, LocalDate nowDate) {
 
 		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
 		boolean requestStatus = monthService.selectMonthTable(contractId, yearMonth).isRequestStatus();
