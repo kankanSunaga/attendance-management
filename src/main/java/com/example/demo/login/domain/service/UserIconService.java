@@ -30,7 +30,6 @@ public class UserIconService {
 	public boolean setImage(MultipartFile file, int userId) throws IOException {
 
 		Path path = Paths.get("image");
-
 		if (Files.notExists(path)) {
 			try {
 				Files.createDirectory(path);
@@ -83,5 +82,22 @@ public class UserIconService {
 		} else {
 			return path;
 		}
+	}
+ 
+	public String uploadLogoImage() throws IOException {
+
+		Path path = Paths.get("image", "logo.jpg");
+
+		byte[] byteData = Files.readAllBytes(pathExists(path));
+
+		Charset charset = StandardCharsets.UTF_8;
+		byte[] a = Base64.getEncoder().encode(byteData);
+		String base64 = new String(a, charset);
+
+		StringBuffer data = new StringBuffer();
+		data.append("data:image/jpeg;base64,");
+		data.append(base64);
+
+		return data.toString();
 	}
 }

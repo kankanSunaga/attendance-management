@@ -24,47 +24,30 @@ public class UserDaoJdbcImpl implements UserDao {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	// Userテーブルにデータを1件insert
-	@Override
 	public int insertOne(User user) throws DataAccessException {
-
-		// パスワードを暗号化
 		String password = passwordEncoder.encode(user.getPassword());
 
-		// １件登録
-		int rowNumber = jdbc.update("INSERT INTO user(" + " userName," + " email," + " password," + " role," + " permission," + " frozen)"
-						+ " VALUES(?, ?, ?, ?, ?, ?)",
-				// 申請日時の登録処理追記してください
+		int rowNumber = jdbc.update(
+				"INSERT INTO user(userName, email, password, role, permission, frozen)"
+				+ " VALUES(?, ?, ?, ?, ?, ?)",
 				user.getUserName(), user.getEmail(), password, user.getRole(), user.isPermission(), user.isFrozen());
-		// 申請日時の登録処理追記してください
 
 		return rowNumber;
 	}
 
-	// Userテーブルから未承認の数を取得
-	@Override
 	public int countPermission() throws DataAccessException {
-
-		// 未承認の数を取得
-		int countPermission = jdbc.queryForObject("SELECT COUNT(*) FROM user WHERE permission　='FALSE'　and frozen = 'FALSE'", Integer.class);
+		int countPermission = jdbc.queryForObject("SELECT COUNT(*) FROM user"
+				+ "	WHERE permission　='FALSE'　and frozen = 'FALSE'", Integer.class);
 
 		return countPermission;
 	}
 
-	// Userテーブルから未承認データを取得する
 	public List<User> selectPermission() throws DataAccessException {
-
-		// DBから未承認のユーザーデータを取得
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user WHERE permission　= 'FALSE' and frozen = 'FALSE'");
 
-		// 結果返却用の変数
 		List<User> userList = new ArrayList<>();
-
-		// 取得データを返却用の変数
 		for (Map<String, Object> map : getList) {
 			User user = new User();
-
-			// 作成したインスタンスにデータをセット
 			user.setUserId((int) map.get("UserId"));
 			user.setUserName((String) map.get("UserName"));
 			user.setEmail((String) map.get("Email"));
@@ -74,24 +57,15 @@ public class UserDaoJdbcImpl implements UserDao {
 			user.setFrozen((boolean) map.get("Frozen"));
 			user.setRequestedAt((String) map.get("RequestedAt"));
 
-			// 結果返却用のListに追加
 			userList.add(user);
 		}
-
 		return userList;
-
 	}
 
-	// Userテーブルから未承認ユーザー１件取得
 	public User selectOne(int userId) throws DataAccessException {
-
-		// １件取得
 		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM user WHERE userId= ?", userId);
 
-		// 結果返却用の変数
 		User user = new User();
-
-		// 取得したデータ結果返却用の変数にセットしていく
 		user.setUserId((int) map.get("UserId"));
 		user.setUserName((String) map.get("UserName"));
 		user.setEmail((String) map.get("Email"));
@@ -104,28 +78,18 @@ public class UserDaoJdbcImpl implements UserDao {
 		return user;
 	}
 
-	// Userテーブルの承認ステータス 未承認→承認に変更
-	@Override
-	public int updatePermission(User user) throws DataAccessException {
-		int rowNumber = jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?", user.getUserId());
-		return rowNumber;
+	public void updatePermission(int userId) throws DataAccessException {
+		jdbc.update("UPDATE user SET permission = 'TRUE' WHERE userId= ?", userId);
 	}
 
-	// Userテーブルの凍結ステータス 利用中→利用不可に変更
-	public int updateFrozen(User user) throws DataAccessException {
-		int rowNumber = jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?", user.getUserId());
-		return rowNumber;
+	public void updateFrozen(int userId) throws DataAccessException {
+		jdbc.update("UPDATE user SET frozen = 'TRUE' WHERE userId= ?", userId);
 	}
 
-	// userテーブルからemailをキーにuserIdを取得する
-	@Override
 	public User selectByEmail(String email) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM user WHERE email= ?", email);
 
-		// 変数を格納するインスタンスの生成
 		User user = new User();
-
-		// インスタンスに取得した値をセットする
 		user.setUserId((int) map.get("UserId"));
 		user.setUserName((String) map.get("UserName"));
 		user.setEmail((String) map.get("Email"));
@@ -137,31 +101,28 @@ public class UserDaoJdbcImpl implements UserDao {
 
 		return user;
 	}
-	
-	@Override
+
 	public int updateEmail(User user) throws DataAccessException {
 		int statusNumber = jdbc.update("UPDATE user SET email = ? WHERE userId = ?", user.getEmail(), user.getUserId());
+
 		return statusNumber;
 	}
-	
-	@Override
+
 	public int updatePassword(User user, String newPassword) throws DataAccessException {
 		String password = passwordEncoder.encode(newPassword);
 		int statusNumber = jdbc.update("UPDATE user SET password = ? WHERE userId = ?", password, user.getUserId());
-		return statusNumber;
-		
-	}
-	
-	@Override
-	public Optional<User> findByEmail(String email) throws DataAccessException {
 
+		return statusNumber;
+	}
+
+	public Optional<User> findByEmail(String email) throws DataAccessException {
 		Map<String, Object> map;
 		try {
 			map = jdbc.queryForMap("SELECT * FROM user WHERE email= ?", email);
-		} catch (EmptyResultDataAccessException ignored){
+		} catch (EmptyResultDataAccessException ignored) {
 			return Optional.empty();
 		}
-		
+
 		User user = new User();
 		user.setUserId((int) map.get("UserId"));
 		user.setUserName((String) map.get("UserName"));
@@ -174,5 +135,4 @@ public class UserDaoJdbcImpl implements UserDao {
 
 		return Optional.of(user);
 	}
-	
 }

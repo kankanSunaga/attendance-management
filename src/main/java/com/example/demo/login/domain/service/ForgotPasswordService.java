@@ -14,27 +14,26 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.login.domain.repository.UserDao;
 
-
 @Service
 public class ForgotPasswordService {
-	
+
 	@Autowired
 	MailSender mailSender;
-	
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Async
 	public void sendMail(String email) throws IOException {
-		
+
 		boolean existEmail = userDao.findByEmail(email).isPresent();
-		
-		if(existEmail) {
+
+		if (existEmail) {
 			SimpleMailMessage msg = new SimpleMailMessage();
-		
+
 			msg.setTo(email);
 			msg.setBcc("attendancemanagement.system.2020@gmail.com");
-		
+
 			Path mailDir = Paths.get(new ClassPathResource("mail").getURI());
 			Path mailFile = mailDir.resolve("mail.txt");
 			String text = String.join("\n", Files.readAllLines(mailFile));
@@ -43,7 +42,5 @@ public class ForgotPasswordService {
 			msg.setText(text);
 			mailSender.send(msg);
 		}
-		
 	}
-	
 }

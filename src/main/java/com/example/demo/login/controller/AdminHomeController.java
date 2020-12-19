@@ -11,27 +11,25 @@ import com.example.demo.login.domain.service.UserService;
 
 @Controller
 public class AdminHomeController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MonthService monthService;
-	
+
 	@GetMapping("/adminHome")
 	public String getAdminHome(Model model) {
-		
-		int countPermission = userService.countPermission();
-		model.addAttribute("countPermission",countPermission);
-		
-		int ruquestUserCount = monthService.ruquestUserCount();
-		model.addAttribute("ruquestUserCount",ruquestUserCount);
+
+		model.addAttribute("countPermission", userService.countPermission());
+		model.addAttribute("ruquestUserCount", monthService.ruquestUserCount());
+
 		return "admin/adminHome";
 	}
 
 	@PostMapping("/adminHome")
 	public String postAdminHome(Model model) {
-		
+
 		return "admin/adminHome";
 	}
 }

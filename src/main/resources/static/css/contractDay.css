@@ -1,16 +1,25 @@
 .box{
-  height:450px;
+ 	height:450px;
 }
 .scroll{
-  overflow:scroll;
+ 	overflow:scroll;
 }
 
 .background {
-	background-color:#D3D3D3;
+	background-color:#D4D9D2;
 	
 }
 
 body{
+	background-color:#D4D9D2;
+}
+
+html {
+	height: 100%;
+	margin: 0;
+	background-color:#D4D9D2;
+}
+
+.table{
 	text-align: center;
-	background-color:#D3D3D3;
 }
