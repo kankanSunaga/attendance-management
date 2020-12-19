@@ -9,8 +9,11 @@ html body{
 }
 
 .btn-primary {	
-	width: 200px;
-	margin-top: 20px !important;
+	height: 40px;
+	width: 240px;
+	margin: 20px 10px 0 10px !important;
+	padding-top: 10px !important;
+	font-size: 14px !important;
 }
 
 .jumbotron label {
@@ -22,8 +25,8 @@ html body{
 }
 
 .nowDate {
-	margin-top: 100px;
-	margin-bottom: 25px !important;
+	margin-top: 90px;
+	margin-bottom: 35px !important;
 }
 
 .officeName {
@@ -40,11 +43,6 @@ html body{
 	margin-left: -25px !important;
 }
 
-.nowDate {
-	text-size: 500px !important;
-	margin-bottom: 5px;
-}
-
 .button {
-	margin-top: 25px;
+	margin-top: 30px;
 }
