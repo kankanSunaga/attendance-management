@@ -27,7 +27,6 @@ public class ApplyListController {
 	@Autowired
 	UserIconService userIconService;
 
-
 	@GetMapping("/applyList")
 	public String getApplyList(Model model) throws IOException {
 
