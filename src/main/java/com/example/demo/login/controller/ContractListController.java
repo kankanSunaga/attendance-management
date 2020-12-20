@@ -102,7 +102,7 @@ public class ContractListController {
 		model.addAttribute("yearMonth", dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月"));
 		model.addAttribute("yearMonthUrl", yearMonth);
 		model.addAttribute("workTimes", workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay));
-		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, userId, contractId, LocalDate.now()));
+		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, contractId, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 		model.addAttribute("logo", userIconService.uploadLogoImage());
 		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));
@@ -128,9 +128,7 @@ public class ContractListController {
 	public String changeRequestStatus(@PathVariable("contractId") int contractId,
 			@PathVariable("yearMonth") String yearMonth) {
 
-		int userId = sessionUtil.getUserId(request);
-
-		Month month = monthService.selectMonthTable(userId, contractId, yearMonth);
+		Month month = monthService.selectMonthTable(contractId, yearMonth);
 		monthService.update(monthService.changeRequest(month));
 
 		return "redirect:/contract/{contractId}/{yearMonth}";

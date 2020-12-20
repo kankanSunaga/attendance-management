@@ -14,23 +14,24 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
-	<br>
-	<br>
-	<br>
-	<br>
 	<div class="container">
-		<div class="text-center">
-			<div class="jumbotron">
-				<label>日付：</label><label th:text="${today}"></label><br> <label>契約時間まであと：</label>
-				<!-- 達成したかどうかの分岐 -->
-				<label th:if="${remainingTimeInt gt 0 or remainingTimeDouble gt 0}"
-					th:text="${remainingTimeInt} + '時間' + ${remainingTimeDouble} + '分'"></label>
-				<label th:if="${remainingTimeInt le 0 and remainingTimeDouble le 0}">達成しました</label><br>
-				<label>今月の勤務時間：</label>
-				<label th:text="${totalWorkTimeInt} + '時間' + ${totalWorkTimeDouble} + '分'"></label>
+		<div class="nowDate">
+			<h2 th:text="${nowDate}"></h2>
+		</div>
+		<div class="jumbotron">
+			<div class="content officeName">
+				<label>現在契約中の会社：</label><label th:text="${officeName}"></label>
 			</div>
-			<a class="btn btn-primary" th:href="@{'/workTime'}">勤務時間登録</a><br><br>
-			<a class="btn btn-primary" th:href="@{'/contracts'}" target="_blank">勤務時間の詳細・変更</a>
+			<div class="content quota">
+				<label>最低稼働時間まで：</label><label th:text="${quota}"></label>
+			</div>
+			<div class="content execution">
+				<label>今月の稼働時間：</label><label th:text="${execution}"></label>
+			</div>
+		</div>
+		<div class="button">
+			<a class="btn btn-primary" th:href="@{'/workTime'}">今日の勤務時間登録</a>
+			<a class="btn btn-primary" th:href="@{'/contracts'}" target="_blank">過去の勤務時間詳細・変更</a>
 		</div>
 	</div>
 	<br>

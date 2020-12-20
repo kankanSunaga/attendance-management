@@ -1,6 +1,7 @@
 package com.example.demo.login.domain.service.util;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,5 +75,13 @@ public class DateTimeUtil {
 		}
 
 		return answer;
+	}
+
+	public String getTotalTime(int totalTime) {
+
+		int hour = totalTime / 60;
+		int minute = totalTime % 60;
+
+		return hour + "時間" + minute + "分";
 	}
 }

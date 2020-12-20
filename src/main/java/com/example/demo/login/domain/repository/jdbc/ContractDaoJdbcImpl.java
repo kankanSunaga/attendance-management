@@ -109,11 +109,11 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return latestContract;
 	}
 
-	public Contract underContract(int userId, LocalDate today) throws DataAccessException {
+	public Contract underContract(int userId, LocalDate nowDate) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 				+ " INNER JOIN contract ON user.userId = contract.userId"
-				+ " WHERE contract.startDate <= '" + today.toString() + "' AND" + " (contract.endDate >= '"
-				+ today.toString() + "' OR contract.endDate IS NOT NULL)" + " AND user.userId = ?", userId);
+				+ " WHERE contract.startDate <= '" + nowDate.toString() + "' AND" + " (contract.endDate >= '"
+				+ nowDate.toString() + "' OR contract.endDate IS NOT NULL)" + " AND user.userId = ?", userId);
 
 		Contract latestContract = new Contract();
 		latestContract.setContractId((int) map.get("contractId"));

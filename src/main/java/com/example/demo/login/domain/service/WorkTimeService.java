@@ -75,10 +75,12 @@ public class WorkTimeService {
 		if (form.isOverTimeFlag()) {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay().plusDays(1), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + overTimeMinute);
+
 		} else {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay(), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form));
 		}
+
 		return workTime;
 	}
 
@@ -92,9 +94,9 @@ public class WorkTimeService {
 		int loopCount = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		for (int i = 0; i < loopCount; i++) {
 			calendar.set(year, month - 1, day + i);
-			list.add(calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
-					+ calendar.get(Calendar.DATE));
+			list.add(calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.DATE));
 		}
+
 		return list;
 	}
 
@@ -115,6 +117,7 @@ public class WorkTimeService {
 		for (int i = 0; i < workTimesSize; i++) {
 			samMinute += workTimes.get(i).getWorkTimeMinute();
 		}
+
 		return samMinute;
 	}
 
@@ -134,11 +137,11 @@ public class WorkTimeService {
 			workTime.setWorkDay(date);
 			calender.put(stringDate, workTime);
 		}
+
 		return calender;
 	}
 
-	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId,
-			String yearMonth) {
+	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
 
 		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
@@ -147,6 +150,7 @@ public class WorkTimeService {
 		for (WorkTime workTime : workTimes) {
 			calender.put(workTime.getWorkDay().toString(), workTime);
 		}
+
 		return calender;
 	}
 
