@@ -19,3 +19,55 @@
 .inline-block_test{
 	display: inline-block;
 }
+
+html body{
+	background-color:#D4D9D2;
+}
+
+.jumbotron{
+	background-color:#F2F2F0;
+	padding: 50px 100px !important;
+	margin-bottom: 0px !important;
+	font-size: 20px !important;
+}
+
+.btn-primary,.btn-danger{	
+	height: 40px;
+	width: 240px;
+	margin: 40px 10px 15px 10px !important;
+	font-size: 14px !important;
+}
+
+label {
+	font-size: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+modal-header{
+	font-size: 24px !important;
+}
+
+.modal-footer{
+	text-align: center;
+	justify-content: space-evenly;
+    display: flex;
+}
+
+.modal-dialog{
+	margin: 200px auto !important;
+}
+
+.modalBtn{
+	margin: auto !important;
+	font-size: 18px !important;
+	width: 200px !important;
+}
+
+p {
+    font-size: 20px;
+}
+
+h2{
+    font-weight: 600 !important;
+}
