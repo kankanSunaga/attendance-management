@@ -52,7 +52,7 @@ modal-header{
 .modal-footer{
 	text-align: center;
 	justify-content: space-evenly;
-    display: flex;
+	display: flex;
 }
 
 .modal-dialog{
@@ -66,9 +66,9 @@ modal-header{
 }
 
 p {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 h2{
-    font-weight: 600 !important;
+	font-weight: 600 !important;
 }

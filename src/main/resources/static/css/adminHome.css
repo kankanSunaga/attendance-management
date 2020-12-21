@@ -28,9 +28,9 @@ label {
 .container{
 	transform: scale(1.2, 1.2);
 	display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
 }
 
 .button {
