@@ -141,13 +141,9 @@ public class WorkTimeService {
 		return calender;
 	}
 
-	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId, String yearMonth) {
+	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, List<WorkTime> workTimeMonth) {
 
-		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
-		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
-
-		List<WorkTime> workTimes = rangedSelectMany(contractId, minDay, maxDay);
-		for (WorkTime workTime : workTimes) {
+		for (WorkTime workTime : workTimeMonth) {
 			calender.put(workTime.getWorkDay().toString(), workTime);
 		}
 
