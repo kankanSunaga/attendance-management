@@ -7,7 +7,6 @@
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>	
-	
 	<title>新規登録申請者の詳細情報</title>
 </head>
 <body>
@@ -24,15 +23,12 @@
 					<label>申請日時:<span class="space"th:text="${user.requestedAt}"></span></label>					
 					<br>
 				</div>
-				<!-- 許可ボタン -->
-				<!-- 許可モーダルを開くボタン・リンク -->	   	
 				<div class="inline-block_test">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
 				</div>
 				<div class="inline-block_test">
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#refusalModal">拒否</button>
 				</div>	
-				<!-- 許可後に表示される画面の内容 -->
 				<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -50,7 +46,6 @@
 					</div>
 				</div>
 			</form>
-			<!-- 拒否後に表示される画面の内容 -->
 			<form method="post" th:action="@{/applyUserFrozen/{userId}(userId=${signupForm.userId})}">
 				<div class="modal fade" id="refusalModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
