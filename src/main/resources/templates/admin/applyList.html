@@ -14,23 +14,25 @@
 	<br><br>
 	<br><br>
 	<div th:fragment="admin_contents">
-		<div class="container" >
+		<div class="container">
+			<h1>新規登録申請者一覧</h1>
 			<table class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th>名前</th>
-			      <th>メールアドレス</th>
-			      <th>申請時間</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr th:each ="user : ${userList}">
-			      <th scope="row" th:text="${user.userName}"></th>
-			      <td th:text="${user.email}"></td>
-			      <td th:text="${user.requestedAt}"></td>
-			      <td ><a class="btn btn-primary" th:href="@{'/applyDetail/'+ ${user.userId}}">詳細</a></td>
-			    </tr>
-			  </tbody>
+				<thead>
+					<tr>
+						<th>名前</th>
+						<th>メールアドレス</th>
+						<th>申請時間</th>
+						<th></th>
+					</tr>
+			  	</thead>
+				<tbody>
+					<tr th:each ="user : ${userList}">
+						<td scope="row" th:text="${user.userName}"></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.requestedAt}"></td>
+						<td ><a class="btn btn-primary" th:href="@{'/applyDetail/'+ ${user.userId}}">詳細</a></td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>

@@ -7,64 +7,58 @@
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>	
-	
 	<title>新規登録申請者の詳細情報</title>
 </head>
 <body>
 	<div th:replace="admin/adminHeader.html :: adminHeader"></div>
 	<br><br>
-	<br><br>
 	<div class="container content text-center">
 		<div th:fragment="admin_contents">		        
 			<form method="post" th:action="@{/applyUserPermission/{userId}(userId=${signupForm.userId})}">
-				<p>名前<span class="space" th:text="${user.userName}"></span></p>
-				<br>
-				<p>メールアドレス<span class="space"th:text="${user.email}"></span></p>
-				<br>
-				<p>申請日時<span class="space"th:text="${user.requestedAt}"></span></p>					
-				<br>
-				<!-- 許可ボタン -->
-				<!-- 許可モーダルを開くボタン・リンク -->	   
-				<div class="row mb-5">
-					<div class="inline-block_test">
-					<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#permissionModal">許可</button>
-					</div>
-					<div class="inline-block_test">
-					<a class="btn btn-primary" data-toggle="modal" data-target="#refusalModal">拒否</a>
-					</div>
-				</div>			    
-				<!-- 許可後に表示される画面の内容 -->
+				<div class="jumbotron">
+					<label>名前:<span class="space" th:text="${user.userName}"></span></label>
+					<br>
+					<label>メールアドレス:<span class="space"th:text="${user.email}"></span></label>
+					<br>
+					<label>申請日時:<span class="space"th:text="${user.requestedAt}"></span></label>					
+					<br>
+				</div>
+				<div class="inline-block_test">
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">許可</button>
+				</div>
+				<div class="inline-block_test">
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#refusalModal">拒否</button>
+				</div>	
 				<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">許可確認画面</h4>
+								<h2 class="modal-title" id="myModalLabel">許可の確認</h2>
 							</div>
 							<div class="modal-body">
-								<label>申請を許可しますか？</label>
+								<p>申請を許可しますか？</p>
 							</div>
 		 					<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
-								<button type="submit" class="btn btn-danger">はい</button>
+								<button type="submit" class="btn btn-primary modalBtn">はい</button>
+								<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">いいえ</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
-			<!-- 拒否後に表示される画面の内容 -->
 			<form method="post" th:action="@{/applyUserFrozen/{userId}(userId=${signupForm.userId})}">
 				<div class="modal fade" id="refusalModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">拒否確認画面</h4>
+								<h2 class="modal-title" id="myModalLabel">拒否の確認</h2>
 							</div>
 							<div class="modal-body">
-								<label>２度とこのメールアドレスでは申請<br>できなくなるけど良いですか？</label>
+								<p>２度とこのメールアドレスでは申請<br>できなくなりますがよろしいですか？</p>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">いいえ</button>
-								<button type="submit" class="btn btn-danger">はい</button>
+								<button type="submit" class="btn btn-primary modalBtn">はい</button>
+								<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">いいえ</button>
 							</div>
 						</div>
 					</div>

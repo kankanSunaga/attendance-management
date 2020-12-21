@@ -1,0 +1,27 @@
+.btn-primary{	
+    margin-top: 0px;
+    margin-left: 0px;
+	
+}
+
+th{
+	font-size: 20px;
+}
+
+td {
+	font-size: 20px;
+}
+
+html body{
+	background-color:#EFF1F3;
+}
+
+.container{
+	background-color:white !important;
+	margin-top: 30px;
+}
+
+h1{
+	text-align: center;
+	font-weight: 600;
+}	

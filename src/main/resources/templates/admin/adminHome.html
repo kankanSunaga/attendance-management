@@ -14,15 +14,15 @@
 	<div th:replace="admin/adminHeader.html :: adminHeader"></div>
 	<br><br>
 	<br><br>
-	<div class="container" >
-		<div class="text-center" >
-			<div class="jumbotron">
-	    		<label th:text = "'アカウントの新規申請数 :  ' + ${countPermission}"></label>
+	<div class="container text-center">
+		<div class="jumbotron">
+	    		<label th:text = "'アカウントの新規申請数 :  ' + ${countPermission}  + '件'"></label>
 	    		<br>
-	    		<label th:text = "'勤務変更の申請数 :  ' + ${ruquestUserCount}"></label>
-	　　　	</div>
-		<a type="button" class="btn btn-success" th:href="@{'/applyList'}">新規申請一覧</a>
-		<a type="button" class="btn btn-success" th:href="@{'/changeApplyList'}">勤務変更申請一覧</a>
+	    		<label th:text = "'勤務変更の申請数 :  ' + ${ruquestUserCount}	 + '件' "></label>
+		</div>
+		<div class="button">
+			<a type="button" class="btn btn-primary" th:href="@{'/applyList'}">新規申請一覧</a>
+			<a type="button" class="btn btn-primary" th:href="@{'/changeApplyList'}">勤務変更申請一覧</a>
 		</div>
 	</div>
 </body>
