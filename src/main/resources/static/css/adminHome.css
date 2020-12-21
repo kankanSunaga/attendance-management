@@ -1,5 +1,5 @@
 html body{
-	background-color:#D4D9D2;
+	background-color:#EFF1F3;
 }
 
 .jumbotron{
@@ -7,6 +7,7 @@ html body{
 	padding: 50px 100px !important;
 	margin-bottom: 0px !important;
 	font-size: 20px !important;
+	background-color: white !important;
 }
 
 .btn-primary {	
