@@ -26,8 +26,8 @@ h1{
 }
 
 label {
-    font-size: 24px !important;
-    letter-spacing: 5px;
+	font-size: 24px !important;
+	letter-spacing: 5px;
 }
 
 .pL48{
@@ -37,6 +37,7 @@ label {
 .pL58{
 	padding-left: 58px !important;
 }
+
 .startTime,.endTime{
 	background-color: #DBD3D8;
 	padding-top: 20px;
@@ -59,10 +60,10 @@ label {
 }
 
 input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin: 0 !important;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	margin: 0 !important;
     
 }
 
