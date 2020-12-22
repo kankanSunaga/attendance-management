@@ -1,0 +1,30 @@
+html body{
+	background-color:#EFF1F3;
+}
+
+.container{
+	background-color:white !important;
+	margin-top: 30px;
+	width: 50% !important;
+}
+
+th{
+	font-size: 20px;
+	text-align: center !important;
+}
+
+td {
+	font-size: 20px;
+	text-align: center;
+}
+
+h1,h2 {
+	font-weight: 600 !important;
+	text-align: center;
+}
+
+.btn-primary{	
+	height: 40px;
+	width: 200px;
+	font-size: 14px !important;
+}

@@ -26,7 +26,10 @@ h1{
 .btn-primary,.btn-danger{	
 	height: 40px;
 	width: 150px;
-	font-size: 14px !important;
+	font-size: 14px !important;	
+    margin-left: 10px;
+    margin-right: 10px;
+	
 }
 
 .modal-header{
