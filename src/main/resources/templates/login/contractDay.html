@@ -28,21 +28,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each ="contractMonth : ${contractMonth}">
+				<tr th:each ="contractDay : ${contractMonth}">
 					<!-- 日付 -->
-					<td th:text ="${contractMonth.value.workDay}">
+					<td th:text ="${contractDay.value.workDay}">
 					<!-- 勤務開始時間 -->
 					<!-- <td th:text="${#temporals.format(contractMonth.value.StartTime, 'HH:mm')}"></td> -->
-					<td th:text="${contractMonth.value.startTime}"></td>
+					<td th:text="${contractDay.value.startTime}"></td>
 					<!-- 勤務終了時間 -->
 					<!-- <td th:text="${#temporals.format(contractMonth.value.EndTime, 'HH:mm')}"></td> -->
-					<td th:text="${contractMonth.value.endTime}"></td>
+					<td th:text="${contractDay.value.endTime}"></td>
 					<!-- 休憩時間 -->
-					<td th:text="${contractMonth.value.breakTime}"></td>
+					<td th:text="${contractDay.value.breakTime}"></td>
 					<!-- 勤務時間 -->
 					<td>
-						<span th:if="${contractMonth.value.workTimeMinute}" th:text="${contractMonth.value.workTimeMinute / 60} + 'h ' + ${contractMonth.value.workTimeMinute % 60} + 'm'"></span>
-						<span th:unless="${contractMonth.value.workTimeMinute}"></span>
+						<span th:if="${contractDay.value.workTimeMinute}" th:text="${contractDay.value.workTimeMinute / 60} + 'h ' + ${contractDay.value.workTimeMinute % 60} + 'm'"></span>
+						<span th:unless="${contractDay.value.workTimeMinute}"></span>
 					</td>
 				</tr>
 			</tbody>

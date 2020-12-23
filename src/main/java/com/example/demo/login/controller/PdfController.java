@@ -76,8 +76,5 @@ public class PdfController {
 		pdfService.createPdf(userId, workTimeMonth, engine, makeContext);
 
 		pdfService.pdfDownload(userId, response);
-
-		model.addAttribute("yearMonthUrl", yearMonth);
-		model.addAttribute("contractDay", workTimeMonth);
 	}
 }
