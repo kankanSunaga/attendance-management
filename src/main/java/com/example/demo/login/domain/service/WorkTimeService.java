@@ -150,10 +150,8 @@ public class WorkTimeService {
 
 		for (Map<String, Object> workTime : workTimeMonth) {
 			calender.put(workTime.get("workDay").toString(), workTime);
-			System.out.println(workTime.get("workDay").toString());
 		}
 
-		System.out.println(calender);
 		return calender;
 	}
 
