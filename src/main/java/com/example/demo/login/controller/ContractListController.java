@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -91,9 +92,11 @@ public class ContractListController {
 
 		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		List<WorkTime> workTimeMonth = monthService.getMonth(monthId);
+		List<Map<String, Object>> workTimeList = workTimeService.changeTimeFormat(workTimeMonth);
+		
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
 
-		model.addAttribute("contractMonth", workTimeService.setCalenderObject(calender, workTimeMonth));
+		model.addAttribute("contractMonth", workTimeService.setCalenderObject(calender, workTimeList));
 		model.addAttribute("contractId", contractId);
 		model.addAttribute("yearMonth", dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月"));
 		model.addAttribute("yearMonthUrl", yearMonth);

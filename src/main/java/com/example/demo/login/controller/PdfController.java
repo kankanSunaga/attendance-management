@@ -3,9 +3,9 @@ package com.example.demo.login.controller;
 import java.io.IOException;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,8 +67,9 @@ public class PdfController {
 		String strYearMonth = dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月");
 
 		List<WorkTime> workTimeMonth = monthService.getMonth(monthId);
+		List<Map<String, Object>> workTimeList = workTimeService.changeTimeFormat(workTimeMonth);
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
-		LinkedHashMap<String, Object> calenderObject = workTimeService.setCalenderObject(calender, workTimeMonth);
+		LinkedHashMap<String, Object> calenderObject = workTimeService.setCalenderObject(calender, workTimeList);
 
 		TemplateEngine engine = pdfService.initializeTemplateEngine();
 		IContext makeContext = pdfService.makeContext(userId, strYearMonth, workTimeMonth, calender, calenderObject);

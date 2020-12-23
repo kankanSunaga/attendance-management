@@ -17,10 +17,4 @@ public class WorkTime {
 	private int workTimeMinute;
 	private int contractId;
 	private int monthId;
-
-	// 変換したデータ(List内のデータ)
-	private int day;
-	private String dayOfWeek;
-	private String stringStartTime;
-	private String stringEndTime;
 }
