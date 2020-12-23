@@ -32,10 +32,8 @@
 					<!-- 日付 -->
 					<td th:text ="${contractDay.value.workDay}">
 					<!-- 勤務開始時間 -->
-					<!-- <td th:text="${#temporals.format(contractMonth.value.StartTime, 'HH:mm')}"></td> -->
 					<td th:text="${contractDay.value.startTime}"></td>
 					<!-- 勤務終了時間 -->
-					<!-- <td th:text="${#temporals.format(contractMonth.value.EndTime, 'HH:mm')}"></td> -->
 					<td th:text="${contractDay.value.endTime}"></td>
 					<!-- 休憩時間 -->
 					<td th:text="${contractDay.value.breakTime}"></td>
