@@ -11,7 +11,7 @@ html body{
 .btn-primary {	
 	height: 40px;
 	width: 240px;
-	margin: 20px 10px 0 10px !important;
+	margin: 20px 10px !important;
 	padding-top: 10px !important;
 	font-size: 14px !important;
 }
