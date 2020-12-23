@@ -14,15 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-//セキュリティ設定用クラス
-
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+
 		return new BCryptPasswordEncoder();
 	}
 	
@@ -95,6 +93,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.usersByUsernameQuery(USER_SQL)
 			.authoritiesByUsernameQuery(ROLE_SQL)
 			.passwordEncoder(passwordEncoder());
-		
 	}
 }
