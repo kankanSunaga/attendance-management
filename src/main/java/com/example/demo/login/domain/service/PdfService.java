@@ -8,13 +8,11 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +50,7 @@ public class PdfService {
 	@Autowired
 	PathUtil pathUtil;
 
-	public String createPdf(int userId, int contractId, String yearMonth, LocalDate minWorkDay, LocalDate maxWorkDay,
-			String strYearMonth, HttpServletResponse response, HttpServletRequest request) throws IOException {
-
-		final TemplateEngine engine = initializeTemplateEngine();
-
-		final IContext ctx = makeContext(userId, contractId, yearMonth, minWorkDay, maxWorkDay, strYearMonth);
+	public String createPdf(int userId, List<WorkTime> workTimes, TemplateEngine engine, IContext ctx) throws IOException {
 
 		String htmlPath = pathUtil.createPath("output", userId, "html");
 		Writer writer = new FileWriter(htmlPath);
@@ -117,14 +110,10 @@ public class PdfService {
 		return templateEngine;
 	}
 
-	public IContext makeContext(int userId, int contractId, String yearMonth, LocalDate minWorkDay,
-			LocalDate maxWorkDay, String strYearMonth) {
+	public IContext makeContext(int userId, String strYearMonth, List<WorkTime> workTimes,
+			LinkedHashMap<String, Object> calender, LinkedHashMap<String, Object> setCalenderObject) {
 
 		final IContext ctx = new Context();
-		List<WorkTime> workTimes = workTimeService.rangedSelectMany(contractId, minWorkDay, maxWorkDay);
-
-		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
-		LinkedHashMap<String, Object> setCalenderObject = workTimeService.setCalenderObject(calender, contractId, yearMonth);
 
 		((Context) ctx).setVariable("userName", userService.selectOne(userId).getUserName());
 		((Context) ctx).setVariable("weekFormatter", DateTimeFormatter.ofPattern("E", Locale.JAPANESE));

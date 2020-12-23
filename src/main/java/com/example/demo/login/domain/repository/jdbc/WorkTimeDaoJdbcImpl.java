@@ -103,12 +103,6 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
 			workTime.setContractId((int) map.get("contractId"));
 
-			DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
-			String stringStartTime = workTime.getStartTime().format(timeFormat);
-			workTime.setStringStartTime(stringStartTime);
-			String stringEndTime = workTime.getEndTime().format(timeFormat);
-			workTime.setStringEndTime(stringEndTime);
-
 			contractDayList.add(workTime);
 		}
 

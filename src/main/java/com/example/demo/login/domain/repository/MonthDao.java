@@ -25,4 +25,6 @@ public interface MonthDao {
 	public List<Month> getMonthList(int contractId) throws DataAccessException;
 	
 	List<WorkTime> getWorkMonth(int contractId, int monthId) throws DataAccessException;
+	
+	public List<WorkTime> getMonth(int monthId) throws DataAccessException;
 }

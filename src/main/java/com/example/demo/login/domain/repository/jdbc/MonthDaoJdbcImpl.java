@@ -153,4 +153,27 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 		return contractDayList;
 	}
+	
+	public List<WorkTime> getMonth(int monthId) {
+
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM workTime"
+				+ " WHERE monthId=?" 
+				+ " ORDER BY workDay", monthId);
+
+		List<WorkTime> contractDayList = new ArrayList<>();
+		for (Map<String, Object> map : getList) {
+			WorkTime workTime = new WorkTime();
+			workTime.setWorkTimeId((int) map.get("workTimeId"));
+			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
+			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
+			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
+			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
+			workTime.setContractId((int) map.get("contractId"));
+
+			contractDayList.add(workTime);
+		}
+
+		return contractDayList;
+	}
 }

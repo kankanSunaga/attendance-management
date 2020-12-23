@@ -167,4 +167,9 @@ public class MonthService {
 
 		return "達成しました";
 	}
+	
+	public List<WorkTime> getMonth(int monthId) {
+		
+		return dao.getMonth(monthId);
+	}
 }
