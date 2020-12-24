@@ -27,9 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-	private static final String USER_SQL = "SELECT email, password, true, FROM, user, WHERE, email =?";
+	// メールアドレスとパスワードを取得する
+	private static final String USER_SQL = "SELECT email, password, true"
+			+ " FROM user"
+			+ " WHERE email =?";
 
-	private static final String ROLE_SQL = "SELECT email, role, FROM, user, WHERE, email =?";
+	// ユーザーのロールを取得する
+	private static final String ROLE_SQL = "SELECT email, role"
+			+ " FROM user"
+			+ " WHERE email =?";
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
