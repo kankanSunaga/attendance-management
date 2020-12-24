@@ -1,0 +1,62 @@
+html body {
+	background-color: #EFF1F3;
+}
+
+.container {
+	background-color: white !important;
+	margin-top: 30px;
+	width: 75% !important;
+}
+
+th {
+	font-size: 20px;
+	text-align: center !important;
+}
+
+td {
+	font-size: 20px;
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+	font-weight: 600;
+}
+
+.btn-primary, .btn-danger {
+	height: 40px;
+	width: 150px;
+	font-size: 14px !important;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.modal-header {
+	font-size: 24px !important;
+}
+
+.modal-footer {
+	text-align: center;
+	justify-content: space-evenly;
+	display: flex;
+}
+
+.modal-dialog {
+	margin: 200px auto !important;
+}
+
+.modalBtn {
+	margin: auto !important;
+	font-size: 18px !important;
+	width: 200px !important;
+}
+
+p {
+	font-size: 20px;
+	text-align: center;
+}
+
+h1, h2 {
+	font-weight: 600 !important;
+	text-align: center;
+}
