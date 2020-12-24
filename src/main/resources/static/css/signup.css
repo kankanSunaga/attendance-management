@@ -1,3 +1,52 @@
 form {
 	margin-top: 30px;
 }
+
+html body {
+    height: 100%;
+    margin: 0;
+    background-color: #EFF1F3;
+}
+
+label {
+    font-size: 24px !important;
+    letter-spacing: 5px;
+}
+
+.form-control {   
+    height: 60px !important;
+    font-size: 24px !important;
+    width: 50% !important;
+    margin: auto !important;
+    text-align: center !important;
+}
+
+.btn-primary {
+    width: 300px !important;
+    height: 40px !important;
+    margin: auto !important;
+}
+
+.email,.confirmPassword{
+	background-color: #DBD3D8;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+h1{
+	font-weight: 600 !important;
+}
+
+.userName{
+	padding-bottom: 20px;
+}
+
+.password{
+	padding-top: 20px;
+    padding-bottom: 20px;
+}
+.homeBack{
+	font-size: 20px;
+	margin-bottom: 20px;
+}
