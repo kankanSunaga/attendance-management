@@ -134,8 +134,11 @@ public class ContractService {
 	}
 
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
-
+		
 		Contract contract = contractService.latestContract(userId);
+		LocalDate date = LocalDate.now();
+		
+		form.setWorkDay(date);
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
 		form.setEndTime(contract.getEndTime());
