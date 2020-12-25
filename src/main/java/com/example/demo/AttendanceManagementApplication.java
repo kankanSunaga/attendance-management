@@ -15,13 +15,14 @@ public class AttendanceManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AttendanceManagementApplication.class, args);
 	}
-	
+
 	@Bean("ForgotPasswordService#sendMail")
 	public Executor taskExecutor1() {
-	    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-	    executor.setCorePoolSize(10);
-	    executor.setThreadNamePrefix("Thread1--");
-	    executor.initialize();
-	    return executor;
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(10);
+		executor.setThreadNamePrefix("Thread1--");
+		executor.initialize();
+
+		return executor;
 	}
 }

@@ -1,9 +1,9 @@
 html body{
-	background-color:#D4D9D2;
+	background-color:#EFF1F3;
 }
 
 .jumbotron{
-	background-color:#F2F2F0;
+	background-color:#FFF !important;
 	padding: 50px 100px !important;
 	margin-bottom: 0px !important;
 }
@@ -11,7 +11,7 @@ html body{
 .btn-primary {	
 	height: 40px;
 	width: 240px;
-	margin: 20px 10px 0 10px !important;
+	margin: 20px 10px !important;
 	padding-top: 10px !important;
 	font-size: 14px !important;
 }
