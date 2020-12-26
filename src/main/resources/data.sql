@@ -28,7 +28,7 @@ INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId
 VALUES(3, 2020, 10, 'false', 'true',1);
  
 INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
-VALUES(4, 2020, 11, 'true', 'true',1);
+VALUES(4, 2020, 11, 'true', 'false',1);
 
 INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
 VALUES(5, 2020, 12, 'true', 'true',1);
