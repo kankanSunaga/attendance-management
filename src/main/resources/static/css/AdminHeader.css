@@ -8,3 +8,8 @@ img.logo {
 	margin-top: 10px;
 	margin-bottom: 10px
 }
+
+.container-fluid{
+    margin-left: 32px !important;
+	
+}
