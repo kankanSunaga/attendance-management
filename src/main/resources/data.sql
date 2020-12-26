@@ -32,18 +32,6 @@ VALUES(4, 2020, 11, 'true', 'false',1);
 
 INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
 VALUES(5, 2020, 12, 'true', 'true',1);
-
-INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
-VALUES(6, 2021, 1, 'true', 'true',1);
-
-INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
-VALUES(7, 2021, 2, 'true', 'true',1);
- 
-INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
-VALUES(8, 2021, 3, 'false', 'false',1);
- 
-INSERT INTO month (monthId, year, month, deadlineStatus,requestStatus,contractId)
-VALUES(9, 2020, 9, 'false', 'true',3);
  
 -- 2020-08
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
@@ -70,18 +58,3 @@ INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTi
 VALUES(9, '2020-12-01', '2020-12-01 09:00:00', '12:00:00', '2020-12-01 17:00:00', 4200, 1, 5);
 INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
 VALUES(10, '2020-12-05', '2020-12-05 09:00:00', '12:00:00', '2020-12-05 17:00:00', 4200, 1, 5);
--- 2021-01
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(11, '2021-01-01', '2021-01-01 09:00:00', '12:00:00', '2021-01-01 17:00:00', 420, 1, 6);
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(12, '2021-01-05', '2021-01-05 09:00:00', '12:00:00', '2021-01-05 17:00:00', 420, 1, 6);
--- 2021-02
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(13, '2021-02-01', '2021-02-01 09:00:00', '12:00:00', '2021-02-01 17:00:00', 420, 1, 7);
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(14, '2021-02-05', '2021-02-05 09:00:00', '12:00:00', '2021-02-05 17:00:00', 420, 1, 7);
--- 2021-03
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(15, '2021-03-01', '2021-03-01 09:00:00', '12:00:00', '2021-03-01 17:00:00', 420, 1, 8);
-INSERT INTO workTime (workTimeId, workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)
-VALUES(16, '2021-03-05', '2021-03-01 09:00:00', '12:00:00', '2021-03-05 17:00:00', 420, 1, 8);
