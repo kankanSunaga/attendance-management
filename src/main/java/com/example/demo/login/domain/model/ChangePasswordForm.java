@@ -21,10 +21,9 @@ public class ChangePasswordForm {
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String newPassword;
 
-	@NotBlank
 	private String newConfirmPassword;
 
-	@AssertTrue(message = "新しいパスワードと新しいパスワード確認が異なります")
+	@AssertTrue
 	public boolean isDataValidOfPassword() {
 		return newPassword.equals(newConfirmPassword);
 	}

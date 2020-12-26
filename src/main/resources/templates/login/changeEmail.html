@@ -24,13 +24,13 @@
 			</div>
 			<div class="newEmail">
 				<label>新しいメールアドレスの入力</label><br>
-				<input type="text" th:field="*{newEmail}" class="form-control" name="newEmail">
+				<input type="text" th:field="*{newEmail}" class="form-control">
 			</div>
 			<div class="newConfirmEmail">
 				<label>新しいメールアドレスの確認</label><br>
-				<input type="text" th:field="*{newConfirmEmail}" class="form-control" name="newConfirmEmail">
+				<input type="text" th:field="*{newConfirmEmail}" class="form-control">
 				<div th:each="error:${#fields.detailedErrors()}">
-					<span th:text="${error.message}">Error message</span>
+					<span th:text="${error.message}"></span>
 				</div>
 				<br>
 			</div>
