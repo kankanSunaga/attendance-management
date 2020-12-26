@@ -136,6 +136,7 @@ public class ContractService {
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
 		
 		Contract contract = contractService.latestContract(userId);
+
 		LocalDate date = LocalDate.now();
 		
 		form.setWorkDay(date);
