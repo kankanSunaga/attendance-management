@@ -30,7 +30,11 @@
 						<td scope="row" th:text="${user.userName}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.requestedAt}"></td>
-						<td ><a class="btn btn-primary" th:href="@{'/applyDetail/'+ ${user.userId}}">詳細</a></td>
+						<td >
+							<a th:href="@{'/applyDetail/'+ ${user.userId}}">
+								<button class="btn btn-primary">詳細</button>
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

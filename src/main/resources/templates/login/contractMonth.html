@@ -27,7 +27,11 @@
 			<tbody>
 				<tr th:each ="month : ${monthList}">
 					<td th:text=${month.view}></td>
-					<td><a class="btn btn-primary" th:href="@{'/contract/'+ ${workTime.contractId} + '/' + ${month.url}}">詳細</a></td>
+					<td>
+						<a th:href="@{'/contract/'+ ${workTime.contractId} + '/' + ${month.url}}">
+							<button class="btn btn-primary">詳細</button>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -1,6 +1,9 @@
 .btn-primary{	
     margin-top: 0px;
     margin-left: 0px;
+    height: 40px;
+	width: 150px;
+	font-size: 14px !important;
 	
 }
 
