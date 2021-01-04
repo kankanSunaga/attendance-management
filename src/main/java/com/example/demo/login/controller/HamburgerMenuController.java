@@ -72,9 +72,7 @@ public class HamburgerMenuController {
 		int userId = sessionUtil.getUserId(request);
 
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-		model.addAttribute("logo", userIconService.uploadLogoImage());
-		model.addAttribute("updateStatus", userIconService.setImage(form.getFile(), userId));
-		
+		model.addAttribute("logo", userIconService.uploadLogoImage());		
 
 		return "redirect:/home";
 	}
