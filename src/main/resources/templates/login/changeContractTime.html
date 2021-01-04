@@ -19,22 +19,22 @@
 				<br>
 				<div class="workTime">
 					<label>契約勤務時間</label>
-					<input type="number" value="0" min="0" max="720" step="1" class="form-control pL22" th:field="*{newContractTime}">
+					<input type="number" value="0" min="0" max="720" step="1" class="form-control pL22" th:field="*{newContractTime}" required>
 					<label class ="totalTime">時間</label>
 				</div>
 				<div class="startTime">
 					<label class="space">想定始業時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newStartTime}">
+					<input type="time" class="form-control pL56" th:field="*{newStartTime}" required>
 					<br>
 				</div>
 				<div class="breakTime">
 					<label class="space">想定休憩時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newBreakTime}">
+					<input type="time" class="form-control pL56" th:field="*{newBreakTime}" required>
 					<br/>
 				</div>
 				<div class="endTime">
 					<label class="space">想定退勤時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newEndTime}">
+					<input type="time" class="form-control pL56" th:field="*{newEndTime}" required>
 				</div>
 				<br>
 				<div th:if="${status}">契約勤務時間を変更しました</div>

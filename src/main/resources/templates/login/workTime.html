@@ -20,22 +20,22 @@
 				<br>
 				<div class="workDay">
 					<label>勤務日</label>
-					<input class="form-control pL58" type="date" th:field="*{workDay}">
+					<input class="form-control pL58" type="date" th:field="*{workDay}" required>
 					<br>
 				</div>
 				<div class="startTime">
 					<label>始業時間</label>
-					<input class="form-control pL48" type="time" th:field="*{startTime}">
+					<input class="form-control pL48" type="time" th:field="*{startTime}" required>
 					<br>
 				</div>
 				<div class="breakTime">
 					<label>休憩時間</label>
-					<input class="form-control pL48" type="time" max="03:00" th:field="*{breakTime}">
+					<input class="form-control pL48" type="time" max="03:00" th:field="*{breakTime}" required>
 					<br>
 				</div>
 				<div class="endTime">
 					<label>終業時間</label>
-					<input class="form-control pL48" type="time" th:field="*{endTime}">
+					<input class="form-control pL48" type="time" th:field="*{endTime}" required>
 					<input type="checkbox" th:field="*{overTimeFlag}" name="overTime"> 0時を過ぎた
 					<br>
 				</div>
