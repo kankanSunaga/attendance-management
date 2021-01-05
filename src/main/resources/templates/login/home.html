@@ -11,9 +11,7 @@
 <title>ホーム</title>
 </head>
 <body>
-	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
-	<!-- コンテンツ -->
 	<div class="container">
 		<div class="nowDate">
 			<h2 th:text="${nowDate}"></h2>
@@ -35,31 +33,30 @@
 		</div>
 	</div>
 	<br>
-	<!-- 勤怠を締めるボタン -->
 	<div class="container text-center">
 		<div class="row mb-5">
-			<div class="col-2">
-				<label th:if="${deadline}">勤怠を締め切ってください。<br>締め切らなかった場合毎月1日に自動で締められます。</label>
-				<br>
-				<button th:if="${deadline}" type="button" class="btn btn-danger mb-12"
-					data-toggle="modal" data-target="#testModal">勤怠を締める</button>
+			<div class="col-2 deadline">
+				<div th:unless="${deadline}">
+					<label>勤怠を締め切ってください。<br>締め切らなかった場合、毎月1日に自動で締め切られます。</label>
+					<br>
+					<button type="button" class="btn btn-danger mb-12" data-toggle="modal" data-target="#testModal">勤怠を締める</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 確認モーダル画面 -->
 	<div class="modal fade" id="testModal" tabindex="-1" role="dialog"
 		aria-labelledby="basicModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">今月の勤怠ステータス変更確認画面</h4>
+					<h2 class="modal-title" id="myModalLabel">締め切り確認</h2>
 				</div>
 				<div class="modal-body">
-					<label>本当に今月の勤怠を締めますか？</label>
+					<p>本当に今月の勤怠を締め切りますか？</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger">勤怠を締める</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+					<a th:href="@{/deadline}"><button type="button" class="btn btn-danger modalBtn">はい</button></a>
+					<button type="button" class="btn btn-primary modalBtn" data-dismiss="modal">いいえ</button>
 				</div>
 			</div>
 		</div>

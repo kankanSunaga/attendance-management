@@ -15,22 +15,22 @@
 		<br>
 		<div class="userName">
 	        <label>名前</label><br/>
-	        <input type="text" class="form-control" th:field="*{userName}" name="userName"/>
+	        <input type="text" class="form-control" th:field="*{userName}" name="userName" required>
         </div>
 		<div class="email">
 	    	<label>メールアドレス</label><br/>
-	    	<input type="text" class="form-control" th:field="*{email}" name="email" />
+	    	<input type="text" class="form-control" th:field="*{email}" name="email" required>
 		</div>
     	<div class="password">
 	        <label>パスワード</label><br/>
-	        <input type="password" class="form-control" th:field="*{password}" name="password" />
+	        <input type="password" class="form-control" th:field="*{password}" name="password" required>
         </div>
        <div class="confirmPassword">
 	        <label>パスワード確認</label>
-	        <input type="password" class="form-control" name="confirmPassword" />
+	        <input type="password" class="form-control" name="confirmPassword" required>
 	    </div>
+	    <br>
 		<div th:each="error:${#fields.detailedErrors()}">
-		<br/>
 			<span th:text="${error.message}">Error message</span>
 		</div>
 		<div th:if="${useEmail}">
