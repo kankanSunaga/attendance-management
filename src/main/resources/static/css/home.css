@@ -8,7 +8,7 @@ html body{
 	margin-bottom: 0px !important;
 }
 
-.btn-primary {	
+.btn {	
 	height: 40px;
 	width: 240px;
 	margin: 20px 10px !important;
@@ -45,4 +45,36 @@ html body{
 
 .button {
 	margin-top: 30px;
+}
+
+.deadline {
+	margin-top: 60px;
+}
+
+.modal {
+	text-align: center;
+}
+
+.modal-footer{
+	text-align: center;
+	justify-content: space-evenly;
+    display: flex;
+}
+
+.modal-dialog {
+	margin: 200px auto !important;
+}
+
+.modalBtn {
+    margin: 0 42px !important;
+    font-size: 18px !important;
+    width: 200px !important;
+}
+
+h2 {
+	font-weight: 600 !important;
+}
+
+p {
+	font-size: 20px;
 }

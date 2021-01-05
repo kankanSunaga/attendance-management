@@ -71,16 +71,10 @@ public class HamburgerMenuController {
 
 		int userId = sessionUtil.getUserId(request);
 
-		if (form.getFile().isEmpty()) {
-			return "login/changeUserIcon";
-		}
-
 		model.addAttribute("base64", userIconService.uploadImage(userId));
-		model.addAttribute("logo", userIconService.uploadLogoImage());
-		model.addAttribute("updateStatus", userIconService.setImage(form.getFile(), userId));
-		
+		model.addAttribute("logo", userIconService.uploadLogoImage());		
 
-		return "login/changeUserIcon";
+		return "redirect:/home";
 	}
 
 	@GetMapping("/changePassword")

@@ -18,6 +18,7 @@
 		<h1>現在の契約</h1>
 		<h2 th:text="${contract.officeName}"></h2><br>
 		<form method="post" th:action="@{/changeContract}" th:object="${ContractForm}">
+
 			<input type="date" name="endDate" class="form-control pl45" required/><br>
 			<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">契約終了日登録</button>
 			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
