@@ -1,6 +1,5 @@
 package com.example.demo.login.domain.service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,17 +52,14 @@ public class MonthService {
 		dao.updateToDeadline(lastMonthDate.getYear(), lastMonthDate.getMonthValue());
 	}
 
-	public boolean deadlineCheck(int contractId, String yearMonth, LocalDate nowDate) throws IOException {
-
-		boolean deadlineStatus = selectMonthTable(contractId, yearMonth).isDeadlineStatus();
-		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);
+	public boolean deadlineCheck(boolean deadlineStatus, LocalDate lastWeekDay, LocalDate nowDate) {
 
 		if (deadlineStatus) {
-			return false;
-		} else if (nowDate.isAfter(lastWeekDay)) {
 			return true;
-		} else {
+		} else if (nowDate.equals(lastWeekDay) || nowDate.isAfter(lastWeekDay)) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
@@ -171,5 +167,12 @@ public class MonthService {
 	public List<WorkTime> getMonth(int monthId) {
 		
 		return dao.getMonth(monthId);
+	}
+	
+	public Month deadlineStatus(Month month) {
+
+		month.setDeadlineStatus(true);
+
+		return month;	
 	}
 }
