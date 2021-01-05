@@ -1,13 +1,12 @@
-.btn-primary{	
-    margin-top: 0px;
-    margin-left: 0px;
-    height: 40px;
+.btn-primary {
+	margin-top: 0px;
+	margin-left: 0px;
+	height: 40px;
 	width: 150px;
 	font-size: 14px !important;
-	
 }
 
-th{
+th {
 	font-size: 20px;
 }
 
@@ -15,16 +14,16 @@ td {
 	font-size: 20px;
 }
 
-html body{
-	background-color:#EFF1F3;
+html body {
+	background-color: #EFF1F3;
 }
 
-.container{
-	background-color:white !important;
+.container {
+	background-color: white !important;
 	margin-top: 30px;
 }
 
-h1{
+h1 {
 	text-align: center;
 	font-weight: 600;
-}	
+}

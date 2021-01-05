@@ -1,51 +1,51 @@
 html body {
-    height: 100%;
-    margin: 0;
-    background-color: #EFF1F3;
+	height: 100%;
+	margin: 0;
+	background-color: #EFF1F3;
 }
 
-.form-control {   
-    height: 60px !important;
-    font-size: 30px !important;
-    width: 50% !important;
-    margin: auto !important;
-    text-align: center !important;
+.form-control {
+	height: 60px !important;
+	font-size: 30px !important;
+	width: 50% !important;
+	margin: auto !important;
+	text-align: center !important;
 }
 
-h1,h2{
-    font-weight: 600 !important;
+h1, h2 {
+	font-weight: 600 !important;
 }
 
 p {
-    font-size: 20px;
-    margin-bottom: 0px !important;
+	font-size: 20px;
+	margin-bottom: 0px !important;
 }
 
-.pl45{
-    padding-left: 45px !important;
+.pl45 {
+	padding-left: 45px !important;
 }
 
 .btn-primary {
-    width: 300px;
-    height: 40px;
-    margin-top: 15px; 
+	width: 300px;
+	height: 40px;
+	margin-top: 15px;
 }
 
-modal-header{
+modal-header {
 	font-size: 24px !important;
 }
 
-.modal-footer{
+.modal-footer {
 	text-align: center;
 	justify-content: space-evenly;
-    display: flex;
+	display: flex;
 }
 
-.modal-dialog{
+.modal-dialog {
 	margin: 200px auto !important;
 }
 
-.modalBtn{
+.modalBtn {
 	margin: auto !important;
 	font-size: 18px !important;
 	width: 200px !important;
