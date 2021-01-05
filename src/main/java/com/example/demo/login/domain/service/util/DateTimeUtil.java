@@ -1,7 +1,6 @@
 package com.example.demo.login.domain.service.util;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,5 +82,12 @@ public class DateTimeUtil {
 		int minute = totalTime % 60;
 
 		return hour + "時間" + minute + "分";
+	}
+	
+	public LocalDate createDate(String yyyyMMdd) {
+
+		LocalDate date = LocalDate.parse(yyyyMMdd, DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+		return date;
 	}
 }

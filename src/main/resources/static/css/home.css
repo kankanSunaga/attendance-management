@@ -66,7 +66,7 @@ html body{
 }
 
 .modalBtn {
-    margin: auto !important;
+    margin: 0 42px !important;
     font-size: 18px !important;
     width: 200px !important;
 }
