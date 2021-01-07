@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.ForgotPasswordForm;
-import com.example.demo.login.domain.service.ForgotPasswordService;
+import com.example.demo.login.domain.service.CreateMailService;
 import com.example.demo.login.domain.service.UserService;
 
 @Controller
 public class ForgotPasswordController {
 
 	@Autowired
-	ForgotPasswordService forgotPasswordService;
+	CreateMailService createMailService;
 
 	@Autowired
 	UserService userService;
@@ -31,16 +31,15 @@ public class ForgotPasswordController {
 	}
 
 	@PostMapping("/forgotPassword")
-	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult,
-			Model model) throws IOException {
-
+	public String postForgotPassword(@ModelAttribute @Validated ForgotPasswordForm form, BindingResult bindingResult, Model model) throws IOException {
+		
 		if (bindingResult.hasErrors()) {
 			return getFotgotPassword(form);
 		}
 
 		String email = form.getEmailByForgotPassword();
 
-		forgotPasswordService.sendMail(email);
+		createMailService.sendMail(email);
 		model.addAttribute("status", 1);
 
 		return "login/forgotPassword";

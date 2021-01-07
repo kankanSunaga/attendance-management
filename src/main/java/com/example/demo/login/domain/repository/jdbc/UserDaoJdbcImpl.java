@@ -135,4 +135,10 @@ public class UserDaoJdbcImpl implements UserDao {
 
 		return Optional.of(user);
 	}
+	
+	@Override
+	public void updateReissuePassword(int userId, String reissuePassword) {
+		String password = passwordEncoder.encode(reissuePassword);
+		jdbc.update("UPDATE user SET password = ? WHERE userId = ?", password, userId);
+	}
 }

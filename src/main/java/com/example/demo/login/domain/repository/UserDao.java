@@ -28,4 +28,6 @@ public interface UserDao {
 	public int updatePassword(User user, String newPassword) throws DataAccessException;
 
 	public Optional<User> findByEmail(String email) throws DataAccessException;
+	
+	public void updateReissuePassword(int userId, String reissuePassword);
 }
