@@ -3,24 +3,24 @@ package com.example.demo.login.domain.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import com.example.demo.login.domain.model.Contract;
+
 
 public interface ContractDao {
 
-	public void insertOne(Contract contract) throws DataAccessException;
+	void insertOne(Contract contract);
 
-	public Contract activeSelectOne(int contractId) throws DataAccessException;
+	Contract activeSelectOne(int contractId);
 
-	public List<Contract> selectMany(int userId) throws DataAccessException;
+	List<Contract> selectMany(int userId);
 
-	public List<Contract> selectByUserId(int userId) throws DataAccessException;
+	List<Contract> selectByUserId(int userId);
 
-	public Contract latestContract(int userId) throws DataAccessException;
+	Contract latestContract(int userId);
 
-	public Contract underContract(int userId, LocalDate today) throws DataAccessException;
+	Contract underContract(int userId, LocalDate today);
 
-	public int updateContract(Contract contract) throws DataAccessException;
+	int updateContract(Contract contract);
 
-	public void updateEndDate(Contract contract) throws DataAccessException;
+	void updateEndDate(Contract contract);
 }

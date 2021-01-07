@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +19,7 @@ public class ReissuePasswordDaoJdbcImpl implements ReissuePasswordDao {
 	JdbcTemplate jdbc;
 	
 	@Override
-	public void insertOne(ReissuePassword reissuePassword) throws DataAccessException {
+	public void insertOne(ReissuePassword reissuePassword) {
 		jdbc.update("INSERT INTO reissuePassword("
 				+ " reissuePasswordId, userId, passwordResetToken, expirationTime, changed)"
 				+ " VALUES(?, ?, ?, ?, ?)",

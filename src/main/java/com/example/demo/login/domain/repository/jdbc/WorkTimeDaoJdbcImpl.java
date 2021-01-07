@@ -2,14 +2,11 @@ package com.example.demo.login.domain.repository.jdbc;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +19,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 	@Autowired
 	JdbcTemplate jdbc;
 
-	public void insertOne(WorkTime workTime) throws DataAccessException {
+	public void insertOne(WorkTime workTime) {
 
 		jdbc.update("INSERT INTO workTime"
 				+ " (workDay, startTime, breakTime, endTime, workTimeMinute, contractId, monthId)"
@@ -31,7 +28,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 				workTime.getWorkTimeMinute(), workTime.getContractId(), workTime.getMonthId());
 	}
 
-	public void updateOne(WorkTime workTime) throws DataAccessException {
+	public void updateOne(WorkTime workTime) {
 
 		jdbc.update("UPDATE workTime"
 				+ " SET workDay=?, startTime=?, breakTime=?, endTime=?, workTimeMinute=?, contractId=?, monthId=?"
@@ -41,7 +38,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 
 	}
 
-	public List<WorkTime> selectMonthData(int userId) throws DataAccessException {
+	public List<WorkTime> selectMonthData(int userId) {
 
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user"
 						+ " INNER JOIN contract ON user.userId = contract.userId"
@@ -58,7 +55,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return monthDataList;
 	}
 
-	public List<WorkTime> selectMany(int contractId) throws DataAccessException {
+	public List<WorkTime> selectMany(int contractId) {
 
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM workTime"
 				+ " WHERE contractId = ?"
@@ -81,8 +78,7 @@ public class WorkTimeDaoJdbcImpl implements WorkTimeDao {
 		return contractMonthList;
 	}
 
-	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay)
-			throws DataAccessException {
+	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) {
 
 		java.sql.Date sqlMinWorkDay = java.sql.Date.valueOf(minWorkDay);
 		java.sql.Date sqlMaxWorkDay = java.sql.Date.valueOf(maxWorkDay);

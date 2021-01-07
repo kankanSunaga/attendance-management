@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +25,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	DateTimeUtil dateTimeUtil;
 
 	@Override
-	public int updateToDeadline(int year, int month) throws DataAccessException {
+	public int updateToDeadline(int year, int month) {
 
 		int date = jdbc.update("UPDATE month SET deadlineStatus = 'TRUE' WHERE year = ? AND month = ? ", year, month);
 
@@ -34,7 +33,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	}
 
 	@Override
-	public List<User> getRequestUsers() throws DataAccessException {
+	public List<User> getRequestUsers() {
 
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user"
 				+ " INNER JOIN contract ON user.userId = contract.userId"
@@ -52,7 +51,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return RuquestUserList;
 	}
 
-	public Month latestMonth(int userId) throws DataAccessException {
+	public Month latestMonth(int userId) {
 
 		Map<String, Object> map = jdbc
 				.queryForMap("SELECT month.* FROM user" + " INNER JOIN contract ON user.userId = contract.userId"
@@ -71,7 +70,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return latestMonth;
 	}
 
-	public Month selectMonthTable(int contractId, String yearMonth) throws DataAccessException {
+	public Month selectMonthTable(int contractId, String yearMonth) {
 
 		int year = dateTimeUtil.getYearAndMonth(yearMonth).get("year");
 		int month = dateTimeUtil.getYearAndMonth(yearMonth).get("month");
@@ -93,7 +92,7 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return selectMonth;
 	}
 
-	public void insertOne(Month month) throws DataAccessException {
+	public void insertOne(Month month) {
 
 		jdbc.update("INSERT INTO month (year, month, deadlineStatus, requestStatus, contractId)"
 				+ " VALUES(?, ?, ?, ?, ?)",
