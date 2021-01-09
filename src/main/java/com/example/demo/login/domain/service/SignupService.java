@@ -25,7 +25,7 @@ public class SignupService {
 
 		User user = new User();
 		LocalDateTime requestTime = LocalDateTime.now();
-		String requestTimeStr = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:MM:ss").format(requestTime);
+		String requestTimeStr = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(requestTime);
 		
 		user.setUserName(form.getUserName());
 		user.setPassword(form.getPassword());
