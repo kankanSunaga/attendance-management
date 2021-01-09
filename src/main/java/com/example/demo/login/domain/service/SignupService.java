@@ -1,5 +1,8 @@
 package com.example.demo.login.domain.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +24,16 @@ public class SignupService {
 	public User setUser(SignupForm form) {
 
 		User user = new User();
-
+		LocalDateTime requestTime = LocalDateTime.now();
+		String requestTimeStr = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:MM:ss").format(requestTime);
+		
 		user.setUserName(form.getUserName());
 		user.setPassword(form.getPassword());
 		user.setEmail(form.getEmail());
 		user.setRole("ROLE_GENERAL");
 		user.setPermission(false);
 		user.setFrozen(false);
+		user.setRequestedAt(requestTimeStr);
 
 		return user;
 	}

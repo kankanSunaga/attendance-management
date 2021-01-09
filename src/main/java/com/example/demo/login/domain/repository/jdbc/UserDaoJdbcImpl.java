@@ -28,9 +28,9 @@ public class UserDaoJdbcImpl implements UserDao {
 		String password = passwordEncoder.encode(user.getPassword());
 
 		int rowNumber = jdbc.update(
-				"INSERT INTO user(userName, email, password, role, permission, frozen)"
-				+ " VALUES(?, ?, ?, ?, ?, ?)",
-				user.getUserName(), user.getEmail(), password, user.getRole(), user.isPermission(), user.isFrozen());
+				"INSERT INTO user(userName, email, password, role, permission, frozen, requestedAt)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
+				user.getUserName(), user.getEmail(), password, user.getRole(), user.isPermission(), user.isFrozen(), user.getRequestedAt());
 
 		return rowNumber;
 	}
