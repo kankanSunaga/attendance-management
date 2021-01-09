@@ -1,11 +1,11 @@
 package com.example.demo.login.controller;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,22 +33,16 @@ public class ReissuePasswordController {
 	@Autowired
 	MessageSource messageSource;
 	
+	
 	@RequestMapping(value = "/login/reissuePassword", method = RequestMethod.GET)
-	public String getReissuePassword(@RequestParam String token, ReissuePasswordForm form, BindingResult bindingResult, Model model) throws IOException {
+	public String getReissuePassword(@RequestParam String token, ReissuePasswordForm form) {
 		
-		boolean isValidToken =  reissuePasswordService.isValidToken(form.getToken());
-		Optional<Integer> userIdOpt = reissuePasswordService.findUserId(form.getToken());
-		
-		if(!isValidToken || !userIdOpt.isPresent()) {
-			String errorMessage = messageSource.getMessage("tokenError", null, LocaleContextHolder.getLocale());
-			FieldError fieldError = new FieldError(bindingResult.getObjectName(), "token", errorMessage);
-			bindingResult.addError(fieldError);
-			model.addAttribute("status", 0);
-			
-			return "login/reissuePassword";
+		try {
+			reissuePasswordService.isValidToken(form.getToken());
+		} catch (EmptyResultDataAccessException ignored) {
+			return "login/tokenError";
 		}
-		
-		form.setUserId(userIdOpt.get());
+
 		form.setToken(token);
 		
 		return "login/reissuePassword";
