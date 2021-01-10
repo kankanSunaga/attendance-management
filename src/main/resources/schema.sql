@@ -9,6 +9,16 @@ CREATE TABLE IF NOT EXISTS user (
 	requestedAt VARCHAR(50)
 );
 
+
+CREATE TABLE IF NOT EXISTS reissuePassword (
+	reissuePasswordId INT IDENTITY(1, 1) PRIMARY KEY,
+	userId INT NOT NULL,
+	passwordResetToken VARCHAR(50) NOT NULL,
+	expirationTime TIMESTAMP NOT NULL,
+	changed BOOLEAN NOT NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS contract (
 	contractId INT IDENTITY(1, 1) PRIMARY KEY,
 	contractTime INT,

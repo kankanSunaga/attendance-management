@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <link th:href="@{/css/tokenError.css}" rel="stylesheet"></Link>
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    <title>トークンエラー</title>
+</head>
+<body>
+	<div class="text-center">
+		<form method="get" th:action="@{/login/reissuePassword}">
+			<h2>トークンエラー</h2><br/>
+			<p>トークンが切れています。</p>
+			<p>メールを再度送信して下さい。</p><br/>
+			<a th:href="@{/forgotPassword}">メールアドレスを入力する</a>
+		</form>
+	</div>
+</body>
+</html>
