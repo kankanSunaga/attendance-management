@@ -2,47 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"></meta>
-	<!-- CSSの読み込み -->
 	<link th:href="@{/css/applyList.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/AdminHeader.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-	
-	
 	<title>新規登録申請者の一覧</title>
 </head>
 <body>
-	<!-- ヘッダー -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">サービス名</a>
-			</div>
-			<div class="pull-right">
-			<button type="button" class="btn btn-success">プロフ画像</button>		
-			</div>	
-		</div>
-	</nav>
+	<div th:replace="admin/adminHeader.html :: adminHeader"></div>
 	<br><br>
 	<br><br>
 	<div th:fragment="admin_contents">
-		<div class="container" >
+		<div class="container">
+			<h1>新規登録申請者一覧</h1>
 			<table class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th>名前</th>
-			      <th>メールアドレス</th>
-			      <th>申請時間</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr th:each ="user : ${userList}">
-			      <th scope="row" th:text="${user.userName}"></th>
-			      <td th:text="${user.email}"></td>
-			      <td th:text="${user.requestedAt}"></td>
-			      <td ><a class="btn btn-primary" th:href="@{'/applyDetail/'+ ${user.userId}}">詳細</a></td>
-			    </tr>
-			  </tbody>
+				<thead>
+					<tr>
+						<th>名前</th>
+						<th>メールアドレス</th>
+						<th>申請時間</th>
+						<th></th>
+					</tr>
+			  	</thead>
+				<tbody>
+					<tr th:each ="user : ${userList}">
+						<td scope="row" th:text="${user.userName}"></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.requestedAt}"></td>
+						<td >
+							<a th:href="@{'/applyDetail/'+ ${user.userId}}">
+								<button class="btn btn-primary">詳細</button>
+							</a>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>

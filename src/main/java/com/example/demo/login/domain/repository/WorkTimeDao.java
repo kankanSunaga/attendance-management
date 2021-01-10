@@ -3,29 +3,22 @@ package com.example.demo.login.domain.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-
 import com.example.demo.login.domain.model.WorkTime;
+
 
 public interface WorkTimeDao {
 
-	// userテーブルにデータを1件insert
-	public void insertOne(WorkTime workTime) throws DataAccessException;
-	
-	public void updateOne(WorkTime workTime) throws DataAccessException;
+	void insertOne(WorkTime workTime);
 
-	// workTimeテーブルから今月のデータを取得
-	public List<WorkTime> selectMonthData(int userId) throws DataAccessException;
+	void updateOne(WorkTime workTime);
 
-	// workTimeテーブルから月のデータを全件取得
-	public List<WorkTime> selectMany(int contractId) throws DataAccessException;
+	List<WorkTime> selectMonthData(int userId);
 
-	// workTimeテーブルから月のデータを全件取得（範囲検索）
-	public List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay) throws DataAccessException;
+	List<WorkTime> selectMany(int contractId);
 
-	
-	public void deleteOne(int workTimeId) throws DataAccessException;
+	List<WorkTime> rangedSelectMany(int contractId, LocalDate minWorkDay, LocalDate maxWorkDay);
 
+	void deleteOne(int workTimeId);
 
-	public boolean hasExist(WorkTime workTime) throws DataAccessException;
+	boolean hasExist(WorkTime workTime);	
 }

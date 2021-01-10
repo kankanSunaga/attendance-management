@@ -30,7 +30,11 @@
 					<td th:text="${contract.startDate}"></td>
 					<td th:text="${contract.endDate}"></td>
 					<td th:text="${contract.officeName}"></td>
-					<td ><a class="btn btn-primary" th:href="@{'/contract/'+ ${contract.contractId}}">詳細</a></td>
+					<td >
+						<a  th:href="@{'/contract/'+ ${contract.contractId}}">
+							<button class="btn btn-primary">詳細</button>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

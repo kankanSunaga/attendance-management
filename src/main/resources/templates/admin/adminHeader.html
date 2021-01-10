@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8"></meta>
+<link th:href="@{/css/AdminHeader.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<title></title>
+</head>
+<body>
+	<nav th:fragment="adminHeader" class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+			<a href="/adminHome"><img class="logo" th:src="${logo}"></a>
+		</div>
+	</nav>
+</body>
+</html>

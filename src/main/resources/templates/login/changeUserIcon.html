@@ -18,7 +18,6 @@
 			<br><br>
 			<input type="file" name="file" class="import" required>
 			<br>
-			<div th:if="${updateStatus}" class="comment">プロフィール画像を変更しました</div>
 			<br>
 			<button type="button" class="btn btn-primary modalBtn" data-toggle="modal" data-target="#testModal">変更する</button>				
 			<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -31,8 +30,8 @@
 							<p>本当にプロフィール画像を変更しますか？</p>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary modalBtn">変更する</button>
-							<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">閉じる</button>
+							<button type="submit" class="btn btn-primary modalBtn">はい</button>
+							<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">いいえ</button>
 						</div>
 					</div>
 				</div>

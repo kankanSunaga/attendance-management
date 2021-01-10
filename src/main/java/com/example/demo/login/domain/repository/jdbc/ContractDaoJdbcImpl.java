@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.demo.login.domain.model.Contract;
 import com.example.demo.login.domain.repository.ContractDao;
+
 
 @Repository
 public class ContractDaoJdbcImpl implements ContractDao {
@@ -20,7 +20,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 	JdbcTemplate jdbc;
 
 	@Override
-	public void insertOne(Contract contract) throws DataAccessException {
+	public void insertOne(Contract contract) {
 		jdbc.update("INSERT INTO contract"
 				+ " (contractTime, startTime, breakTime, endTime, startDate, officeName, userId)"
 				+ " VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -28,7 +28,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 				contract.getStartDate(), contract.getOfficeName(), contract.getUserId());
 	}
 
-	public Contract activeSelectOne(int contractId) throws DataAccessException {
+	public Contract activeSelectOne(int contractId) {
 		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM contract WHERE contractId= ?", contractId);
 
 		Contract contract = new Contract();
@@ -44,7 +44,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return contract;
 	}
 
-	public List<Contract> selectMany(int userId) throws DataAccessException {
+	public List<Contract> selectMany(int userId) {
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM contract"
 				+ " WHERE userId = ? ORDER BY startDate DESC", userId);
 
@@ -66,7 +66,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return contractList;
 	}
 
-	public List<Contract> selectByUserId(int userId) throws DataAccessException {
+	public List<Contract> selectByUserId(int userId) {
 		List<Map<String, Object>> list = jdbc.queryForList("SELECT * FROM contract WHERE userId =?", userId);
 
 		return list.stream().map(contractMap -> this.mapToContract(contractMap)).collect(Collectors.toList());
@@ -88,7 +88,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return contract;
 	}
 
-	public Contract latestContract(int userId) throws DataAccessException {
+	public Contract latestContract(int userId) {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 				+ " INNER JOIN contract ON user.userId = contract.userId"
 				+ " INNER JOIN month ON contract.contractId = month.contractId"
@@ -109,11 +109,11 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return latestContract;
 	}
 
-	public Contract underContract(int userId, LocalDate today) throws DataAccessException {
+	public Contract underContract(int userId, LocalDate nowDate) {
 		Map<String, Object> map = jdbc.queryForMap("SELECT contract.* FROM user"
 				+ " INNER JOIN contract ON user.userId = contract.userId"
-				+ " WHERE contract.startDate <= '" + today.toString() + "' AND" + " (contract.endDate >= '"
-				+ today.toString() + "' OR contract.endDate IS NOT NULL)" + " AND user.userId = ?", userId);
+				+ " WHERE contract.startDate <= '" + nowDate.toString() + "' AND" + " (contract.endDate >= '"
+				+ nowDate.toString() + "' OR contract.endDate IS NOT NULL)" + " AND user.userId = ?", userId);
 
 		Contract latestContract = new Contract();
 		latestContract.setContractId((int) map.get("contractId"));
@@ -129,7 +129,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return latestContract;
 	}
 
-	public int updateContract(Contract contract) throws DataAccessException {
+	public int updateContract(Contract contract) {
 		java.sql.Time startTime = java.sql.Time.valueOf(contract.getStartTime());
 		java.sql.Time breakTime = java.sql.Time.valueOf(contract.getBreakTime());
 		java.sql.Time endTime = java.sql.Time.valueOf(contract.getEndTime());
@@ -142,7 +142,7 @@ public class ContractDaoJdbcImpl implements ContractDao {
 		return rowNumber;
 	}
 
-	public void updateEndDate(Contract contract) throws DataAccessException {
+	public void updateEndDate(Contract contract) {
 		jdbc.update("UPDATE contract SET endDate=? WHERE contractId = ?", contract.getEndDate(),contract.getContractId());
 	}
 }

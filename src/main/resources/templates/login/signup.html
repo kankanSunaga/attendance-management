@@ -11,34 +11,37 @@
 </head>
 <body class="text-center">
 	<form method="post" th:action="@{/signup}" th:object="${signupForm}">
-		<!-- 名前 -->
-        <label>名前</label><br/>
-        <input type="text" th:field="*{userName}" name="userName"/><br/>
-        <br/>
-		<!-- メールアドレス -->
-    	<label>メールアドレス</label><br/>
-    	<input type="text" th:field="*{email}" name="email" /><br/>
-    	<br/>
-    	<!-- パスワード -->
-        <label>パスワード</label><br/>
-        <input type="password" th:field="*{password}" name="password" /><br/>
-        <br/>
-        <!-- パスワード確認 -->
-        <label>パスワード確認</label><br/>
-        <input type="password" name="confirmPassword" /><br/>
-        <br/>
-        <!-- エラーメッセージの一覧表示 -->
-        <br/>
+		<h1>新規登録	</h1>
+		<br>
+		<div class="userName">
+	        <label>名前</label><br/>
+	        <input type="text" class="form-control" th:field="*{userName}" name="userName" required>
+        </div>
+		<div class="email">
+	    	<label>メールアドレス</label><br/>
+	    	<input type="text" class="form-control" th:field="*{email}" name="email" required>
+		</div>
+    	<div class="password">
+	        <label>パスワード</label><br/>
+	        <input type="password" class="form-control" th:field="*{password}" name="password" required>
+        </div>
+       <div class="confirmPassword">
+	        <label>パスワード確認</label>
+	        <input type="password" class="form-control" name="confirmPassword" required>
+	    </div>
+	    <br>
 		<div th:each="error:${#fields.detailedErrors()}">
 			<span th:text="${error.message}">Error message</span>
 		</div>
-		<br/>
-		<div th:if="${useEmail}">このメールアドレスは既に使用されています</div>
-        <br/>
-        <!-- 申請ボタン -->
+		<div th:if="${useEmail}">
+			<label>このメールアドレスは既に使用されています</label>
+		</div>
+		<br>
 		<button class="btn btn-primary" type="submit">申請する</button>
     </form>
-    <br/>
-    <a th:href="@{'/login'}">ログイン画面に戻る</a>
+    <br>
+    <div class="homeBack">
+    	<a th:href="@{'/login'}">ログイン画面に戻る</a>
+    </div>
 </body>
 </html>

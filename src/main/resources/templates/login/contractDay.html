@@ -4,6 +4,7 @@
 	<meta charset="UTF-8"></meta>
 	<link th:href="@{/css/contractDay.css}" rel="stylesheet"></link>
 	<link th:href="@{/css/headerLayout.css}" rel="stylesheet"></link>
+	<link th:href="@{/css/workTime.css}" rel="stylesheet"></link>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -13,9 +14,7 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<!-- コンテンツ -->
-	<div class="background">
-		<br><br>
-	</div>
+	<br><br>
 	<div class = "box scroll">
 		<table class="table table-bordered">
 			<thead class="thead-dark">				
@@ -28,16 +27,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each ="contractDay : ${contract}">
-					<!-- 日付 -->
+				<tr th:each ="contractDay : ${contractMonth}">
 					<td th:text ="${contractDay.value.workDay}">
-					<!-- 勤務開始時間 -->
-					<td th:text="${#temporals.format(contractDay.value.StartTime, 'HH:mm')}"></td>
-					<!-- 勤務終了時間 -->
-					<td th:text="${#temporals.format(contractDay.value.EndTime, 'HH:mm')}"></td>
-					<!-- 休憩時間 -->
+					<td th:text="${contractDay.value.startTime}"></td>
+					<td th:text="${contractDay.value.startTime}"></td>
+					<td th:text="${contractDay.value.endTime}"></td>
 					<td th:text="${contractDay.value.breakTime}"></td>
-					<!-- 勤務時間 -->
 					<td>
 						<span th:if="${contractDay.value.workTimeMinute}" th:text="${contractDay.value.workTimeMinute / 60} + 'h ' + ${contractDay.value.workTimeMinute % 60} + 'm'"></span>
 						<span th:unless="${contractDay.value.workTimeMinute}"></span>
@@ -56,27 +51,27 @@
 				<li class="nav-item">
 					<a class="nav-link" id="cange-tab" data-toggle="tab" href="#cange" role="tab" aria-controls="cange">勤務情報の変更</a>
 				</li>
-			</ul>								
+			</ul>									
 			<div class="tab-content" id="myTabContent">										
 				<div class="tab-pane fade" id="cange" role="tabpanel" aria-labelledby="cange-tab"><br>						
-					<div th:replace="login/workTime.html :: content"></div><br>
+					<div th:replace="login/workTime.html :: content"></div>
 				</div>							
 				<div class="tab-pane fade text-center" id="delete" role="tabpanel" aria-labelledby="delete-tab">
 					<form method="post" th:action="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl}}" th:object="${workTime}">	
-						<br>
+						<br><br>
 						<label>勤務日</label><br>
-						<select name="workTimeId">
+						<select name="workTimeId" class="form-control">
 							<option th:each ="workTimes:${workTimes}" th:text="${workTimes.workDay}" th:value="${workTimes.workTimeId}" th:field="*{workTimeId}" th:name="workTimeId"></option>
-						</select><br><br>				
-						<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button><br><br>
+						</select>		
+						<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">削除</button>
 						<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 				 					<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+										<h2 class="modal-title" id="myModalLabel">削除確認画面</h2>
 									</div>
 									<div class="modal-body">
-										<label>本当に削除しますか？</label>
+										<p>本当に削除しますか？</p>
 									</div>
 				 					<div class="modal-footer">
 				 						<button type="submit" class="btn btn-primary">はい</button>
@@ -89,33 +84,32 @@
 				</div>														
 			</div>																								
 		</div>			
-		<div th:if="${displayStatus} == nowRequest">変更申請済み</div>
-			<!-- 3.変更申請ボタン表示 -->
-			<div th:if="${displayStatus} == lastMonth">
-				<button  type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal">変更申請</button>
-				<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-		 					<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">変更申請確認画面</h4>
-							</div>
-							<div class="modal-body">
-								<label>本当に変更申請しますか？</label>
-							</div>
-		 					<div class="modal-footer">
-		 						<a th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/changeRequestStatus'}">
-		 							<button type="submit" class="btn btn-primary">はい</button>
-		 						</a>
-								<button type="submit" class="btn btn-danger" data-dismiss="modal">いいえ</button>								
-							</div>
+		<div class= "nowRequest" th:if="${displayStatus} == nowRequest">
+			<label>変更申請済み</label>
+		</div>
+		<div th:if="${displayStatus} == lastMonth" class="changeWorkTime">
+			<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">変更申請</button>
+			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+	 					<div class="modal-header">
+							<h2 class="modal-title" id="myModalLabel">変更申請確認</h2>
+						</div>
+						<div class="modal-body">
+							<p>本当に変更申請しますか？</p>
+						</div>
+	 					<div class="modal-footer">
+	 						<a th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/changeRequestStatus'}">
+	 							<button type="submit" class="btn btn-primary modalBtn">はい</button>
+	 						</a>
+							<button type="submit" class="btn btn-danger modalBtn" data-dismiss="modal">いいえ</button>								
 						</div>
 					</div>
 				</div>
 			</div>
-		<div class="background">
-			<br>
-			<a class="btn btn-primary" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}" style="text-align: center;">PDFをダウンロード</a>
-			<br>
-		</div>	
+		</div>
+	<div class="pdfBtn">
+		<button class="btn btn-primary pdf" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}">PDFをダウンロード</button>
+	</div>
 </body>
 </html>

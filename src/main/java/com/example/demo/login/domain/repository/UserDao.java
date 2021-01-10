@@ -3,29 +3,30 @@ package com.example.demo.login.domain.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.DataAccessException;
-
 import com.example.demo.login.domain.model.User;
+
 
 public interface UserDao {
 
-	public int insertOne(User user) throws DataAccessException;
+	int insertOne(User user);
 
-	public int countPermission() throws DataAccessException;
+	int countPermission();
 
-	public List<User> selectPermission() throws DataAccessException;
+	List<User> selectPermission();
 
-	public User selectOne(int userId) throws DataAccessException;
+	User selectOne(int userId);
 
-	public void updatePermission(int userId) throws DataAccessException;
+	void updatePermission(int userId);
 
-	public void updateFrozen(int userId) throws DataAccessException;
+	void updateFrozen(int userId);
 
-	public User selectByEmail(String email) throws DataAccessException;
+	User selectByEmail(String email);
 
-	public int updateEmail(User user) throws DataAccessException;
+	int updateEmail(User user);
 
-	public int updatePassword(User user, String newPassword) throws DataAccessException;
+	int updatePassword(User user, String newPassword);
 
-	public Optional<User> findByEmail(String email) throws DataAccessException;
+	Optional<User> findByEmail(String email);
+	
+	void updateReissuePassword(int userId, String reissuePassword);	
 }

@@ -24,15 +24,15 @@
 			</div>
 			<div class="newEmail">
 				<label>新しいメールアドレスの入力</label><br>
-				<input type="text" th:field="*{newEmail}" class="form-control" name="newEmail">
+				<input type="text" th:field="*{newEmail}" class="form-control" required>
 			</div>
 			<div class="newConfirmEmail">
 				<label>新しいメールアドレスの確認</label><br>
-				<input type="text" th:field="*{newConfirmEmail}" class="form-control" name="newConfirmEmail">
-				<div th:each="error:${#fields.detailedErrors()}">
-					<span th:text="${error.message}">Error message</span>
-				</div>
-				<br>
+				<input type="text" th:field="*{newConfirmEmail}" class="form-control" required>
+			</div>
+			<br>
+			<div th:each="error:${#fields.detailedErrors()}">
+				<span th:text="${error.message}"></span>
 			</div>
 			<br>
 			<button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">変更する</button>
@@ -40,14 +40,14 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2 class="modal-title" id="myModalLabel">変更確認画面</h2>
+							<h2 class="modal-title" id="myModalLabel">変更確認</h2>
 						</div>
 						<div class="modal-body">
 							<p>本当にメールアドレスを変更しますか？</p>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary  modalBtn">変更する</button>
-							<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">閉じる</button>
+							<button type="submit" class="btn btn-primary  modalBtn">はい</button>
+							<button type="button" class="btn btn-danger modalBtn" data-dismiss="modal">いいえ</button>
 						</div>
 					</div>
 				</div>

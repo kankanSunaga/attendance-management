@@ -1,15 +1,16 @@
 package com.example.demo.login.domain.repository.jdbc;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.repository.MonthDao;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
 import com.example.demo.login.domain.model.Month;
@@ -24,14 +25,15 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	DateTimeUtil dateTimeUtil;
 
 	@Override
-	public int updateToDeadline(int year, int month) throws DataAccessException {
+	public int updateToDeadline(int year, int month) {
+
 		int date = jdbc.update("UPDATE month SET deadlineStatus = 'TRUE' WHERE year = ? AND month = ? ", year, month);
 
 		return date;
 	}
 
 	@Override
-	public List<User> getRequestUsers() throws DataAccessException {
+	public List<User> getRequestUsers() {
 
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM user"
 				+ " INNER JOIN contract ON user.userId = contract.userId"
@@ -45,13 +47,16 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 			RuquestUserList.add(user);
 		}
+
 		return RuquestUserList;
 	}
 
-	public Month latestMonth(int userId) throws DataAccessException {
-		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
-						+ " INNER JOIN contract ON user.userId = contract.userId"
-						+ " INNER JOIN month ON contract.contractId = month.contractId" + " WHERE user.userId = ?"
+	public Month latestMonth(int userId) {
+
+		Map<String, Object> map = jdbc
+				.queryForMap("SELECT month.* FROM user" + " INNER JOIN contract ON user.userId = contract.userId"
+						+ " INNER JOIN month ON contract.contractId = month.contractId"
+						+ " WHERE user.userId = ?"
 						+ " ORDER BY monthId DESC LIMIT 1", userId);
 
 		Month latestMonth = new Month();
@@ -65,15 +70,16 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return latestMonth;
 	}
 
-	public Month selectMonthTable(int userId, int contractId, String yearMonth) throws DataAccessException {
+	public Month selectMonthTable(int contractId, String yearMonth) {
+
 		int year = dateTimeUtil.getYearAndMonth(yearMonth).get("year");
 		int month = dateTimeUtil.getYearAndMonth(yearMonth).get("month");
 
 		Map<String, Object> map = jdbc.queryForMap("SELECT month.* FROM user"
-						+ " INNER JOIN contract ON user.userId = contract.userId"
-						+ " INNER JOIN month ON contract.contractId = month.contractId"
-						+ " WHERE user.userId = ? AND contract.contractId = ? AND month.year = ? AND month.month = ?",
-						userId, contractId, year, month);
+				+ " INNER JOIN contract ON user.userId = contract.userId"
+				+ " INNER JOIN month ON contract.contractId = month.contractId"
+				+ " WHERE contract.contractId = ? AND month.year = ? AND month.month = ?",
+				contractId, year, month);
 
 		Month selectMonth = new Month();
 		selectMonth.setMonthId((int) map.get("monthId"));
@@ -86,13 +92,15 @@ public class MonthDaoJdbcImpl implements MonthDao {
 		return selectMonth;
 	}
 
-	public void insertOne(Month month) throws DataAccessException {
+	public void insertOne(Month month) {
+
 		jdbc.update("INSERT INTO month (year, month, deadlineStatus, requestStatus, contractId)"
 				+ " VALUES(?, ?, ?, ?, ?)",
 				month.getYear(), month.getMonth(), false, false, month.getContractId());
 	}
 
 	public void update(Month month) {
+
 		jdbc.update("UPDATE month SET monthId=?, year=?, month=?, deadlineStatus=?, requestStatus=?, contractId=?"
 				+ " WHERE monthId=?",
 				month.getMonthId(), month.getYear(), month.getMonth(), month.isDeadlineStatus(),
@@ -100,10 +108,11 @@ public class MonthDaoJdbcImpl implements MonthDao {
 	}
 
 	public List<Month> getMonthList(int contractId) {
+
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT month.* FROM contract"
 				+ " INNER JOIN month ON contract.contractId = month.contractId"
-				+ " WHERE contract.contractId = ?" + " ORDER BY monthId DESC",
-				contractId);
+				+ " WHERE contract.contractId = ?"
+				+ " ORDER BY monthId DESC", contractId);
 
 		List<Month> monthList = new ArrayList<>();
 		for (Map<String, Object> map : getList) {
@@ -117,6 +126,53 @@ public class MonthDaoJdbcImpl implements MonthDao {
 
 			monthList.add(month);
 		}
+
 		return monthList;
+	}
+
+	public List<WorkTime> getWorkMonth(int contractId, int monthId) {
+
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM workTime"
+				+ " WHERE contractId=? AND monthId=?" 
+				+ " ORDER BY workDay", contractId, monthId);
+
+		List<WorkTime> contractDayList = new ArrayList<>();
+		for (Map<String, Object> map : getList) {
+			WorkTime workTime = new WorkTime();
+			workTime.setWorkTimeId((int) map.get("workTimeId"));
+			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
+			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
+			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
+			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
+			workTime.setContractId((int) map.get("contractId"));
+
+			contractDayList.add(workTime);
+		}
+
+		return contractDayList;
+	}
+	
+	public List<WorkTime> getMonth(int monthId) {
+
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM workTime"
+				+ " WHERE monthId=?" 
+				+ " ORDER BY workDay", monthId);
+
+		List<WorkTime> contractDayList = new ArrayList<>();
+		for (Map<String, Object> map : getList) {
+			WorkTime workTime = new WorkTime();
+			workTime.setWorkTimeId((int) map.get("workTimeId"));
+			workTime.setWorkDay(((java.sql.Date) map.get("workDay")).toLocalDate());
+			workTime.setStartTime(((Timestamp) map.get("startTime")).toLocalDateTime());
+			workTime.setBreakTime(((java.sql.Time) map.get("breakTime")).toLocalTime());
+			workTime.setEndTime(((Timestamp) map.get("endTime")).toLocalDateTime());
+			workTime.setWorkTimeMinute((int) map.get("workTimeMinute"));
+			workTime.setContractId((int) map.get("contractId"));
+
+			contractDayList.add(workTime);
+		}
+
+		return contractDayList;
 	}
 }

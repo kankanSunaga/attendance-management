@@ -13,46 +13,38 @@
 	<!-- ヘッダー -->
 	<div th:replace="login/headerLayout.html :: header"></div>
 	<br><br>
+	<h1>勤務時間登録</h1>
 	<div th:fragment="content">
 		<form method="post" th:action="@{/workTime}" th:object="${workTimeForm}">
-			<div class="container text-center">
-				<!-- カレンダー -->
-				<div class="col-sm-2">
-					<h3>勤務時間登録</h3>
-					<br>
-				</div>
-				<div class="col-sm-2">
-					<label>勤務日</label>
-					<input class="form-control" type="date" th:field="*{workDay}" name="workDay" required>
-					<br>
-				</div>
-				<!-- 始業時間 -->
-				<div class="col-sm-2">
-					<label>始業時間</label>
-					<input class="form-control" type="time" name="startTime" th:field="*{startTime}" required>
-					<br>
-				</div>
-				<!-- 休憩時間 -->
-				<div class="col-sm-2">
-					<label>休憩時間</label>
-					<input class="form-control" type="time" max="03:00" name="breakTime" th:field="*{breakTime}" required>
-				</div>
+			<div class="text-center">
 				<br>
-				<!-- 終業時間 -->
-				<div class="col-sm-2">
-					<label>終業時間</label>
-					<input class="form-control" type="time" name="endTime" th:field="*{endTime}" required>
+				<div class="workDay">
+					<label>勤務日</label>
+					<input class="form-control pL58" type="date" th:field="*{workDay}" required>
+					<br>
 				</div>
-				<!-- チェックボックス -->
-				<div class="col-sm-4">
+				<div class="startTime">
+					<label>始業時間</label>
+					<input class="form-control pL48" type="time" th:field="*{startTime}" required>
+					<br>
+				</div>
+				<div class="breakTime">
+					<label>休憩時間</label>
+					<input class="form-control pL48" type="time" max="03:00" th:field="*{breakTime}" required>
+					<br>
+				</div>
+				<div class="endTime">
+					<label>終業時間</label>
+					<input class="form-control pL48" type="time" th:field="*{endTime}" required>
 					<input type="checkbox" th:field="*{overTimeFlag}" name="overTime"> 0時を過ぎた
 					<br>
 				</div>
 				<br>
-				<div class="col-sm-2">
-					<button class="btn btn-primary" type="submit">保存</button>
+				<div th:each="error:${#fields.detailedErrors()}">
+					<span th:text="${error.message}">Error message</span>
 				</div>
-			</div>		
+				<button class="btn btn-primary" type="submit">保存</button>
+			</div>	
 		</form>
 	</div>
 </body>

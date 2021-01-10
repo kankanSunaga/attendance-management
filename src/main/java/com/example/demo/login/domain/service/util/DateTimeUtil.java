@@ -57,22 +57,18 @@ public class DateTimeUtil {
 		return BeginningOfMonth;
 	}
 
-	public boolean checkYearMonth(int userId) {
+	public String getTotalTime(int totalTime) {
 
-		LocalDate nowDate = LocalDate.now();
-		String nowYearMonth = toStringDate(nowDate, "yyyyMM");
+		int hour = totalTime / 60;
+		int minute = totalTime % 60;
 
-		int year = monthService.latestMonth(userId).getYear();
-		int month = monthService.latestMonth(userId).getMonth();
-		String stringYearMonth = toStringYearMonth(year, month);
+		return hour + "時間" + minute + "分";
+	}
+	
+	public LocalDate createDate(String yyyyMMdd) {
 
-		boolean answer;
-		if (nowYearMonth.equals(stringYearMonth)) {
-			answer = true;
-		} else {
-			answer = false;
-		}
+		LocalDate date = LocalDate.parse(yyyyMMdd, DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-		return answer;
+		return date;
 	}
 }

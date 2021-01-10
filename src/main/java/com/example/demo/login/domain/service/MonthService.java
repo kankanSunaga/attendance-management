@@ -1,6 +1,5 @@
 package com.example.demo.login.domain.service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.login.domain.model.Month;
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.repository.MonthDao;
 import com.example.demo.login.domain.service.util.DateTimeUtil;
 
@@ -37,17 +37,13 @@ public class MonthService {
 	DateTimeUtil dateTimeUtil;
 
 	public List<User> getRequestUsers() {
-		
+
 		return dao.getRequestUsers();
 	}
 
 	public int ruquestUserCount() {
 
-		List<User> ruquestUserList = getRequestUsers();
-
-		int ruquestUserCount = ruquestUserList.size();
-
-		return ruquestUserCount;
+		return getRequestUsers().size();
 	}
 
 	public void updateToDeadline() {
@@ -56,35 +52,29 @@ public class MonthService {
 		dao.updateToDeadline(lastMonthDate.getYear(), lastMonthDate.getMonthValue());
 	}
 
-	public boolean deadlineCheck(int userId, int contractId, String yearMonth) throws IOException {
+	public boolean deadlineCheck(boolean deadlineStatus, LocalDate lastWeekDay, LocalDate nowDate) {
 
-		LocalDate nowDate = LocalDate.now();
-		LocalDate lastWeekDay = dayOfWeekService.getLastWeekDay(nowDate);
-		boolean stetus = selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
-
-		if (stetus) {
-			stetus = false;
-		} else if (nowDate.isAfter(lastWeekDay)) {
-			stetus = true;
+		if (deadlineStatus) {
+			return true;
+		} else if (nowDate.equals(lastWeekDay) || nowDate.isAfter(lastWeekDay)) {
+			return false;
 		} else {
-			stetus = false;
+			return true;
 		}
-		
-		return stetus;
 	}
 
 	public Month latestMonth(int userId) {
-		
+
 		return dao.latestMonth(userId);
 	}
 
-	public Month selectMonthTable(int userId, int contractId, String yearMonth) {
-		
-		return dao.selectMonthTable(userId, contractId, yearMonth);
+	public Month selectMonthTable(int contractId, String yearMonth) {
+
+		return dao.selectMonthTable(contractId, yearMonth);
 	}
 
 	public void insertOne(Month month) {
-		
+
 		dao.insertOne(month);
 	}
 
@@ -108,7 +98,7 @@ public class MonthService {
 	}
 
 	public void update(Month month) {
-		
+
 		dao.update(month);
 	}
 
@@ -120,12 +110,12 @@ public class MonthService {
 	}
 
 	public List<Month> getMonthList(int contractId) {
-		
+
 		return dao.getMonthList(contractId);
 	}
 
 	public List<Map<String, String>> getMonthDate(List<Month> monthList) {
-		
+
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		int size = monthList.size();
 		for (int i = 0; i < size; i++) {
@@ -142,6 +132,47 @@ public class MonthService {
 			map.put("url", stringYearMonth);
 			list.add(map);
 		}
+
 		return list;
+	}
+
+	public List<WorkTime> getWorkTime(int contractId, int monthId) {
+
+		return dao.getWorkMonth(contractId, monthId);
+	}
+
+	public int getTotalTime(List<WorkTime> workTime) {
+
+		int totalTime = 0;
+		for (int i = 0; i < workTime.size(); i++) {
+			totalTime += workTime.get(i).getWorkTimeMinute();
+		}
+
+		return totalTime;
+	}
+
+	public String checkQuota(int contractTime, int totalTime) {
+
+		int result = contractTime - totalTime;
+		if (result > 0) {
+			int hour = result / 60;
+			int minute = result % 60;
+
+			return hour + "時間" + minute + "分";
+		}
+
+		return "達成しました";
+	}
+	
+	public List<WorkTime> getMonth(int monthId) {
+		
+		return dao.getMonth(monthId);
+	}
+	
+	public Month deadlineStatus(Month month) {
+
+		month.setDeadlineStatus(true);
+
+		return month;	
 	}
 }

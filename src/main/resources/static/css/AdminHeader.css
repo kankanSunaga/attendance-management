@@ -1,0 +1,15 @@
+.navbar{
+	background-color: #D8B4A0;	
+}
+
+img.logo {
+	height: 45px;
+	z-index: 0;
+	margin-top: 10px;
+	margin-bottom: 10px
+}
+
+.container-fluid{
+    margin-left: 32px !important;
+	
+}

@@ -29,6 +29,7 @@ public class ContractService {
 	DateTimeUtil dateTimeUtilityService;
 
 	public void insertOne(Contract contract) {
+
 		dao.insertOne(contract);
 	}
 
@@ -68,10 +69,10 @@ public class ContractService {
 		return dao.latestContract(userId);
 	}
 
-	public String selectDisplay(String yearMonth, int userId, int contractId, LocalDate nowDate) {
+	public String selectDisplay(String yearMonth, int contractId, LocalDate nowDate) {
 
-		boolean deadlineStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isDeadlineStatus();
-		boolean requestStatus = monthService.selectMonthTable(userId, contractId, yearMonth).isRequestStatus();
+		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
+		boolean requestStatus = monthService.selectMonthTable(contractId, yearMonth).isRequestStatus();
 
 		LocalDate lastMonth = nowDate.minusMonths(1);
 		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");
@@ -90,16 +91,13 @@ public class ContractService {
 		return status;
 	}
 
-	public Contract underContract(int userId) {
+	public Contract underContract(int userId, LocalDate nowDate) {
 
-		LocalDate today = LocalDate.now();
-
-		return dao.underContract(userId, today);
+		return dao.underContract(userId, nowDate);
 	}
 
-	public Contract setOldContractTime(ChangeContractTimeForm form, int userId) {
+	public Contract setOldContractTime(int userId, Contract contract, ChangeContractTimeForm form) {
 
-		Contract contract = underContract(userId);
 		form.setNewContractTime(contract.getContractTime());
 		form.setNewStartTime(contract.getStartTime());
 		form.setNewBreakTime(contract.getBreakTime());
@@ -136,8 +134,11 @@ public class ContractService {
 	}
 
 	public WorkTimeForm setWorkTimeForm(WorkTimeForm form, int userId) {
-
+		
 		Contract contract = contractService.latestContract(userId);
+		LocalDate date = LocalDate.now();
+		
+		form.setWorkDay(date);
 		form.setStartTime(contract.getStartTime());
 		form.setBreakTime(contract.getBreakTime());
 		form.setEndTime(contract.getEndTime());

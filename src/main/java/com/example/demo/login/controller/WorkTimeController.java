@@ -1,12 +1,15 @@
 package com.example.demo.login.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,17 +67,27 @@ public class WorkTimeController {
 	}
 
 	@PostMapping("/workTime")
-	public String postWorkTime(@ModelAttribute WorkTimeForm form, Model model) throws IOException {
+	public String postWorkTime(@ModelAttribute @Validated WorkTimeForm form, BindingResult bindingResult, Model model) throws IOException {
 
 		int userId = sessionUtil.getUserId(request);
+		
+		String nowYearMonth = dateTimeUtil.toStringDate(LocalDate.now(), "yyyyMM");
+
+		int year = monthService.latestMonth(userId).getYear();
+		int month = monthService.latestMonth(userId).getMonth();
+		String latestYearMonth = dateTimeUtil.toStringYearMonth(year, month);
+		
+		if (bindingResult.hasErrors()) {
+			return getWorkTime(form, model);
+		}
 
 		if (!(workTimeService.hasExist(workTimeService.setWorkTime(form, userId)))) {
 			workTimeService.updateOne(workTimeService.setWorkTime(form, userId));
 
-		} else if (dateTimeUtil.checkYearMonth(userId)) {
+		} else if (nowYearMonth.equals(latestYearMonth)) {
 			workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
 
-		} else if (!(dateTimeUtil.checkYearMonth(userId))) {
+		} else {
 			workTimeTransaction.insertMonthAndWork(form, userId);
 		}
 

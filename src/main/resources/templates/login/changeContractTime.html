@@ -19,38 +19,28 @@
 				<br>
 				<div class="workTime">
 					<label>契約勤務時間</label>
-					<input type="number" value="0" min="0" max="720" step="1" class="form-control pL22" th:field="*{newContractTime}" name="newContractTime">
+					<input type="number" value="0" min="0" max="720" step="1" class="form-control pL22" th:field="*{newContractTime}" required>
 					<label class ="totalTime">時間</label>
-					<div th:each="error:${#fields.detailedErrors('newContractTime')}">
-						<span th:text="${error.message}" th:errors="*{newContractTime}"></span>
-					</div>
 				</div>
 				<div class="startTime">
 					<label class="space">想定始業時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newStartTime}" name="newStartTime">
-					<div th:each="error:${#fields.detailedErrors('newStartTime')}">
-						<span th:text="${error.message}" th:errors="*{newStartTime}"></span>
-					</div>
+					<input type="time" class="form-control pL56" th:field="*{newStartTime}" required>
 					<br>
 				</div>
 				<div class="breakTime">
 					<label class="space">想定休憩時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newBreakTime}" name="newBreakTime">
-					<div th:each="error:${#fields.detailedErrors('newBreakTime')}">
-						<span th:text="${error.message}" th:errors="*{newBreakTime}"></span>
-					</div>
+					<input type="time" class="form-control pL56" th:field="*{newBreakTime}" required>
 					<br/>
 				</div>
 				<div class="endTime">
 					<label class="space">想定退勤時間</label>
-					<input type="time" class="form-control pL56" th:field="*{newEndTime}" name="newEndTime">
-					<div th:each="error:${#fields.detailedErrors('newEndTime')}">
-						<br>	
-						<span th:text="${error.message}" th:errors="*{newEndTime}"></span>
-					</div>
-					<br/>
-					<div th:if="${status}">契約勤務時間を変更しました</div>
-					<div th:if="${status == false}">契約勤務時間を変更出来ませんでした</div>
+					<input type="time" class="form-control pL56" th:field="*{newEndTime}" required>
+				</div>
+				<br>
+				<div th:if="${status}">契約勤務時間を変更しました</div>
+				<div th:if="${status == false}">契約勤務時間を変更出来ませんでした</div>
+				<div th:each="error:${#fields.detailedErrors()}">
+					<span th:text="${error.message}">Error message</span>
 				</div>
 				<br>
 				<button type="submit" class="btn btn-primary">保存</button>

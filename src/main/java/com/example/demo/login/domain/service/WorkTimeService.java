@@ -7,8 +7,11 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,10 +78,12 @@ public class WorkTimeService {
 		if (form.isOverTimeFlag()) {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay().plusDays(1), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form) + overTimeMinute);
+
 		} else {
 			workTime.setEndTime(LocalDateTime.of(form.getWorkDay(), form.getEndTime()));
 			workTime.setWorkTimeMinute(getWorkTimeMinute(form));
 		}
+
 		return workTime;
 	}
 
@@ -95,6 +100,7 @@ public class WorkTimeService {
 			list.add(calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
 					+ calendar.get(Calendar.DATE));
 		}
+
 		return list;
 	}
 
@@ -115,6 +121,7 @@ public class WorkTimeService {
 		for (int i = 0; i < workTimesSize; i++) {
 			samMinute += workTimes.get(i).getWorkTimeMinute();
 		}
+
 		return samMinute;
 	}
 
@@ -125,8 +132,8 @@ public class WorkTimeService {
 
 		LocalDate BeginningOfMonth = dateTimeUtil.BeginningOfMonth(yearMonth);
 		DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
 
+		LinkedHashMap<String, Object> calender = new LinkedHashMap<>();
 		for (int i = 0; i < maxDay; i++) {
 			LocalDate date = BeginningOfMonth.plusDays(i);
 			String stringDate = datetimeformatter.format(date);
@@ -134,20 +141,37 @@ public class WorkTimeService {
 			workTime.setWorkDay(date);
 			calender.put(stringDate, workTime);
 		}
+
 		return calender;
 	}
 
-	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender, int contractId,
-			String yearMonth) {
+	public LinkedHashMap<String, Object> setCalenderObject(LinkedHashMap<String, Object> calender,
+			List<Map<String, Object>> workTimeMonth) {
 
-		LocalDate minDay = dateTimeUtil.BeginningOfMonth(yearMonth);
-		LocalDate maxDay = minDay.with(TemporalAdjusters.lastDayOfMonth());
-
-		List<WorkTime> workTimes = rangedSelectMany(contractId, minDay, maxDay);
-		for (WorkTime workTime : workTimes) {
-			calender.put(workTime.getWorkDay().toString(), workTime);
+		for (Map<String, Object> workTime : workTimeMonth) {
+			calender.put(workTime.get("workDay").toString(), workTime);
 		}
+
 		return calender;
+	}
+
+	public List<Map<String, Object>> changeTimeFormat(List<WorkTime> workTimeMonth) {
+
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
+
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		for (WorkTime map : workTimeMonth) {
+			Map<String, Object> workTimeObject = new HashMap<>();
+			workTimeObject.put("workDay", map.getWorkDay());
+			workTimeObject.put("startTime", map.getStartTime().format(timeFormat));
+			workTimeObject.put("endTime", map.getEndTime().format(timeFormat));
+			workTimeObject.put("breakTime", map.getBreakTime());
+			workTimeObject.put("workTimeMinute", map.getWorkTimeMinute());
+
+			list.add(workTimeObject);
+		}
+
+		return list;
 	}
 
 	public void deleteOne(int workTimeId) {
@@ -158,5 +182,13 @@ public class WorkTimeService {
 	public boolean hasExist(WorkTime workTime) {
 
 		return dao.hasExist(workTime);
+	}
+
+	public String changeFormat(LocalDate timeDate) {
+
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
+		String stringTime = timeDate.format(timeFormat);
+
+		return stringTime;
 	}
 }

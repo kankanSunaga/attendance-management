@@ -1,25 +1,102 @@
-.box{
- 	height:450px;
-}
-.scroll{
- 	overflow:scroll;
+.box {
+	height: 450px;
+	background-color: #FFF;
 }
 
-.background {
-	background-color:#D4D9D2;
-	
-}
-
-body{
-	background-color:#D4D9D2;
+.scroll {
+	overflow: scroll;
 }
 
 html {
 	height: 100%;
 	margin: 0;
-	background-color:#D4D9D2;
+	background-color: #EFF1F3;
 }
 
-.table{
+.table {
 	text-align: center;
+}
+
+.label {
+	font-size: 24px !important;
+	letter-spacing: 5px;
+}
+
+th, td {
+	text-align: center !important;
+	font-size: 18px !important;
+}
+
+.background {
+	background-color: #DBD3D8 !important;
+}
+
+.form-control {
+	height: 60px !important;
+	font-size: 24px !important;
+	width: 50% !important;
+	margin: auto !important;
+	text-align-last: center !important;
+}
+
+.nav-link {
+	font-size: 20px !important;
+}
+
+.pdf {
+	margin-top: 0px !important;
+}
+
+.pdfBtn {
+	text-align: center !important;
+}
+
+.nowRequest {
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
+	text-align-last: center !important;
+}
+
+.modalBtn {
+	font-size: 18px !important;
+	width: 200px !important;
+}
+
+.modal-header {
+	font-size: 24px !important;
+	text-align: center !important;
+}
+
+.modal-body {
+	text-align: center !important;
+}
+
+.modal-footer {
+	justify-content: space-evenly;
+	display: flex;
+	text-align-last: center !important;
+}
+
+.modal-dialog {
+	margin: 200px auto !important;
+	width: 800px !important;
+}
+
+h2 {
+	font-weight: 600 !important;
+}
+
+p {
+	font-size: 20px;
+}
+
+.btn-danger {
+	width: 300px !important;
+	height: 40px !important;
+	margin-bottom: 20px !important;
+	margin-top: 20px;
+}
+
+.changeWorkTime {
+	text-align: center !important;
 }
