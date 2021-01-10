@@ -2,29 +2,28 @@ package com.example.demo.login.domain.repository;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WorkTime;
 import com.example.demo.login.domain.model.Month;
 
+
 public interface MonthDao {
 
-	public int updateToDeadline(int year, int month) throws DataAccessException;
+	int updateToDeadline(int year, int month);
 
-	public List<User> getRequestUsers() throws DataAccessException;
+	List<User> getRequestUsers();
 
-	public Month latestMonth(int userId) throws DataAccessException;
+	Month latestMonth(int userId);
 
-	public Month selectMonthTable(int contractId, String yearMonth) throws DataAccessException;
+	Month selectMonthTable(int contractId, String yearMonth);
 
-	public void insertOne(Month month) throws DataAccessException;
+	void insertOne(Month month);
 
-	public void update(Month month) throws DataAccessException;
+	void update(Month month);
 
-	public List<Month> getMonthList(int contractId) throws DataAccessException;
+	List<Month> getMonthList(int contractId);
 	
-	List<WorkTime> getWorkMonth(int contractId, int monthId) throws DataAccessException;
+	List<WorkTime> getWorkMonth(int contractId, int monthId);
 	
-	public List<WorkTime> getMonth(int monthId) throws DataAccessException;
+	List<WorkTime> getMonth(int monthId);
 }
