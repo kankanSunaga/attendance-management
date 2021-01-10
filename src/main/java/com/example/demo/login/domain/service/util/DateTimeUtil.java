@@ -57,25 +57,6 @@ public class DateTimeUtil {
 		return BeginningOfMonth;
 	}
 
-	public boolean checkYearMonth(int userId) {
-
-		LocalDate nowDate = LocalDate.now();
-		String nowYearMonth = toStringDate(nowDate, "yyyyMM");
-
-		int year = monthService.latestMonth(userId).getYear();
-		int month = monthService.latestMonth(userId).getMonth();
-		String stringYearMonth = toStringYearMonth(year, month);
-
-		boolean answer;
-		if (nowYearMonth.equals(stringYearMonth)) {
-			answer = true;
-		} else {
-			answer = false;
-		}
-
-		return answer;
-	}
-
 	public String getTotalTime(int totalTime) {
 
 		int hour = totalTime / 60;
