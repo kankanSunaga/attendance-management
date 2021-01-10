@@ -1,6 +1,7 @@
 package com.example.demo.login.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,6 +71,12 @@ public class WorkTimeController {
 
 		int userId = sessionUtil.getUserId(request);
 		
+		String nowYearMonth = dateTimeUtil.toStringDate(LocalDate.now(), "yyyyMM");
+
+		int year = monthService.latestMonth(userId).getYear();
+		int month = monthService.latestMonth(userId).getMonth();
+		String latestYearMonth = dateTimeUtil.toStringYearMonth(year, month);
+		
 		if (bindingResult.hasErrors()) {
 			return getWorkTime(form, model);
 		}
@@ -77,10 +84,10 @@ public class WorkTimeController {
 		if (!(workTimeService.hasExist(workTimeService.setWorkTime(form, userId)))) {
 			workTimeService.updateOne(workTimeService.setWorkTime(form, userId));
 
-		} else if (dateTimeUtil.checkYearMonth(userId)) {
+		} else if (nowYearMonth.equals(latestYearMonth)) {
 			workTimeService.insertOne(workTimeService.setWorkTime(form, userId));
 
-		} else if (!(dateTimeUtil.checkYearMonth(userId))) {
+		} else {
 			workTimeTransaction.insertMonthAndWork(form, userId);
 		}
 
