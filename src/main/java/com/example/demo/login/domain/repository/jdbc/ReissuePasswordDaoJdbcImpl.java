@@ -46,5 +46,6 @@ public class ReissuePasswordDaoJdbcImpl implements ReissuePasswordDao {
 	@Override
 	public void updateChanged(int userIdOpt) {
 		jdbc.update("UPDATE reissuePassword SET changed = 'TRUE' WHERE userId = ?", userIdOpt);
+
 	}
 }

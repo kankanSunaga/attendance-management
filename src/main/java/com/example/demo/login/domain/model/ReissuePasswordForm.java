@@ -27,10 +27,7 @@ public class ReissuePasswordForm {
 	
 	@AssertTrue
 	public boolean isDataValidOfReissuePassword() {
-		if (!reissuePassword.equals(confirmReissuePassword)) {
-			return false;
-		}
-		return true;		
+		return reissuePassword.equals(confirmReissuePassword);
 	}
 	
 }
