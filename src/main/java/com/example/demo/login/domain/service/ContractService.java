@@ -69,10 +69,7 @@ public class ContractService {
 		return dao.latestContract(userId);
 	}
 
-	public String selectDisplay(String yearMonth, int contractId, LocalDate nowDate) {
-
-		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
-		boolean requestStatus = monthService.selectMonthTable(contractId, yearMonth).isRequestStatus();
+	public String selectDisplay(String yearMonth, boolean deadlineStatus, boolean requestStatus, LocalDate nowDate) {
 
 		LocalDate lastMonth = nowDate.minusMonths(1);
 		String stringLastMonth = dateTimeUtilityService.toStringDate(lastMonth, "yyyyMM");

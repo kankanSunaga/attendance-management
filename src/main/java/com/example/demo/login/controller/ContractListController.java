@@ -89,19 +89,23 @@ public class ContractListController {
 
 		int userId = sessionUtil.getUserId(request);
 		int monthId = monthService.selectMonthTable(contractId, yearMonth).getMonthId();
-
-		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		List<WorkTime> workTimeMonth = monthService.getMonth(monthId);
-		List<Map<String, Object>> workTimeList = workTimeService.changeTimeFormat(workTimeMonth);
+		
 		
 		LinkedHashMap<String, Object> calender = workTimeService.calender(yearMonth);
-
+		List<Map<String, Object>> workTimeList = workTimeService.changeTimeFormat(workTimeMonth);
 		model.addAttribute("contractMonth", workTimeService.setCalenderObject(calender, workTimeList));
-		model.addAttribute("contractId", contractId);
+		
+		LocalDate minWorkDay = dateTimeUtil.BeginningOfMonth(yearMonth);
 		model.addAttribute("yearMonth", dateTimeUtil.toStringDate(minWorkDay, "yyyy年MM月"));
+		
+		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
+		boolean requestStatus = monthService.selectMonthTable(contractId, yearMonth).isRequestStatus();
+		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, deadlineStatus, requestStatus, LocalDate.now()));
+		
+		model.addAttribute("contractId", contractId);
 		model.addAttribute("yearMonthUrl", yearMonth);
 		model.addAttribute("workTimes", workTimeMonth);
-		model.addAttribute("displayStatus", contractService.selectDisplay(yearMonth, contractId, LocalDate.now()));
 		model.addAttribute("WorkTimeForm", contractService.setWorkTimeForm(form, userId));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
 		model.addAttribute("logo", userIconService.uploadLogoImage());

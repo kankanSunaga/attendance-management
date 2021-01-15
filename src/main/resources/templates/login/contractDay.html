@@ -109,7 +109,7 @@
 			</div>
 		</div>
 	<div class="pdfBtn">
-		<button class="btn btn-primary pdf" th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}">PDFをダウンロード</button>
+		<a th:href="@{'/contract/'+ ${contractId} + '/' + ${yearMonthUrl} + '/pdfDownload'}"><button class="btn btn-primary pdf">PDFをダウンロード</button></a>
 	</div>
 </body>
 </html>

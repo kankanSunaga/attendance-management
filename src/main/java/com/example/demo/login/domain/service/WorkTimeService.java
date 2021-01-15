@@ -183,12 +183,4 @@ public class WorkTimeService {
 
 		return dao.hasExist(workTime);
 	}
-
-	public String changeFormat(LocalDate timeDate) {
-
-		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.JAPANESE);
-		String stringTime = timeDate.format(timeFormat);
-
-		return stringTime;
-	}
 }
