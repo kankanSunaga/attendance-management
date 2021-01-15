@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ public class ReissuePasswordController {
 	
 	
 	@RequestMapping(value = "/login/reissuePassword", method = RequestMethod.GET)
-	public String getReissuePassword(@RequestParam String token, ReissuePasswordForm form) {
+	public String getReissuePassword(@ModelAttribute ReissuePasswordForm form, @RequestParam String token) {
 		
 		try {
 			reissuePasswordService.isValidToken(form.getToken());
@@ -50,10 +51,16 @@ public class ReissuePasswordController {
 		
 	
 	@PostMapping("/login/reissuePassword")
-	public String postReissuePassword(@ModelAttribute ReissuePasswordForm form, BindingResult bindingResult, Model model) {
+	public String postReissuePassword(@ModelAttribute @Validated ReissuePasswordForm form, BindingResult bindingResult, String token, Model model) {
+		
+		try {
+			reissuePasswordService.isValidToken(form.getToken());
+		} catch (EmptyResultDataAccessException ignored) {
+			return "login/tokenError";
+		}
 		
 		if(bindingResult.hasErrors()) {
-			return "login/reissuePassword";
+			return getReissuePassword(form, form.getToken());
 		}
 		
 		boolean isValidToken =  reissuePasswordService.isValidToken(form.getToken());
@@ -68,9 +75,7 @@ public class ReissuePasswordController {
 			return "login/forgotPassword";
 		} 
 		
-		reissuePasswordService.updatePassword(userIdOpt.get(), form.getReissuePassword());
-		
-		model.addAttribute("status", 1);
+		model.addAttribute("status", reissuePasswordService.updatePassword(userIdOpt.get(), form.getReissuePassword()));
 		
 		return "login/reissuePassword";
 	}

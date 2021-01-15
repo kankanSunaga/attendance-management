@@ -34,8 +34,10 @@ public class ReissuePasswordService {
 	}
 	
 	@Transactional
-	public void updatePassword(int userId, String reissuePassword) {
+	public boolean updatePassword(int userId, String reissuePassword) {
 		userDao.updateReissuePassword(userId, reissuePassword);
 		reissuePasswordDao.updateChanged(userId);
+		
+		return true;
 	}
 }
