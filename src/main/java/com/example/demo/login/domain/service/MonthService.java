@@ -143,17 +143,18 @@ public class MonthService {
 
 	public int getTotalTime(List<WorkTime> workTime) {
 
-		int totalTime = 0;
+		int totalTimeMinute = 0;
 		for (int i = 0; i < workTime.size(); i++) {
-			totalTime += workTime.get(i).getWorkTimeMinute();
+			totalTimeMinute += workTime.get(i).getWorkTimeMinute();
 		}
 
-		return totalTime;
+		return totalTimeMinute;
 	}
 
-	public String checkQuota(int contractTime, int totalTime) {
+	public String checkQuota(int contractTimeHour, int totalTimeMinute) {
 
-		int result = contractTime - totalTime;
+		int contractTimeMinute = contractTimeHour * 60;
+		int result = contractTimeMinute - totalTimeMinute;
 		if (result > 0) {
 			int hour = result / 60;
 			int minute = result % 60;
