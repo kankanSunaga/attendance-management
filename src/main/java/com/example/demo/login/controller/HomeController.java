@@ -56,7 +56,7 @@ public class HomeController {
 		String yearMonth = dateTimeUtil.toStringDate(LocalDate.now(), "yyyyMM");
 		int monthId = monthService.selectMonthTable(1, yearMonth).getMonthId();
 
-		int contractTime = contractService.underContract(userId, LocalDate.now()).getContractTime();
+		int contractTimeHour = contractService.underContract(userId, LocalDate.now()).getContractTime();
 		int totalTime = monthService.getTotalTime(monthService.getWorkTime(contractId, monthId));
 		
 		boolean deadlineStatus = monthService.selectMonthTable(contractId, yearMonth).isDeadlineStatus();
@@ -64,7 +64,7 @@ public class HomeController {
 
 		model.addAttribute("nowDate", dateTimeUtil.toStringDate(LocalDate.now(), "yyyy年MM月dd日(E)"));
 		model.addAttribute("officeName", contractService.underContract(userId, LocalDate.now()).getOfficeName());
-		model.addAttribute("quota", monthService.checkQuota(contractTime, totalTime));
+		model.addAttribute("quota", monthService.checkQuota(contractTimeHour, totalTime));
 		model.addAttribute("execution", dateTimeUtil.getTotalTime(totalTime));
 		model.addAttribute("deadline", monthService.deadlineCheck(deadlineStatus, lastWeekDay, LocalDate.now()));
 		model.addAttribute("base64", userIconService.uploadImage(userId));
